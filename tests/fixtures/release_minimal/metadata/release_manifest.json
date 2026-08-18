@@ -1,0 +1,102 @@
+{
+  "version": "smoke-1.0",
+  "status": "TEST_FIXTURE",
+  "configs": [
+    {
+      "name": "participation_and_concentration_metrics",
+      "path": "data/participation_and_concentration_metrics/data.csv",
+      "rows": 6,
+      "fields": [
+        "chain",
+        "chain_id",
+        "event_week",
+        "event_count",
+        "active_beneficiary_addresses",
+        "entrant_addresses",
+        "exit_addresses",
+        "retained_addresses",
+        "beneficiary_hhi",
+        "beneficiary_gini",
+        "top1pct_share",
+        "top10pct_share",
+        "nakamoto_51",
+        "observed_unit",
+        "causal_status"
+      ],
+      "evidence_status": "DERIVED"
+    },
+    {
+      "name": "structural_metrics",
+      "path": "data/structural_metrics/data.csv",
+      "rows": 2,
+      "fields": [
+        "chain",
+        "chain_id",
+        "layer",
+        "event_count",
+        "self_directed_event_share",
+        "delegated_event_count",
+        "topology_node_count",
+        "topology_edge_count",
+        "directed_reciprocity",
+        "largest_weak_component_share",
+        "weighted_out_degree_hhi",
+        "weighted_in_degree_hhi",
+        "pagerank_hhi",
+        "maximum_pagerank_share",
+        "maximum_k_core",
+        "maximum_core_node_share",
+        "observed_unit",
+        "interpretation_status"
+      ],
+      "evidence_status": "DERIVED"
+    },
+    {
+      "name": "failed_design_estimates",
+      "path": "data/failed_design_estimates/data.csv",
+      "rows": 2,
+      "fields": [
+        "outcome_id",
+        "pre_event_weeks",
+        "post_event_weeks",
+        "post_horizon",
+        "anticipation_weeks_excluded",
+        "event_week_zero_excluded",
+        "arbitrum_pre_mean",
+        "arbitrum_post_mean",
+        "arbitrum_change",
+        "gnosis_pre_mean",
+        "gnosis_post_mean",
+        "gnosis_change",
+        "difference_in_changes_arbitrum_minus_gnosis",
+        "nw_lag",
+        "nw_standard_error",
+        "ci_lower",
+        "ci_upper",
+        "normal_approx_p_value",
+        "causal_status"
+      ],
+      "evidence_status": "FAILED_DESIGN"
+    },
+    {
+      "name": "actor_bounds_change",
+      "path": "data/actor_bounds_change/data.csv",
+      "rows": 1,
+      "fields": [
+        "comparison",
+        "metric",
+        "assumption",
+        "pre_lower",
+        "pre_upper",
+        "post_lower",
+        "post_upper",
+        "change_lower",
+        "change_upper",
+        "sign_identified",
+        "direction",
+        "economic_actor_conclusion_permitted"
+      ],
+      "evidence_status": "BOUNDED"
+    }
+  ]
+}

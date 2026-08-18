@@ -1,6 +1,7 @@
-.PHONY: demo simulation test lint policy-assets verify-real-v2 reproduce-real-v2 verify-real-v3 reproduce-real-v3 real-v3-assets verify-real-v4 verify-real-v4-local reproduce-real-v4 real-v4-assets reproduce-real-v5-candidate real-v5-descriptive real-v5-topology real-v5-core-periphery real-v5-assets real-v5-core-periphery-assets real-v6-gnosis-assets network-glossary real-v5-pilot-did publication-visual-assets paper paper-layout-audit submission clean
+.PHONY: demo simulation test lint release-smoke reproduce-release verify-release-reference policy-assets verify-real-v2 reproduce-real-v2 verify-real-v3 reproduce-real-v3 real-v3-assets verify-real-v4 verify-real-v4-local reproduce-real-v4 real-v4-assets reproduce-real-v5-candidate real-v5-descriptive real-v5-topology real-v5-core-periphery real-v5-assets real-v5-core-periphery-assets real-v6-gnosis-assets network-glossary real-v5-pilot-did publication-visual-assets paper paper-layout-audit submission clean
 
 PYTHON ?= python
+DATASET_ROOT ?= ../aave-bns-data-HF
 
 demo:
 	PYTHONPATH=src $(PYTHON) -m aave_bns.cli demo
@@ -16,6 +17,18 @@ test:
 
 lint:
 	ruff check src tests scripts hf_space
+
+release-smoke:
+	$(PYTHON) scripts/run_release_smoke.py
+
+reproduce-release:
+	$(PYTHON) scripts/reproduce_release.py \
+		--dataset-root $(DATASET_ROOT) \
+		--checksum-scope all \
+		--output-dir outputs/release_review
+
+verify-release-reference:
+	cd release && sha256sum -c reference_results.sha256
 
 verify-real-v2:
 	PYTHONPATH=src $(PYTHON) scripts/verify_real_v2_ethereum.py

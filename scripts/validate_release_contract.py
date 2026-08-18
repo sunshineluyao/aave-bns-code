@@ -13,7 +13,14 @@ ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONTRACT = ROOT / "release" / "release_contract.json"
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
 PRODUCTS = {"data", "code", "paper", "demo"}
-BOUNDARIES = {"address_actor", "hhi_construct", "simulation", "causal", "infrastructure"}
+BOUNDARIES = {
+    "address_actor",
+    "hhi_construct",
+    "hhi_aggregation",
+    "simulation",
+    "causal",
+    "infrastructure",
+}
 
 
 def validate(contract: dict) -> list[str]:
@@ -46,6 +53,16 @@ def validate(contract: dict) -> list[str]:
     for key, value in boundaries.items():
         if not isinstance(value, str) or len(value.strip()) < 20:
             errors.append(f"evidence boundary {key} is missing or non-substantive")
+    gate = contract.get("reproduction_gate", {})
+    for key in ("config", "entrypoint", "reference", "reference_sha256", "smoke_fixture"):
+        if not gate.get(key):
+            errors.append(f"reproduction_gate.{key} is required")
+    if gate.get("reference_sha256") and not re.fullmatch(
+        r"[0-9a-f]{64}", gate["reference_sha256"]
+    ):
+        errors.append("reproduction_gate.reference_sha256 must be a lowercase SHA-256")
+    if contract.get("final_cross_repository_lock") is not None:
+        errors.append("final_cross_repository_lock must remain null until human release approval")
     return errors
 
 

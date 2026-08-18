@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0",
+  "release_family": "Aave-BNS RC8 smoke fixture",
+  "dataset": {
+    "repository": "https://example.invalid/aave-bns-fixture",
+    "candidate_revision": "1111111111111111111111111111111111111111",
+    "locked_revision": null,
+    "package_version": "smoke-1.0",
+    "release_manifest": "metadata/release_manifest.json",
+    "checksum_manifest": "metadata/checksums.sha256"
+  },
+  "required_configs": {
+    "participation_and_concentration_metrics": "DERIVED",
+    "structural_metrics": "DERIVED",
+    "failed_design_estimates": "FAILED_DESIGN",
+    "actor_bounds_change": "BOUNDED"
+  },
+  "transformation_inputs": [
+    "data/participation_and_concentration_metrics/data.csv",
+    "data/structural_metrics/data.csv",
+    "data/failed_design_estimates/data.csv",
+    "data/actor_bounds_change/data.csv"
+  ],
+  "reference": {
+    "results": "tests/fixtures/release_minimal/expected_results.json",
+    "absolute_tolerance": 1e-12
+  },
+  "evidence_boundaries": {
+    "address_actor": "Fixture addresses are not verified people or independent economic actors.",
+    "hhi_construct": "Fixture event-frequency HHI is not capital, liquidity, risk, welfare, or power.",
+    "simulation": "No simulation output is promoted into observed evidence by this fixture.",
+    "causal": "Fixture diagnostics are failed-design arithmetic, not treatment effects.",
+    "infrastructure": "Route-level infrastructure evidence remains blocked in this fixture."
+  },
+  "cross_repository_candidates": {
+    "scientific_truth": "2222222222222222222222222222222222222222",
+    "paper": "3333333333333333333333333333333333333333",
+    "demo": "4444444444444444444444444444444444444444"
+  },
+  "final_cross_repository_lock": null
+}

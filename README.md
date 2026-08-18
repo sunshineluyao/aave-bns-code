@@ -1,6 +1,54 @@
 # Aave BNS: reproducible protocol-network research
 
-This repository supports **“Measuring decentralization in decentralized finance: a reproducible longitudinal Aave protocol-network case study.”** It reproduces the research chain from public-source queries and event registries to transformed network data, network metrics, identification diagnostics, paper-ready LaTeX fragments, editable figures, and an anonymous Springer Nature submission package. The study is framed as a measurement and reproducibility case study; it does not claim that the available benchmark identifies a causal effect of GHO issuance or cross-chain expansion.
+This is the standalone **code product** for the RC8 Aave protocol-network
+study. It contains the transformations, metrics, diagnostics, renderers, and
+tests used by the project. The governed Dataset, paper, and Hugging Face Space
+are maintained in separate repositories; this repository records immutable
+candidate revisions and refuses to call them a final release until the human
+cross-repository lock is completed. The study is a measurement and
+reproducibility case study; the available benchmark does not identify a causal
+effect of GHO issuance or cross-chain expansion.
+
+## RC8 reviewer reproduction path
+
+The shortest evidence-preserving route starts from the canonical Dataset
+package, verifies its checksum and schema manifests, recomputes the released
+reviewer-facing summaries, and compares the result byte-for-byte with the
+committed reference:
+
+```bash
+git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
+git -C aave-bns-data-HF checkout 33e4077acaa0cad82930f5c76cc05d9594ad51ef
+
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-release.lock
+
+python scripts/reproduce_release.py \
+  --dataset-root ../aave-bns-data-HF \
+  --checksum-scope all
+```
+
+Expected deterministic result hash:
+`5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65`.
+The command verifies all checksum-listed Dataset files; checks all 16
+configuration schemas, row counts, and evidence states; recomputes event
+totals, weekly HHI changes, structural snapshots, failed-design diagnostics,
+and actor bounds; and compares the JSON result to
+`release/reference_results.json`. See
+`docs/RELEASE_REPRODUCIBILITY.md` for the transformation ledger,
+troubleshooting, evidence ceiling, and the separate credentialed raw-chain
+workflow.
+
+Run the self-contained fixture without network access:
+
+```bash
+make release-smoke
+```
+
+The smoke gate validates the harness, checksum rejection, reference comparison,
+and failed-design language boundary. It is not a full empirical rerun.
 
 ## Research status
 
@@ -81,6 +129,8 @@ python -m pip install -e '.[query]'
 make demo       # deterministic end-to-end smoke test
 make simulation # deterministic Section 3 mechanism check
 make test       # unit and integration tests
+make release-smoke # standard-library release harness against committed fixture
+make reproduce-release DATASET_ROOT=../aave-bns-data-HF # canonical Dataset -> results
 make verify-real-v4 # offline verification of the partial-identification release
 make reproduce-real-v5-candidate # requires protected ARBITRUM_RPC_URL
 make real-v6-gnosis-assets # render compact audited benchmark assets, no RPC required

@@ -1,0 +1,159 @@
+{
+  "cross_repository_candidates": {
+    "demo": "4444444444444444444444444444444444444444",
+    "paper": "3333333333333333333333333333333333333333",
+    "scientific_truth": "2222222222222222222222222222222222222222"
+  },
+  "dataset": {
+    "candidate_revision": "1111111111111111111111111111111111111111",
+    "locked_revision": null,
+    "package_version": "smoke-1.0",
+    "repository": "https://example.invalid/aave-bns-fixture",
+    "verified_checksum_file_count": 5
+  },
+  "evidence_boundaries": {
+    "address_actor": "Fixture addresses are not verified people or independent economic actors.",
+    "causal": "Fixture diagnostics are failed-design arithmetic, not treatment effects.",
+    "hhi_construct": "Fixture event-frequency HHI is not capital, liquidity, risk, welfare, or power.",
+    "infrastructure": "Route-level infrastructure evidence remains blocked in this fixture.",
+    "simulation": "No simulation output is promoted into observed evidence by this fixture."
+  },
+  "final_cross_repository_lock": null,
+  "inventory": [
+    {
+      "evidence_status": "BOUNDED",
+      "name": "actor_bounds_change",
+      "path": "data/actor_bounds_change/data.csv",
+      "promoted_to_result": true,
+      "rows": 1,
+      "sha256": "ae72a9a47478c84ea6d3d0dfe823dfb8dd32d2d2cb366c95de33f4e893097f46"
+    },
+    {
+      "evidence_status": "FAILED_DESIGN",
+      "name": "failed_design_estimates",
+      "path": "data/failed_design_estimates/data.csv",
+      "promoted_to_result": true,
+      "rows": 2,
+      "sha256": "a93074d31ac6e0bacd31c554220c374075a01018190735d2a81d278e3b7f555c"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "participation_and_concentration_metrics",
+      "path": "data/participation_and_concentration_metrics/data.csv",
+      "promoted_to_result": true,
+      "rows": 6,
+      "sha256": "324caf4ee558a34b3f75d18770476880ae4245ddbc3e757c1cdd178d6dc2f264"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "structural_metrics",
+      "path": "data/structural_metrics/data.csv",
+      "promoted_to_result": true,
+      "rows": 2,
+      "sha256": "5e5f9b19abab3ec09049aaf31fa7b77194fd2cd9a76dc86fb92bdcc3c2830eab"
+    }
+  ],
+  "release_family": "Aave-BNS RC8 smoke fixture",
+  "results": {
+    "all_actions_structural_snapshot": [
+      {
+        "chain": "Arbitrum",
+        "event_count": 150,
+        "evidence_status": "DERIVED",
+        "interpretation_status": "descriptive_noncausal",
+        "maximum_k_core": 4,
+        "observed_unit": "address_role",
+        "pagerank_hhi": "0.04",
+        "topology_edge_count": 25,
+        "topology_node_count": 20,
+        "weighted_in_degree_hhi": "0.2",
+        "weighted_out_degree_hhi": "0.3"
+      },
+      {
+        "chain": "Ethereum",
+        "event_count": 60,
+        "evidence_status": "DERIVED",
+        "interpretation_status": "descriptive_noncausal",
+        "maximum_k_core": 3,
+        "observed_unit": "address_role",
+        "pagerank_hhi": "0.05",
+        "topology_edge_count": 12,
+        "topology_node_count": 10,
+        "weighted_in_degree_hhi": "0.1",
+        "weighted_out_degree_hhi": "0.2"
+      }
+    ],
+    "economic_actor_hhi_change_bound": {
+      "change_lower": "-0.95",
+      "change_upper": "0.9",
+      "comparison": "post_minus_pre",
+      "economic_actor_conclusion_permitted": false,
+      "evidence_status": "BOUNDED",
+      "metric": "hhi",
+      "sign_identified": false
+    },
+    "event_totals": [
+      {
+        "chain": "Arbitrum",
+        "chain_id": "42161",
+        "event_count": 150,
+        "evidence_status": "DERIVED",
+        "observed_unit": "beneficiary_address"
+      },
+      {
+        "chain": "Ethereum",
+        "chain_id": "1",
+        "event_count": 60,
+        "evidence_status": "DERIVED",
+        "observed_unit": "beneficiary_address"
+      }
+    ],
+    "failed_design_horizon_16": [
+      {
+        "causal_status": "diagnostic_not_causal",
+        "ci_lower": "0.0",
+        "ci_upper": "0.4",
+        "difference_in_changes_arbitrum_minus_gnosis": "0.2",
+        "evidence_status": "FAILED_DESIGN",
+        "nw_standard_error": "0.1",
+        "outcome_id": "beneficiary_hhi",
+        "post_horizon": 16
+      },
+      {
+        "causal_status": "diagnostic_not_causal",
+        "ci_lower": "0.1",
+        "ci_upper": "0.9",
+        "difference_in_changes_arbitrum_minus_gnosis": "0.5",
+        "evidence_status": "FAILED_DESIGN",
+        "nw_standard_error": "0.2",
+        "outcome_id": "log_active_beneficiary_addresses",
+        "post_horizon": 16
+      }
+    ],
+    "weekly_beneficiary_hhi": [
+      {
+        "chain": "Arbitrum",
+        "evidence_status": "DERIVED",
+        "interpretation": "weekly event-frequency concentration; descriptive, not causal",
+        "post_mean_beneficiary_hhi": "0.50",
+        "post_weeks": 1,
+        "pre_mean_beneficiary_hhi": "0.25",
+        "pre_weeks": 1,
+        "relative_change": "1",
+        "week_zero_excluded": true
+      },
+      {
+        "chain": "Ethereum",
+        "evidence_status": "DERIVED",
+        "interpretation": "weekly event-frequency concentration; descriptive, not causal",
+        "post_mean_beneficiary_hhi": "0.10",
+        "post_weeks": 1,
+        "pre_mean_beneficiary_hhi": "0.20",
+        "pre_weeks": 1,
+        "relative_change": "-0.5",
+        "week_zero_excluded": true
+      }
+    ]
+  },
+  "schema_version": "1.0"
+}

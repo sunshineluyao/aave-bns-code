@@ -1,0 +1,3 @@
+chain,chain_id,layer,event_count,self_directed_event_share,delegated_event_count,topology_node_count,topology_edge_count,directed_reciprocity,largest_weak_component_share,weighted_out_degree_hhi,weighted_in_degree_hhi,pagerank_hhi,maximum_pagerank_share,maximum_k_core,maximum_core_node_share,observed_unit,interpretation_status
+Ethereum,1,all_actions,60,0.5,30,10,12,0.0,1.0,0.2,0.1,0.05,0.2,3,0.2,address_role,descriptive_noncausal
+Arbitrum,42161,all_actions,150,0.6,60,20,25,0.0,1.0,0.3,0.2,0.04,0.1,4,0.1,address_role,descriptive_noncausal

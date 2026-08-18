@@ -1,0 +1,54 @@
+{
+  "schema_version": "1.0",
+  "release_family": "Aave-BNS RC8",
+  "dataset": {
+    "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+    "pull_request": 1,
+    "candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+    "locked_revision": null,
+    "package_version": "0.1.0-rc8-provisional",
+    "release_manifest": "metadata/release_manifest.json",
+    "checksum_manifest": "metadata/checksums.sha256"
+  },
+  "required_configs": {
+    "observed_protocol_action_counts": "DERIVED",
+    "treatment_event_registry": "OBSERVED",
+    "participation_and_concentration_metrics": "DERIVED",
+    "cross_chain_overlap": "DERIVED",
+    "structural_metrics": "DERIVED",
+    "actor_bounds_period": "BOUNDED",
+    "actor_bounds_change": "BOUNDED",
+    "simulation": "SYNTHETIC",
+    "failed_design_estimates": "FAILED_DESIGN",
+    "failed_design_event_study": "FAILED_DESIGN",
+    "failed_design_placebos": "FAILED_DESIGN",
+    "failed_design_pretrends": "FAILED_DESIGN",
+    "source_audit": "OBSERVED",
+    "metric_registry": "OBSERVED",
+    "infrastructure_evidence_status": "BLOCKED",
+    "future_route_schema": "BLOCKED"
+  },
+  "transformation_inputs": [
+    "data/participation_and_concentration_metrics/data.csv",
+    "data/structural_metrics/data.csv",
+    "data/failed_design_estimates/data.csv",
+    "data/actor_bounds_change/data.csv"
+  ],
+  "reference": {
+    "results": "release/reference_results.json",
+    "absolute_tolerance": 1e-12
+  },
+  "evidence_boundaries": {
+    "address_actor": "Addresses are protocol identifiers, not verified natural persons or independent economic actors.",
+    "hhi_construct": "Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare, or governance power.",
+    "simulation": "Simulation outputs are synthetic and uncalibrated theoretical illustrations.",
+    "causal": "Arbitrum-Gnosis estimates are failed-design diagnostics, not treatment effects.",
+    "infrastructure": "Verified route-level infrastructure dependence remains blocked."
+  },
+  "cross_repository_candidates": {
+    "scientific_truth": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+    "paper": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+    "demo": "de702cffb5307b21fdc03c692775678ac492581d"
+  },
+  "final_cross_repository_lock": null
+}

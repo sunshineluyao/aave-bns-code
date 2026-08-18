@@ -2,7 +2,7 @@
   "release_status": "PROVISIONAL_RC8_CROSS_REPOSITORY_STAGED",
   "source_repository": "https://github.com/sunshineluyao/aave-bns",
   "scientific_truth_source_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
-  "technical_review_fix_commit": "3ea3a0505ef9f091c0fe605cd7fdbcf04f60be6a",
+  "technical_review_fix_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
   "source_pr": 29,
   "standalone_baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
   "scope": [
@@ -13,7 +13,9 @@
     "src",
     "tests",
     "root build and citation files",
-    "cross-repository release validation"
+    "cross-repository release validation",
+    "canonical Dataset-to-results reviewer harness",
+    "deterministic reference result and smoke fixture"
   ],
   "excluded": [
     "paper",
@@ -21,11 +23,17 @@
     "raw logs"
   ],
   "checked_at": "2026-08-18",
-  "clean_room_execution": "BLOCKED_PENDING_RUNNER_OR_GITHUB_ACTIONS_AVAILABILITY",
+  "clean_room_execution": "DATASET_TO_RESULTS_HARNESS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
+  "canonical_dataset_candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+  "paper_candidate_revision": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+  "demo_candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
+  "reference_results_sha256": "5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65",
+  "validation_ceiling": "E4 for the synthetic smoke fixture and deterministic calculations over inspected canonical inputs; no authenticated byte-exact full Dataset clone and no raw-chain clean-room rerun",
   "scientific_boundaries": [
     "address identifiers are not verified people or independent economic actors",
     "failed-design diagnostics are not treatment effects",
     "simulation is synthetic and uncalibrated",
+    "mean-weekly and pooled-period HHI changes are not interchangeable",
     "route-level infrastructure evidence remains blocked"
   ],
   "associated_repositories": {

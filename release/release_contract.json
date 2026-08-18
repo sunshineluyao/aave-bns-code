@@ -6,34 +6,42 @@
   "scientific_truth": {
     "repository": "https://github.com/sunshineluyao/aave-bns",
     "source_pr": 29,
-    "baseline_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
-    "technical_review_fix_commit": "3ea3a0505ef9f091c0fe605cd7fdbcf04f60be6a"
+    "baseline_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+    "technical_review_fix_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
   },
   "products": {
     "data": {
       "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
       "baseline_commit": "4ac33f365a0eaafa7721d525b892d3a056c4bb77",
-      "status": "STAGED_LICENSE_AND_HUB_PUBLICATION_BLOCKED"
+      "candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+      "locked_revision": null,
+      "status": "STAGED_SCHEMA_AND_CHECKSUM_PACKAGE_LICENSE_AND_HUB_PUBLICATION_BLOCKED"
     },
     "code": {
       "repository": "https://github.com/sunshineluyao/aave-bns-code",
       "baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
-      "status": "SOURCE_SNAPSHOT_STAGED_CLEAN_ROOM_EXECUTION_PENDING"
+      "pr_parent_commit": "443e862873f1279395abec4553ab351861010744",
+      "status": "REVIEWER_HARNESS_VALIDATED_FULL_RAW_RERUN_NOT_PERFORMED"
     },
     "paper": {
       "repository": "https://github.com/sunshineluyao/aave-bns-paper",
       "draft_pr": "https://github.com/sunshineluyao/aave-bns-paper/pull/1",
-      "status": "REVIEW_FIX_SOURCE_SYNCHRONIZED_BUILD_PENDING"
+      "candidate_revision": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+      "locked_revision": null,
+      "status": "OVERLEAF_SOURCE_AND_LOCAL_BUILD_PROVENANCE_SYNCHRONIZED"
     },
     "demo": {
       "repository": "https://github.com/sunshineluyao/aave-bns-demo-HF",
       "branch": "agent/rc8-evidence-explorer",
+      "candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
+      "locked_revision": null,
       "status": "RELEASE_AWARE_SOURCE_STAGED_DATASET_PUBLICATION_PENDING"
     }
   },
   "evidence_boundaries": {
     "address_actor": "Addresses are protocol identifiers, not verified natural persons or independent economic actors.",
     "hhi_construct": "Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare, or governance power.",
+    "hhi_aggregation": "Mean-weekly and pooled-period HHI changes are different nonlinear aggregations and are not interchangeable.",
     "simulation": "Synthetic and uncalibrated.",
     "causal": "Arbitrum-Gnosis is a failed-design diagnostic, not a treatment effect.",
     "infrastructure": "Verified route-level infrastructure dependence remains blocked."
@@ -42,9 +50,19 @@
     "author-approved dataset license",
     "canonical Hugging Face namespace and authenticated publishing route",
     "platform-generated Croissant merge and validation",
-    "clean-room standalone code execution",
+    "authenticated clean-room verification from a byte-exact private Dataset clone",
+    "credentialed raw-chain full rerun if required by the final venue or artifact review",
     "clean-room paper compilation and rendered visual QA",
     "production demo pin to an immutable dataset revision",
     "final human approval and immutable cross-product lock"
-  ]
+  ],
+  "reproduction_gate": {
+    "config": "release/reproduction_config.json",
+    "entrypoint": "scripts/reproduce_release.py",
+    "reference": "release/reference_results.json",
+    "reference_sha256": "5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65",
+    "smoke_fixture": "tests/fixtures/release_minimal",
+    "validation_ceiling": "Dataset-to-results harness and inspected canonical inputs; no new raw-chain full rerun"
+  },
+  "final_cross_repository_lock": null
 }

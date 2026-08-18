@@ -1,0 +1,2 @@
+comparison,metric,assumption,pre_lower,pre_upper,post_lower,post_upper,change_lower,change_upper,sign_identified,direction,economic_actor_conclusion_permitted
+post_minus_pre,hhi,evidence,0.1,1.0,0.05,1.0,-0.95,0.9,False,not_identified,False
