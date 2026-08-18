@@ -1,0 +1,99 @@
+schema_version: 1
+status: candidate-single-primary-with-independent-samples
+release_version: real_v5-arbitrum-candidate-v0.1.0
+cohort_id: arbitrum_gho
+
+chain:
+  name: Arbitrum
+  chain_id: 42161
+  primary_rpc:
+    source_id: arbitrum_user_configured_primary
+    environment_variable: ARBITRUM_RPC_URL
+  validation_rpc:
+    source_id: arbitrum_official_rpc
+    url: https://arb1.arbitrum.io/rpc
+    environment_variable: ARBITRUM_VERIFY_RPC_URL
+
+window:
+  calendar: data/metadata/real_v2_event_week_calendar.csv
+  minimum_event_week: -16
+  maximum_event_week: 16
+  timezone: UTC
+  boundary_rule: first-block-with-timestamp-greater-than-or-equal-to-window-start
+
+pool:
+  address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD"
+  registry_repository: https://github.com/aave-dao/aave-address-book
+  registry_commit: a1770e87fd61db02a7725cd9eed3b1d07c3980af
+  registry_path: src/AaveV3Arbitrum.sol
+  registry_source_id: aave_address_book
+  interface_repository: https://github.com/aave/aave-v3-core
+  interface_commit: 782f51917056a53a2c228701058a6c3fb233684a
+  interface_path: contracts/interfaces/IPool.sol
+  interface_source_id: aave_v3_core_interface
+
+gho:
+  underlying_address: "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33"
+  decimals: 18
+
+events:
+  - action: supply
+    signature: Supply(address,address,address,uint256,uint16)
+    topic0: "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61"
+  - action: withdraw
+    signature: Withdraw(address,address,address,uint256)
+    topic0: "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"
+  - action: borrow
+    signature: Borrow(address,address,address,uint256,uint8,uint256,uint16)
+    topic0: "0xb3d084820fb1a9decffb176436bd02558d15fac9b0ddfed8c465bc7359d7dce0"
+  - action: repay
+    signature: Repay(address,address,address,uint256,bool)
+    topic0: "0xa534c8dbe71f871f9f3530e97a74601fea17b426cae02e1c5aee42c96c784051"
+  - action: liquidation
+    signature: LiquidationCall(address,address,address,uint256,uint256,address,bool)
+    topic0: "0xe413a321e8681d831f4dbccbca790d2952b56f977908e45be37335533e005286"
+
+retrieval:
+  maximum_blocks_per_request: 10000
+  initial_blocks_per_log_query: 10000
+  minimum_adaptive_blocks_per_log_query: 10
+  minimum_viable_bulk_blocks_per_query: 2000
+  bulk_log_provider_order:
+    - validation_rpc
+    - primary_rpc
+  bulk_log_probe_widths:
+    - 10000
+    - 2000
+  log_workers: 4
+  maximum_pending_log_chunks: 8
+  progress_every_chunks: 10
+  progress_interval_seconds: 30
+  maximum_runtime_seconds: 9000
+  boundary_workers: 8
+  boundary_seed_seconds_per_block: 1
+  boundary_initial_radius_blocks: 60000000
+  timeout_seconds: 90
+  maximum_attempts: 6
+  validation_sample_count: 4
+  validation_sample_width_blocks: 10
+  raw_chunk_directory: data/raw/real_v5/arbitrum/pool_action_chunks
+  processed_event_path: data/processed/real_v5/arbitrum/aave_v3_pool_actions.csv.gz
+  output_directory: outputs/real_v5/arbitrum
+  comparable_output_directory: outputs/real_v5/ethereum_arbitrum
+
+comparison:
+  ethereum_beneficiary_panel: outputs/real_v4/ethereum/beneficiary_event_panel.csv.gz
+  ethereum_weekly_action_panel: outputs/real_v2/ethereum/weekly_action_panel.csv
+  ethereum_reserve_week_action_panel: outputs/real_v2/ethereum/reserve_week_action_panel.csv
+  ethereum_gho_address: "0x40d16FC0246aD3160ccC09B8D0D3A2cD28aE6c2f"
+  observed_unit: beneficiary_address
+  observed_unit_label: position-holder address
+
+release_gate:
+  independent_provider_samples_required: true
+  causal_estimates_allowed: false
+  entity_level_primary_result_allowed: false
+  interpretation: >-
+    The candidate may publish address-level descriptive panels only after an independently
+    delivered RPC agrees on chain identity, sampled boundaries, Pool bytecode, and sampled
+    logs. It never treats addresses as people and never reports a causal coefficient.

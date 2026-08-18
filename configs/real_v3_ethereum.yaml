@@ -1,0 +1,50 @@
+schema_version: 1
+status: locked-descriptive-annotation-specification
+release_version: real_v3-ethereum-v0.1.0
+
+chain:
+  name: Ethereum
+  chain_id: 1
+  primary_rpc:
+    source_id: ethereum_rpc_mevblocker
+    url: https://rpc.mevblocker.io
+    environment_variable: ETHEREUM_RPC_URL
+  validation_rpc:
+    source_id: ethereum_rpc_blast
+    url: https://eth-mainnet.public.blastapi.io
+    environment_variable: ETHEREUM_VALIDATION_RPC_URL
+
+input:
+  processed_events: data/processed/real_v2/ethereum/aave_v3_pool_actions.csv.gz
+  curated_labels: data/metadata/real_v3_ethereum_curated_labels.csv
+  source_catalog: data/metadata/source_catalog.csv
+
+retrieval:
+  addresses_per_batch: 50
+  workers: 4
+  timeout_seconds: 120
+  maximum_attempts: 5
+  validation_sample_count: 16
+  raw_code_directory: data/raw/real_v3/ethereum/address_code_batches
+
+entity_gate:
+  minimum_confidence: 0.90
+  minimum_unique_address_coverage: 0.50
+  minimum_incidence_coverage: 0.80
+  minimum_economic_actor_incidence_coverage: 0.80
+
+output_directory: outputs/real_v3/ethereum
+
+interpretation:
+  address_type: >-
+    Runtime code is checked at each address's first and last observed blocks. Empty code is
+    reported as code-absent, not interpreted as proof that the address is a natural person.
+  entity_resolution: >-
+    Only primary-source labels at or above the confidence gate may merge addresses. Every
+    unresolved address remains separate in the curated sensitivity specification.
+  infrastructure_family: >-
+    Equal runtime-code hashes measure shared technical templates only. They are never used
+    as evidence of common ownership or a common economic actor.
+  release_status: >-
+    This layer is descriptive and fails closed: it produces no primary entity-level result
+    and no causal estimate unless all later source, label, treatment, and analysis locks pass.

@@ -1,0 +1,74 @@
+schema_version: 1
+status: locked-partial-identification-specification
+release_version: real_v4-ethereum-v0.1.0
+
+chain:
+  name: Ethereum
+  chain_id: 1
+
+event:
+  event_id: ethereum_gho_policy
+  activation_block: 17699249
+  activation_utc: "2023-07-15T14:02:59Z"
+  public_changelog_date: "2023-07-16"
+  timing_rule: >-
+    The on-chain governance execution is the treatment clock. The following day's Aave
+    changelog is a public-announcement record and never replaces the execution timestamp.
+
+input:
+  processed_events: data/processed/real_v2/ethereum/aave_v3_pool_actions.csv.gz
+  address_registry: outputs/real_v3/ethereum/address_registry.csv.gz
+  actor_constraints: data/metadata/real_v4_ethereum_actor_constraints.csv
+  source_catalog: data/metadata/source_catalog.csv
+  event_source_audit: data/metadata/event_source_audit.csv
+  event_week_calendar: data/metadata/real_v2_event_week_calendar.csv
+
+measurement:
+  observed_unit: beneficiary_address
+  observed_unit_label: position-holder address
+  minimum_event_week: -16
+  maximum_event_week: 16
+  periods:
+    - name: pre
+      minimum_event_week: -16
+      maximum_event_week: -1
+    - name: week_0
+      minimum_event_week: 0
+      maximum_event_week: 0
+    - name: post
+      minimum_event_week: 1
+      maximum_event_week: 16
+    - name: full
+      minimum_event_week: -16
+      maximum_event_week: 16
+  assumptions:
+    event_split: >-
+      The same address may represent different underlying actors across incidences. The
+      sharp logical HHI set is [1/N, 1].
+    stable_single_controller_address: >-
+      Each address maps to one controller within the reported group, while a controller may
+      operate multiple addresses. The sharp HHI set is [address HHI, 1].
+    evidence_constrained_partition: >-
+      Only primary-source, high-confidence economic-actor must-link constraints that cover
+      the complete reported block interval may merge addresses. No behavioral heuristic,
+      shared bytecode, or transaction similarity is accepted as ownership evidence.
+
+constraint_gate:
+  allowed_relation: must_link
+  required_entity_scope: economic_actor
+  required_review_status: primary_source_verified
+  minimum_confidence: 0.90
+
+output_directory: outputs/real_v4/ethereum
+
+interpretation:
+  beneficiary_address: >-
+    The beneficiary is the Aave position-holder field: onBehalfOf for Supply and Borrow,
+    and user for Withdraw, Repay, and LiquidationCall. It is an observable address, not a
+    natural person or verified economic actor.
+  bounds: >-
+    Identified sets are assumption-indexed logical bounds, not point estimates or confidence
+    intervals. A wide set is an empirical result about the limits of public-chain evidence.
+  release_status: >-
+    This release may report address-proxy patterns and actor identified sets. It produces no
+    primary entity-level result and no causal estimate.

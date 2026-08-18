@@ -1,0 +1,19 @@
+assets:
+  AAVE:
+    chain: ethereum
+    chain_id: 1
+    address: "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9"
+    decimals: 18
+    verification_source: "https://github.com/bgd-labs/how-to-delegate-aave"
+    verification_status: verified
+  GHO:
+    chain: ethereum
+    chain_id: 1
+    address: "0x40d16fc0246ad3160ccc09b8d0d3a2cd28ae6c2f"
+    decimals: 18
+    verification_source: "https://github.com/aave-dao/aave-address-book"
+    verification_status: verified
+
+cross_chain:
+  note: "Destination-chain token and facilitator addresses must be resolved from a pinned Aave Address Book release before full extraction."
+  verification_status: pending_release_pin

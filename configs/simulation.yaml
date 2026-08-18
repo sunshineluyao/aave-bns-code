@@ -1,0 +1,39 @@
+simulation:
+  seed: 20260801
+  n_agents: 240
+  outside_option: 0.50
+  activity_threshold: 0.02
+  base_link_probability: 0.045
+  cross_venue_link_factor: 0.20
+  gho_access_gain: 0.20
+  cross_chain_access_gain: 0.05
+  bridge_private_cost: 0.06
+  structural_alpha: 0.70
+  beta_grid:
+    - 0.10
+    - 0.30
+    - 0.50
+    - 0.70
+  reference_beta: 0.50
+
+scenarios:
+  - id: ethereum_aave
+    label: Ethereum / pre-GHO benchmark
+    gho: false
+    cross_chain: false
+    routes: 0
+  - id: ethereum_gho
+    label: Ethereum + GHO
+    gho: true
+    cross_chain: false
+    routes: 0
+  - id: crosschain_single
+    label: Cross-chain GHO / one route
+    gho: true
+    cross_chain: true
+    routes: 1
+  - id: crosschain_redundant
+    label: Cross-chain GHO / two routes
+    gho: true
+    cross_chain: true
+    routes: 2

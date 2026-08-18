@@ -1,0 +1,24 @@
+project:
+  name: aave-bns
+  paper_title: "Is decentralized finance actually decentralized? A social network analysis of the Aave protocol on the Ethereum blockchain"
+
+analysis:
+  period: W-SUN
+  network_levels:
+    - address
+    - entity
+  primary_outcomes:
+    - effective_entities
+    - activity_hhi
+    - giant_component_ratio
+    - core_share
+    - bridge_dependency
+  demo_treatment_id: gho_arbitrum_activation_2024
+
+query:
+  source_id: ethereum_bigquery_token_transfers
+  start_date: "2020-10-10"
+  end_date: "2026-07-31"
+  assets:
+    - AAVE
+    - GHO

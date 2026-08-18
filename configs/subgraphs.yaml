@@ -1,0 +1,81 @@
+schema_version: 2
+source:
+  provider: the_graph
+  owner: aave
+  repository: https://github.com/aave/protocol-subgraphs
+  authority: future_independent_validation_only
+  completed: false
+  latest_gateway_template: https://gateway.thegraph.com/api/{api_key}/subgraphs/id/{subgraph_id}
+  pinned_deployment_gateway_template: https://gateway.thegraph.com/api/{api_key}/deployments/id/{deployment_id}
+  last_reviewed: "2026-08-11"
+  notes: >-
+    Raw consensus RPC logs are authoritative for every reported event, policy clock, and
+    outcome. Official Aave Subgraphs are a pre-specified future reconciliation layer.
+    The advertised subgraph IDs below may resolve to mutable latest deployments; they do
+    not become pinned evidence until deployment_id, repository commit, mapping hashes,
+    schema hash, indexed-block gate, query hash, and response hash are recorded.
+
+validation_protocol:
+  completed: false
+  required_before_execution:
+    - repository_commit
+    - schema_sha256
+    - mapping_sha256
+    - deployment_id
+    - indexed_block_at_or_beyond_requested_end
+    - no_indexing_error
+  canonical_join_key:
+    - chain_id
+    - block_number
+    - transaction_hash
+    - log_index
+  compared_fields:
+    - event_name
+    - pool_emitter
+    - reserve_address
+    - action_side_address
+    - position_holder_address
+    - raw_integer_amount
+  outputs:
+    - unmatched_event_keys
+    - field_level_differences
+    - weekly_action_count_differences
+    - weekly_position_holder_metric_differences
+    - retrieval_manifest
+
+deployments:
+  ethereum_v3:
+    chain_id: 1
+    subgraph_id: Cd2gEDVeqnjBn1hSeqFMitw8Q1iiyV9FYUZkLNRcL87g
+    deployment_id: null
+    role: historical_anchor
+  ethereum_v3_gho:
+    chain_id: 1
+    subgraph_id: BQN5t5Mgti3BNLsZYEiL1MtiBJLa1DQJnaquXR1zTBjn
+    deployment_id: null
+    role: gho_issuance_sidecar
+  arbitrum_v3:
+    chain_id: 42161
+    subgraph_id: DLuE98kEb5pQNXAcKFQGQgfSQ57Xdou4jnVbAEqMfy3B
+    deployment_id: null
+    role: first_cross_chain_gho_treatment
+  base_v3:
+    chain_id: 8453
+    subgraph_id: GQFbb95cE6d8mV989mL5figjaGaKCQB3xqYrr1bRyXqF
+    deployment_id: null
+    role: candidate_later_cohort
+  avalanche_v3:
+    chain_id: 43114
+    subgraph_id: 2h9woxy8RTjHu1HJsCEnmzpPHFArU33avmUh4f71JpVn
+    deployment_id: null
+    role: candidate_later_cohort
+  gnosis_v3:
+    chain_id: 100
+    subgraph_id: HtcDaL8L8iZ2KQNNS44EBVmLruzxuNAz1RkBYdui1QUT
+    deployment_id: null
+    role: audited_rpc_donor_future_cross_check
+
+treatment_rule: >-
+  Listing a Subgraph or deployment does not establish treatment. Treatment requires an
+  executed governance payload, verified activation block, and nontrivial observed economic
+  activity in authoritative raw RPC records.

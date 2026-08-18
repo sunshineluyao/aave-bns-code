@@ -1,0 +1,27 @@
+{
+  "release_status": "PROVISIONAL_RC8",
+  "source_repository": "https://github.com/sunshineluyao/aave-bns",
+  "source_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
+  "source_pr": 29,
+  "scope": [
+    "analysis",
+    "configs",
+    "queries",
+    "scripts",
+    "src",
+    "tests",
+    "root build and citation files"
+  ],
+  "excluded": [
+    "paper",
+    "large empirical payloads published separately through Dataset release",
+    "raw logs"
+  ],
+  "copied_at": "2026-08-18",
+  "scientific_boundaries": [
+    "address != natural person != independent economic actor",
+    "failed-design diagnostics are not treatment effects",
+    "simulation is synthetic and uncalibrated",
+    "route-level infrastructure evidence remains blocked"
+  ]
+}

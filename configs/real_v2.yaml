@@ -1,0 +1,75 @@
+schema_version: 1
+status: preregistration-lock-draft
+source_event_ledger: data/metadata/event_source_audit.csv
+
+analysis:
+  observation_unit: chain-market-action-layer-event-week
+  timezone: UTC
+  window:
+    pre_weeks: 16
+    post_weeks: 16
+    include_event_week: true
+  treatment_clock:
+    primary: governance-controlled market activation block
+    anticipation: official forum or ARFC publication
+    readiness_covariate: technical deployment or CCIP configuration
+    implementation_check: first verified user action
+  action_layers:
+    - supply
+    - withdraw
+    - borrow
+    - repay
+    - liquidation
+    - transfer
+    - bridge
+  primary_outcomes:
+    participation: effective_active_entities
+    concentration: adjusted_activity_hhi
+    structure: core_activity_share
+    infrastructure: bridge_route_concentration
+  estimators:
+    ethereum: saturated-triple-difference-or-synthetic-control-after-pre-fit-gate
+    cross_chain: group-time-did-with-not-yet-treated-controls
+  safeguards:
+    - no invented GHO pre-period
+    - no first-user transaction as treatment
+    - no post-treatment entity labels in baseline controls
+    - no causal estimate before source-label-treatment-and-analysis locks pass
+
+cohorts:
+  - cohort_id: ethereum_gho
+    chain: Ethereum
+    chain_id: 1
+    event_id: ethereum_gho_policy
+    activation_utc: "2023-07-15T14:02:59Z"
+    activation_block: 17699249
+  - cohort_id: arbitrum_gho
+    chain: Arbitrum
+    chain_id: 42161
+    event_id: arbitrum_gho_policy
+    activation_utc: "2024-07-02T15:40:32Z"
+    activation_block: 228027379
+  - cohort_id: base_gho
+    chain: Base
+    chain_id: 8453
+    event_id: base_gho_policy
+    activation_utc: "2025-02-10T16:19:31Z"
+    activation_block: 26207512
+  - cohort_id: avalanche_gho
+    chain: Avalanche
+    chain_id: 43114
+    event_id: avalanche_gho_policy
+    activation_utc: "2025-06-25T21:06:11Z"
+    activation_block: 64466944
+  - cohort_id: gnosis_gho
+    chain: Gnosis
+    chain_id: 100
+    event_id: gnosis_gho_policy
+    activation_utc: "2025-08-05T17:18:10Z"
+    activation_block: 41454924
+  - cohort_id: mantle_gho
+    chain: Mantle
+    chain_id: 5000
+    event_id: mantle_gho_policy
+    activation_utc: "2026-02-11T10:10:50Z"
+    activation_block: 91337169

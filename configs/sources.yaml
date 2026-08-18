@@ -1,0 +1,31 @@
+sources:
+  ethereum_bigquery_token_transfers:
+    provider: google_bigquery_public_data
+    table: bigquery-public-data.crypto_ethereum.token_transfers
+    schema_url: https://console.cloud.google.com/marketplace/product/ethereum/crypto-ethereum-blockchain
+    expected_fields:
+      - token_address
+      - from_address
+      - to_address
+      - value
+      - transaction_hash
+      - log_index
+      - block_timestamp
+      - block_number
+    last_schema_reviewed: "2026-08-01"
+    notes: >-
+      Public dataset schemas and access policies can change. The query adapter validates
+      required fields before materializing any research partition.
+  evm_json_rpc_logs:
+    provider: evm_json_rpc
+    method: eth_getLogs
+    standard: JSON-RPC 2.0
+    notes: >-
+      Used for chain-specific contract logs where a public warehouse is unavailable.
+      Every extraction must pin chain ID, contract address, event topic, and block range.
+  aave_governance:
+    provider: official_governance_forum_and_onchain_execution
+    base_url: https://governance.aave.com/
+    notes: >-
+      Forum posts motivate events but do not by themselves establish treatment. Activation
+      dates must be verified against executed governance payloads and/or on-chain events.

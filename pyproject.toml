@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aave-bns"
+version = "0.1.0"
+description = "Reproducible protocol-network research pipeline for the longitudinal Aave decentralization study"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+  {name = "Ziqiao Ao"},
+  {name = "Lin William Cong"},
+  {name = "Gergely Horvath"},
+  {name = "Luyao Zhang"}
+]
+dependencies = [
+  "numpy>=1.26,<3",
+  "pandas>=2.1,<3",
+  "networkx>=3.2,<4",
+  "PyYAML>=6.0,<7",
+  "requests>=2.31,<3"
+]
+
+[project.optional-dependencies]
+dev = [
+  "PyMuPDF>=1.24,<2",
+  "pytest>=8,<9",
+  "ruff>=0.8,<1"
+]
+query = [
+  "google-cloud-bigquery>=3.25,<4",
+  "db-dtypes>=1.3,<2"
+]
+space = [
+  "gradio>=5,<7",
+  "plotly>=5,<7"
+]
+
+[project.scripts]
+aave-bns = "aave_bns.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

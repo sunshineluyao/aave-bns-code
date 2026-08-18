@@ -1,0 +1,41 @@
+schema_version: 1
+release_version: causal-v2-design-2026-08-08
+freeze_date: "2026-08-08"
+primary_estimand: formal_commitment_group_time_att
+secondary_estimand: operational_activation_incremental_att
+unit: chain_reserve_action_week
+cluster_unit: chain
+event_windows: [8, 12, 16, 24]
+primary_outcomes:
+  - log1p_active_position_holder_addresses
+  - beneficiary_event_hhi
+robustness_outcomes:
+  - normalized_beneficiary_event_hhi
+  - top_1pct_share
+  - normalized_entropy
+inference:
+  - chain_clustered_standard_errors_supplementary
+  - wild_cluster_bootstrap
+  - admissible_date_permutation
+  - leave_one_chain_out
+  - equal_chain_weighting
+claim_gates:
+  minimum_treated_cohorts: 3
+  minimum_contemporaneous_donors: 2
+  require_joint_pretrend_gate: true
+  require_placebo_gate: true
+  require_leave_one_chain_out_sign_stability: true
+  require_permutation_p_below: 0.10
+bridge:
+  provider: chainlink_ccip
+  require_historical_contract_versioning: true
+  require_source_destination_message_pairing: true
+  require_continuous_inclusive_coverage: true
+  minimum_verified_routes_for_route_hhi: 2
+  metrics:
+    - bridge_reliance
+    - route_hhi
+    - normalized_route_hhi
+    - dominant_source_share
+    - route_removal_loss
+

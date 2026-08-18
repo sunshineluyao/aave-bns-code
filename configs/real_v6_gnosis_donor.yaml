@@ -1,0 +1,94 @@
+schema_version: 1
+status: common-calendar-donor-diagnostic
+release_version: real_v6-gnosis-donor-mvp-v0.1.0
+
+design:
+  treated_chain: Arbitrum
+  treated_chain_id: 42161
+  treated_cohort_id: arbitrum_gho
+  treatment_utc: "2024-07-02T15:40:32Z"
+  anticipation_utc: "2024-05-08T00:00:00Z"
+  calendar: data/metadata/real_v2_event_week_calendar.csv
+  minimum_event_week: -16
+  maximum_event_week: 16
+  clean_pre_minimum_event_week: -16
+  clean_pre_maximum_event_week: -9
+  anticipation_minimum_event_week: -8
+  anticipation_maximum_event_week: -1
+  post_minimum_event_week: 1
+  post_maximum_event_week: 16
+  event_week_zero_excluded: true
+  causal_estimates_allowed: false
+
+donor:
+  chain: Gnosis
+  chain_id: 100
+  cohort_id: arbitrum_gho_gnosis_donor
+  market_available_by_utc: "2023-11-07T00:00:00Z"
+  own_anticipation_utc: "2025-03-13T00:00:00Z"
+  pool_address: "0xb50201558B00496A145fE76f7424749556E326D8"
+  anchor_block: 41454924
+  anchor_utc: "2025-08-05T17:18:10Z"
+  registry_repository: https://github.com/aave-dao/aave-address-book
+  registry_commit: 4a7ebc4c3ab30280ad7c64aaacb66bb74cebf290
+  registry_path: src/AaveV3Gnosis.sol
+
+providers:
+  primary:
+    source_id: gnosis_user_configured_primary
+    environment_variable: GNOSIS_RPC_URL
+  bulk:
+    source_id: gnosis_official_public_rpc
+    url: https://rpc.gnosischain.com
+  log_crosscheck:
+    source_id: gnosis_gateway_fm_public_rpc
+    url: https://rpc.gnosis.gateway.fm
+
+retrieval:
+  timeout_seconds: 90
+  maximum_attempts: 6
+  maximum_blocks_per_cache_chunk: 10000
+  blocks_per_log_query: 2000
+  minimum_adaptive_blocks_per_log_query: 100
+  log_workers: 2
+  maximum_pending_log_chunks: 4
+  minimum_request_start_interval_seconds: 0.5
+  rate_limit_cooldown_seconds: 65
+  maximum_rate_limit_cooldowns: 8
+  progress_every_chunks: 10
+  progress_interval_seconds: 30
+  maximum_runtime_seconds: 6900
+  boundary_workers: 6
+  boundary_seed_seconds_per_block: 5
+  boundary_initial_radius_blocks: 1000000
+  validation_sample_count: 4
+  validation_sample_width_blocks: 10
+  raw_chunk_directory: data/raw/real_v6/gnosis_donor/pool_action_chunks
+  processed_event_path: data/processed/real_v6/gnosis_donor/aave_v3_pool_actions.csv.gz
+  output_directory: outputs/real_v6/gnosis_donor
+
+analysis:
+  arbitrum_weekly_metrics: outputs/real_v5/descriptive/weekly_address_metrics.csv
+  output_directory: outputs/real_v6/arbitrum_gnosis_did_mvp
+  outcomes:
+    - log_active_beneficiary_addresses
+    - beneficiary_hhi
+  primary_post_horizon: 16
+  sensitivity_post_horizons: [8, 12, 16]
+  newey_west_lag: 3
+  pretrend_newey_west_lag: 2
+  placebo_event_weeks: [-13, -12, -11]
+  placebo_half_window: 2
+
+release_gate:
+  independent_boundary_samples_required: true
+  independent_log_samples_required: true
+  causal_estimates_allowed: false
+  observed_unit: beneficiary_address
+  observed_unit_label: position-holder address
+  interpretation: >-
+    This release may report an Arbitrum-versus-Gnosis common-calendar
+    difference-in-changes diagnostic only after independent block, bytecode, and sampled
+    log checks pass. One treated chain and one donor chain cannot support chain-cluster
+    causal inference, and beneficiary addresses are not verified people or economic actors.
+

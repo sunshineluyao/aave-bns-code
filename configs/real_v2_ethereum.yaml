@@ -1,0 +1,81 @@
+schema_version: 1
+status: locked-extraction-specification
+cohort_id: ethereum_gho
+chain:
+  name: Ethereum
+  chain_id: 1
+  primary_rpc:
+    source_id: ethereum_rpc_mevblocker
+    url: https://rpc.mevblocker.io
+    environment_variable: ETHEREUM_RPC_URL
+  validation_rpc:
+    source_id: ethereum_rpc_blast
+    url: https://eth-mainnet.public.blastapi.io
+    environment_variable: ETHEREUM_VALIDATION_RPC_URL
+  contract_validation_rpc:
+    source_id: ethereum_rpc_nodies
+    url: https://eth-pokt.nodies.app
+    environment_variable: ETHEREUM_CONTRACT_RPC_URL
+
+window:
+  calendar: data/metadata/real_v2_event_week_calendar.csv
+  minimum_event_week: -16
+  maximum_event_week: 16
+  timezone: UTC
+  boundary_rule: first-block-with-timestamp-greater-than-or-equal-to-window-start
+
+pool:
+  address: "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2"
+  registry_repository: https://github.com/aave-dao/aave-address-book
+  registry_commit: a1770e87fd61db02a7725cd9eed3b1d07c3980af
+  registry_path: src/AaveV3Ethereum.sol
+  registry_source_id: aave_address_book
+  interface_repository: https://github.com/aave/aave-v3-core
+  interface_commit: 782f51917056a53a2c228701058a6c3fb233684a
+  interface_path: contracts/interfaces/IPool.sol
+  interface_source_id: aave_v3_core_interface
+
+events:
+  - action: supply
+    signature: Supply(address,address,address,uint256,uint16)
+    topic0: "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61"
+  - action: withdraw
+    signature: Withdraw(address,address,address,uint256)
+    topic0: "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7"
+  - action: borrow
+    signature: Borrow(address,address,address,uint256,uint8,uint256,uint16)
+    topic0: "0xb3d084820fb1a9decffb176436bd02558d15fac9b0ddfed8c465bc7359d7dce0"
+  - action: repay
+    signature: Repay(address,address,address,uint256,bool)
+    topic0: "0xa534c8dbe71f871f9f3530e97a74601fea17b426cae02e1c5aee42c96c784051"
+  - action: liquidation
+    signature: LiquidationCall(address,address,address,uint256,uint256,address,bool)
+    topic0: "0xe413a321e8681d831f4dbccbca790d2952b56f977908e45be37335533e005286"
+
+retrieval:
+  maximum_blocks_per_request: 10000
+  minimum_blocks_per_request: 10
+  log_workers: 4
+  boundary_workers: 8
+  boundary_seed_seconds_per_block: 12
+  boundary_initial_radius_blocks: 20000
+  timeout_seconds: 60
+  maximum_attempts: 4
+  validation_sample_count: 4
+  validation_sample_width_blocks: 10
+  raw_chunk_directory: data/raw/real_v2/ethereum/pool_action_chunks
+  processed_event_path: data/processed/real_v2/ethereum/aave_v3_pool_actions.csv.gz
+  output_directory: outputs/real_v2/ethereum
+
+measurement:
+  address_roles:
+    - actor_address
+    - beneficiary_address
+    - counterparty_address
+  primary_interim_weight: unique address-event incidence count
+  amount_policy: >-
+    Preserve integer raw amounts by reserve. Never aggregate token-native amounts across
+    reserve addresses and never label token-native units as USD.
+  interpretation: >-
+    Address-level measures are an auditable interim layer, not the preregistered
+    entity-level causal outcomes. No causal estimate is produced by this extractor.

@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software or data pipeline, please cite the associated paper and this repository."
+title: "Aave BNS: Reproducible Protocol-Network Research Pipeline"
+type: software
+version: 0.1.0
+date-released: 2026-08-01
+url: "https://github.com/sunshineluyao/aave-bns"
+authors:
+  - family-names: Ao
+    given-names: Ziqiao
+  - family-names: Cong
+    given-names: Lin William
+  - family-names: Horvath
+    given-names: Gergely
+  - family-names: Zhang
+    given-names: Luyao
+preferred-citation:
+  type: article
+  title: "Is decentralized finance actually decentralized? A social network analysis of the Aave protocol on the Ethereum blockchain"
+  authors:
+    - family-names: Ao
+      given-names: Ziqiao
+    - family-names: Cong
+      given-names: Lin William
+    - family-names: Horvath
+      given-names: Gergely
+    - family-names: Zhang
+      given-names: Luyao
+  year: 2023
+  doi: "10.48550/arXiv.2206.08401"
+  notes: "This DOI identifies the original Ethereum-focused version. The repository also contains the complete evidence-bounded longitudinal Aave, GHO, and cross-chain manuscript."

@@ -1,0 +1,314 @@
+#!/usr/bin/env python3
+"""Render the canonical network-measure glossary into LaTeX and Markdown."""
+from __future__ import annotations
+
+import csv
+import re
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE = ROOT / "data/metadata/network_measure_glossary.csv"
+TABLE = ROOT / "paper/tables/tabA_network_measure_glossary.tex"
+DOCUMENT = ROOT / "docs/NETWORK_MEASURE_GLOSSARY.md"
+
+DIMENSIONS = ("Participation", "Transaction", "Structural", "Infrastructure")
+REQUIRED_COLUMNS = {
+    "measure_id",
+    "dimension",
+    "indicator",
+    "legacy_alias",
+    "symbol",
+    "formula_latex",
+    "text_definition",
+    "direction",
+    "unit",
+    "evidence_status",
+    "data_available",
+    "data_path",
+    "visualization_available",
+    "visualization_path",
+    "reference_keys",
+}
+
+FIGURE_REFERENCES = {
+    "paper/figures/fig03b_simulation_outcomes.tex": "Fig.~\\ref{fig:simulation-outcomes}",
+    "paper/figures/fig04_real_v4_partial_identification.tex": (
+        "Fig.~\\ref{fig:real-v4-partial-identification}"
+    ),
+    "paper/figures/fig05_real_v5_cross_chain.tex": "Fig.~\\ref{fig:real-v5-cross-chain}",
+    "paper/figures/fig06_real_v5_core_periphery.tex": (
+        "Fig.~\\ref{fig:real-v5-core-periphery}"
+    ),
+}
+
+
+def read_rows() -> list[dict[str, str]]:
+    with SOURCE.open(newline="", encoding="utf-8") as stream:
+        reader = csv.DictReader(stream)
+        if set(reader.fieldnames or ()) != REQUIRED_COLUMNS:
+            raise ValueError("network-measure glossary schema drift")
+        rows = list(reader)
+    identifiers = [row["measure_id"] for row in rows]
+    if len(identifiers) != len(set(identifiers)):
+        raise ValueError("network-measure glossary contains duplicate measure_id values")
+    if set(row["dimension"] for row in rows) != set(DIMENSIONS):
+        raise ValueError("network-measure glossary must cover all four dimensions")
+    bibliography = (ROOT / "paper/references.bib").read_text(encoding="utf-8")
+    known_keys = set(re.findall(r"@\w+\{([^,]+),", bibliography))
+    cited_keys = {
+        key
+        for row in rows
+        for key in row["reference_keys"].split(";")
+        if key
+    }
+    missing = sorted(cited_keys - known_keys)
+    if missing:
+        raise ValueError(f"glossary cites missing bibliography keys: {missing}")
+    return rows
+
+
+def tex_escape(value: str) -> str:
+    replacements = {
+        "\\": r"\textbackslash{}",
+        "&": r"\&",
+        "%": r"\%",
+        "$": r"\$",
+        "#": r"\#",
+        "_": r"\_",
+        "{": r"\{",
+        "}": r"\}",
+        "~": r"\textasciitilde{}",
+    }
+    return "".join(replacements.get(character, character) for character in value)
+
+
+def breakable_alias(value: str) -> str:
+    """Escape legacy labels while allowing line breaks at field separators."""
+    escaped = tex_escape(value)
+    return escaped.replace(r"\_", r"\_\allowbreak{}").replace(" / ", r" /\allowbreak{} ")
+
+
+def evidence_tag(status: str) -> str:
+    if "synthetic" in status and "blocked" in status:
+        return r"\AVSyntheticTag\newline\AVBlockedTag"
+    if status.startswith("observed") or status in {"partly_observed"}:
+        return r"\AVObservedTag"
+    if "synthetic" in status:
+        return r"\AVSyntheticTag"
+    if "blocked" in status:
+        return r"\AVBlockedTag"
+    if status in {"legacy_benchmark", "planned_not_reported"}:
+        return r"\AVPendingTag"
+    return r"\AVDiagnosticTag"
+
+
+def data_label(row: dict[str, str]) -> str:
+    value = row["data_available"]
+    if value == "yes":
+        return "committed data"
+    if value == "yes_derived":
+        return "committed; derived"
+    if value == "yes_for_giant_share":
+        return "giant share committed"
+    if value == "synthetic":
+        return "synthetic data"
+    if value == "synthetic_only":
+        return "synthetic data only"
+    if "route_event" in value:
+        return "no verified route table"
+    if value.startswith("no_"):
+        return "no governed output"
+    if value.startswith("derivable"):
+        return "derivable; not governed"
+    return tex_escape(value.replace("_", " "))
+
+
+def visualization_label(row: dict[str, str]) -> str:
+    if not row["visualization_path"]:
+        return "no standalone visual"
+    references = [
+        FIGURE_REFERENCES.get(path, r"\path{" + tex_escape(path) + "}")
+        for path in row["visualization_path"].split(";")
+    ]
+    qualifier = " (synthetic)" if "synthetic" in row["visualization_available"] else ""
+    return ", ".join(references) + qualifier
+
+
+def citation(keys: str) -> str:
+    return r"\cite{" + ",".join(keys.split(";")) + "}"
+
+
+def formula_cell(value: str) -> str:
+    """Format compact notation at the final table size without geometric scaling."""
+    rows = value.replace(r";\quad", r"\\[-1pt]")
+    return r"\(\displaystyle\begin{gathered}" + rows + r"\end{gathered}\)"
+
+
+def render_table(rows: list[dict[str, str]]) -> str:
+    lines = [
+        "% Generated by scripts/render_network_measure_glossary.py; do not edit by hand.",
+        r"\clearpage",
+        r"\suspendrefereelines",
+        r"\begingroup",
+        r"\setstretch{1.02}",
+        r"\AVTableSetup",
+        r"\setlength{\tabcolsep}{3pt}",
+        r"\setlength{\LTleft}{0pt}",
+        r"\setlength{\LTright}{0pt}",
+        r"\renewcommand{\arraystretch}{1.16}",
+        r"\begin{longtable}{>{\raggedright\arraybackslash}p{0.235\linewidth}"
+        r">{\raggedright\arraybackslash}p{0.27\linewidth}"
+        r">{\raggedright\arraybackslash}p{0.425\linewidth}}",
+        r"\caption{Network-measure glossary: formulas, interpretation, "
+        r"evidence, and visualization coverage.}",
+        r"\label{tab:network-measure-glossary}\\",
+        r"\toprule",
+        r"\AVTableHeader",
+        r"\textbf{Measure} & \textbf{Notation} & "
+        r"\textbf{Interpretation, evidence, and source} \\",
+        r"\midrule",
+        r"\endfirsthead",
+        r"\multicolumn{3}{c}{\tablename\ \thetable\ (continued)}\\",
+        r"\toprule",
+        r"\AVTableHeader",
+        r"\textbf{Measure} & \textbf{Notation} & "
+        r"\textbf{Interpretation, evidence, and source} \\",
+        r"\midrule",
+        r"\endhead",
+        r"\midrule",
+        r"\multicolumn{3}{r}{Continued on next page}\\",
+        r"\endfoot",
+        r"\bottomrule",
+        r"\endlastfoot",
+    ]
+    for dimension in DIMENSIONS:
+        lines.extend(
+            [
+                r"\AVTableSubheader",
+                rf"\multicolumn{{3}}{{l}}{{\textbf{{{dimension} decentralization}}}} \\",
+            ]
+        )
+        for row in (item for item in rows if item["dimension"] == dimension):
+            legacy = ""
+            if row["legacy_alias"]:
+                legacy = (
+                    r"\par\vspace{1pt}\AVTableMeta{Legacy/field: "
+                    + breakable_alias(row["legacy_alias"])
+                    + "}"
+                )
+            indicator_text = tex_escape(row["indicator"]).replace(
+                "infrastructure-", r"infrastructure\allowbreak-"
+            )
+            indicator = r"\textbf{" + indicator_text + "}" + legacy
+            formula = formula_cell(row["formula_latex"])
+            definition = (
+                tex_escape(row["text_definition"])
+                + r" \emph{Direction:} "
+                + tex_escape(row["direction"])
+                + r" \par\vspace{1pt}\AVTableMeta{Unit: "
+                + tex_escape(row["unit"])
+                + "}"
+            )
+            evidence = (
+                evidence_tag(row["evidence_status"])
+                + "; "
+                + data_label(row)
+                + "; "
+                + visualization_label(row)
+            )
+            lines.append(
+                f"{indicator} & {formula} & {definition} "
+                rf"\par\vspace{{1pt}}{evidence}; {citation(row['reference_keys'])} \\\\"
+            )
+        lines.append(r"\addlinespace[2pt]")
+    lines.extend(
+        [
+            r"\end{longtable}",
+            r"\noindent\begin{minipage}{0.98\linewidth}",
+            r"\AVTableNoteFont\emph{Notes:} The glossary is generated from the canonical "
+            r"network-measure CSV. ``Observed'' means a "
+            r"committed empirical output at the stated address or address-role unit; it does "
+            r"not open an economic-actor or causal claim. ``Synthetic'' denotes the mechanism "
+            r"simulation only. ``Pending'' includes original-paper benchmarks that are "
+            r"derivable from the locked event rows but are not governed outputs in this release. "
+            r"``Blocked'' means the necessary verified entity, multilayer, or route-event input "
+            r"does not exist. A missing standalone visual is not missing data: the "
+            r"machine-readable "
+            r"data status and path remain explicit in the source glossary.",
+            r"\end{minipage}",
+            r"\endgroup",
+            r"\resumerefereelines",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def markdown_status(row: dict[str, str]) -> str:
+    status = row["evidence_status"].replace("_", " ")
+    return status[0].upper() + status[1:]
+
+
+def render_markdown(rows: list[dict[str, str]]) -> str:
+    visualized = [row for row in rows if row["visualization_path"]]
+    empirical_visuals = sum(
+        "synthetic_only" not in row["evidence_status"] for row in visualized
+    )
+    synthetic_only_visuals = len(visualized) - empirical_visuals
+    no_visual = len(rows) - len(visualized)
+    lines = [
+        "# Network-measure glossary and visualization audit",
+        "",
+        "This file is generated from `data/metadata/network_measure_glossary.csv`. "
+        "It distinguishes a computed result from a derivable benchmark, a synthetic mechanism, "
+        "and a measure blocked by missing verified inputs.",
+        "",
+    ]
+    for dimension in DIMENSIONS:
+        lines.extend(
+            [
+                f"## {dimension}",
+                "",
+                "| Indicator | Formula | Evidence | Data | Standalone visual |",
+                "|---|---|---|---|---|",
+            ]
+        )
+        for row in (item for item in rows if item["dimension"] == dimension):
+            formula = row["formula_latex"].replace("|", r"\|")
+            data = data_label(row)
+            visual = "yes" if row["visualization_path"] else "no"
+            lines.append(
+                f"| {row['indicator']} | `${formula}` | {markdown_status(row)} | "
+                f"{data} | {visual} |"
+            )
+        lines.append("")
+    lines.extend(
+        [
+            "## Coverage conclusion",
+            "",
+            f"The registry contains {len(rows)} indicators. {empirical_visuals} link to an "
+            f"empirical or mixed empirical figure, {synthetic_only_visuals} have synthetic-only "
+            f"visuals, and {no_visual} have no standalone figure. Current empirical visuals "
+            "cover address breadth, position-holder-event HHI, period actor-HHI bounds, and the "
+            "core-periphery/PageRank comparison. Several other observed series are committed as "
+            "CSV but intentionally have no standalone paper figure. Route dependence and verified "
+            "multilayer measures remain blocked; their current visuals are synthetic mechanism "
+            "illustrations only.",
+            "",
+        ]
+    )
+    return "\n".join(lines)
+
+
+def main() -> None:
+    rows = read_rows()
+    TABLE.parent.mkdir(parents=True, exist_ok=True)
+    DOCUMENT.parent.mkdir(parents=True, exist_ok=True)
+    TABLE.write_text(render_table(rows), encoding="utf-8")
+    DOCUMENT.write_text(render_markdown(rows), encoding="utf-8")
+    print(TABLE)
+    print(DOCUMENT)
+
+
+if __name__ == "__main__":
+    main()
