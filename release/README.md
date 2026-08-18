@@ -30,7 +30,7 @@ python scripts/reproduce_release.py \
 ```
 
 The expected result hash is
-`5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65`.
+`d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862`.
 This gate verifies the staged Dataset-to-results transformation. It does not
 claim a new raw-chain extraction, a full empirical clean-room rerun, or a final
 cross-repository release.

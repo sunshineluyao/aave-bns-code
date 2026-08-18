@@ -91,3 +91,17 @@ def test_final_lock_is_intentionally_unset():
     )
     assert config["dataset"]["locked_revision"] is None
     assert config["final_cross_repository_lock"] is None
+
+
+def test_hf_configs_are_separate_from_audit_only_gaps():
+    config = json.loads(
+        (ROOT / "release" / "reproduction_config.json").read_text(encoding="utf-8")
+    )
+    assert len(config["required_configs"]) == 14
+    assert config["metadata_only_evidence_gaps"] == {
+        "infrastructure_evidence_status": "BLOCKED",
+        "future_route_schema": "BLOCKED",
+    }
+    assert not (
+        set(config["required_configs"]) & set(config["metadata_only_evidence_gaps"])
+    )

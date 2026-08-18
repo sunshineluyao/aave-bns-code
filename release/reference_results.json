@@ -5,7 +5,7 @@
     "scientific_truth": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
   },
   "dataset": {
-    "candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+    "candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
     "locked_revision": null,
     "package_version": "0.1.0-rc8-provisional",
     "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",

@@ -28,7 +28,7 @@ errors.
 | Product | Repository | Candidate revision |
 |---|---|---|
 | Scientific truth | `sunshineluyao/aave-bns` PR #29 | `932f6f4f62c3402adf38231ed83ea9ca17cc227c` |
-| Dataset | `sunshineluyao/aave-bns-data-HF` PR #1 | `33e4077acaa0cad82930f5c76cc05d9594ad51ef` |
+| Dataset | `sunshineluyao/aave-bns-data-HF` PR #1 | `ec8340befe6ba98d053482a8d0efc25577d7a222` |
 | Paper | `sunshineluyao/aave-bns-paper` PR #1 | `24d559b8f5f764f76590e1877f799c1244ad57b4` |
 | Space source | `sunshineluyao/aave-bns-demo-HF` PR #1 | `de702cffb5307b21fdc03c692775678ac492581d` |
 
@@ -58,7 +58,7 @@ third-party installation.
 ```bash
 # 1. Obtain the immutable candidate Dataset.
 git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout 33e4077acaa0cad82930f5c76cc05d9594ad51ef
+git -C aave-bns-data-HF checkout ec8340befe6ba98d053482a8d0efc25577d7a222
 
 # 2. Obtain this code PR and check out its reported final commit.
 git clone https://github.com/sunshineluyao/aave-bns-code.git
@@ -85,7 +85,7 @@ python scripts/reproduce_release.py \
 The command must end with:
 
 ```text
-PASS: canonical package verified; deterministic result snapshot sha256=5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65
+PASS: canonical package verified; deterministic result snapshot sha256=d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862
 NOTICE: candidate dataset commit is immutable, but the final cross-repository lock remains a human release decision.
 ```
 
@@ -109,7 +109,9 @@ Before any transformation, the entry point:
 1. rejects unsafe or duplicate checksum paths;
 2. verifies either every checksum entry (release gate) or only required fixture
    inputs (smoke development);
-3. requires the exact 16-config inventory;
+3. requires exactly 14 Hugging Face configurations and separately audits the
+   two blocked metadata-only tables, neither of which is exposed as a Hub
+   configuration;
 4. matches every config's CSV header and row count to
    `metadata/release_manifest.json`;
 5. matches all evidence states;

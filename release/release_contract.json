@@ -13,7 +13,7 @@
     "data": {
       "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
       "baseline_commit": "4ac33f365a0eaafa7721d525b892d3a056c4bb77",
-      "candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+      "candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
       "locked_revision": null,
       "status": "STAGED_SCHEMA_AND_CHECKSUM_PACKAGE_LICENSE_AND_HUB_PUBLICATION_BLOCKED"
     },
@@ -52,7 +52,6 @@
     "platform-generated Croissant merge and validation",
     "authenticated clean-room verification from a byte-exact private Dataset clone",
     "credentialed raw-chain full rerun if required by the final venue or artifact review",
-    "clean-room paper compilation and rendered visual QA",
     "production demo pin to an immutable dataset revision",
     "final human approval and immutable cross-product lock"
   ],
@@ -60,7 +59,7 @@
     "config": "release/reproduction_config.json",
     "entrypoint": "scripts/reproduce_release.py",
     "reference": "release/reference_results.json",
-    "reference_sha256": "5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65",
+    "reference_sha256": "d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862",
     "smoke_fixture": "tests/fixtures/release_minimal",
     "validation_ceiling": "Dataset-to-results harness and inspected canonical inputs; no new raw-chain full rerun"
   },

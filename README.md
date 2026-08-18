@@ -18,7 +18,7 @@ committed reference:
 
 ```bash
 git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout 33e4077acaa0cad82930f5c76cc05d9594ad51ef
+git -C aave-bns-data-HF checkout ec8340befe6ba98d053482a8d0efc25577d7a222
 
 python3.11 -m venv .venv
 source .venv/bin/activate
@@ -31,9 +31,10 @@ python scripts/reproduce_release.py \
 ```
 
 Expected deterministic result hash:
-`5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65`.
-The command verifies all checksum-listed Dataset files; checks all 16
-configuration schemas, row counts, and evidence states; recomputes event
+`d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862`.
+The command verifies all checksum-listed Dataset files; checks all 14
+Hugging Face configuration schemas plus the two audit-only blocked tables,
+including row counts and evidence states; recomputes event
 totals, weekly HHI changes, structural snapshots, failed-design diagnostics,
 and actor bounds; and compares the JSON result to
 `release/reference_results.json`. See

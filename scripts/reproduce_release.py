@@ -161,6 +161,14 @@ def validate_config(config: dict[str, Any]) -> None:
     for name, value in boundaries.items():
         if not isinstance(value, str) or len(value.strip()) < 20:
             raise ReleaseError(f"evidence boundary {name} is missing or non-substantive")
+    required = config.get("required_configs")
+    gaps = config.get("metadata_only_evidence_gaps", {})
+    if not isinstance(required, dict) or not required:
+        raise ReleaseError("required_configs must be a non-empty object")
+    if not isinstance(gaps, dict):
+        raise ReleaseError("metadata_only_evidence_gaps must be an object")
+    if set(required) & set(gaps):
+        raise ReleaseError("Hugging Face configs and metadata-only gaps must be disjoint")
 
 
 def validate_dataset_manifest(
@@ -210,6 +218,37 @@ def validate_dataset_manifest(
         expected_fields = item.get("fields")
         if expected_fields != fields:
             raise ReleaseError(f"{name} schema differs from release manifest")
+        paths.add(relative)
+
+    raw_gaps = manifest.get("metadata_only_evidence_gaps", [])
+    expected_gaps = config.get("metadata_only_evidence_gaps", {})
+    if not isinstance(raw_gaps, list):
+        raise ReleaseError("dataset release manifest requires metadata_only_evidence_gaps list")
+    gap_names = {item.get("name") for item in raw_gaps if isinstance(item, dict)}
+    if len(gap_names) != len(raw_gaps) or gap_names != set(expected_gaps):
+        raise ReleaseError(
+            "metadata-only evidence-gap inventory mismatch: expected "
+            f"{sorted(expected_gaps or {})}, got {sorted(str(name) for name in gap_names)}"
+        )
+    for item in raw_gaps:
+        name = item["name"]
+        if item.get("status") != expected_gaps[name]:
+            raise ReleaseError(
+                f"{name} evidence state mismatch: expected {expected_gaps[name]}, "
+                f"got {item.get('status')}"
+            )
+        if item.get("exposed_as_hf_configuration") is not False:
+            raise ReleaseError(f"{name} must not be exposed as a Hugging Face configuration")
+        relative = item.get("path")
+        if not isinstance(relative, str):
+            raise ReleaseError(f"{name} has no audit-table path")
+        fields, rows = read_csv(resolve_inside(dataset_root, relative))
+        by_name[name] = {
+            **item,
+            "rows": len(rows),
+            "fields": fields,
+            "evidence_status": item["status"],
+        }
         paths.add(relative)
     return by_name, paths
 

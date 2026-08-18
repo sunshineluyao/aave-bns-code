@@ -24,10 +24,10 @@
   ],
   "checked_at": "2026-08-18",
   "clean_room_execution": "DATASET_TO_RESULTS_HARNESS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
-  "canonical_dataset_candidate_revision": "33e4077acaa0cad82930f5c76cc05d9594ad51ef",
+  "canonical_dataset_candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
   "paper_candidate_revision": "24d559b8f5f764f76590e1877f799c1244ad57b4",
   "demo_candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
-  "reference_results_sha256": "5bc0b12ecccf02cfedaeca96f88c008477f1a9aedd06772bcb4d67ff41979b65",
+  "reference_results_sha256": "d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862",
   "validation_ceiling": "E4 for the synthetic smoke fixture and deterministic calculations over inspected canonical inputs; no authenticated byte-exact full Dataset clone and no raw-chain clean-room rerun",
   "scientific_boundaries": [
     "address identifiers are not verified people or independent economic actors",
