@@ -1,8 +1,10 @@
 {
-  "release_status": "PROVISIONAL_RC8",
+  "release_status": "PROVISIONAL_RC8_CROSS_REPOSITORY_STAGED",
   "source_repository": "https://github.com/sunshineluyao/aave-bns",
-  "source_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
+  "scientific_truth_source_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
+  "technical_review_fix_commit": "3ea3a0505ef9f091c0fe605cd7fdbcf04f60be6a",
   "source_pr": 29,
+  "standalone_baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
   "scope": [
     "analysis",
     "configs",
@@ -10,18 +12,25 @@
     "scripts",
     "src",
     "tests",
-    "root build and citation files"
+    "root build and citation files",
+    "cross-repository release validation"
   ],
   "excluded": [
     "paper",
     "large empirical payloads published separately through Dataset release",
     "raw logs"
   ],
-  "copied_at": "2026-08-18",
+  "checked_at": "2026-08-18",
+  "clean_room_execution": "BLOCKED_PENDING_RUNNER_OR_GITHUB_ACTIONS_AVAILABILITY",
   "scientific_boundaries": [
-    "address != natural person != independent economic actor",
+    "address identifiers are not verified people or independent economic actors",
     "failed-design diagnostics are not treatment effects",
     "simulation is synthetic and uncalibrated",
     "route-level infrastructure evidence remains blocked"
-  ]
+  ],
+  "associated_repositories": {
+    "data": "https://github.com/sunshineluyao/aave-bns-data-HF",
+    "paper": "https://github.com/sunshineluyao/aave-bns-paper",
+    "demo": "https://github.com/sunshineluyao/aave-bns-demo-HF"
+  }
 }
