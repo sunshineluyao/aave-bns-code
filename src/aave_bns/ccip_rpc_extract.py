@@ -127,7 +127,7 @@ def extract_indexed_message_events(
         "continuous_inclusive_coverage": bool(covered)
         and covered[0][0] == query.start_block
         and covered[-1][1] == query.end_block
-        and all(a[1] + 1 == b[0] for a, b in zip(covered, covered[1:])),
+        and all(a[1] + 1 == b[0] for a, b in zip(covered, covered[1:], strict=False)),
         "returned_log_validation_passed": True,
         "historical_code_start_sha256": canonical_hash([{"code": start_code}]),
         "historical_code_end_sha256": canonical_hash([{"code": end_code}]),
@@ -158,3 +158,4 @@ def write_extraction_artifacts(
         json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     return event_path, audit_path
+

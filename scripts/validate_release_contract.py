@@ -12,7 +12,7 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_CONTRACT = ROOT / "release" / "release_contract.json"
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
-PRODUCTS = {"data", "code", "paper", "demo"}
+PRODUCTS = {"data", "code"}
 BOUNDARIES = {
     "address_actor",
     "hhi_construct",
@@ -39,24 +39,40 @@ def validate(contract: dict) -> list[str]:
         if parsed.scheme != "https" or parsed.netloc != "github.com":
             errors.append(f"{name}.repository must be an https://github.com URL")
         for key, value in item.items():
-            if key.endswith("commit") and not SHA40.fullmatch(value):
+            if key.endswith(("commit", "revision")) and not SHA40.fullmatch(str(value)):
                 errors.append(f"{name}.{key} must be a 40-character lowercase commit SHA")
-    truth = contract.get("scientific_truth", {})
-    for key in ("baseline_commit", "technical_review_fix_commit"):
+    if products.get("data", {}).get("license") != "CC-BY-4.0":
+        errors.append("data.license must be CC-BY-4.0")
+    if products.get("code", {}).get("license") != "MIT":
+        errors.append("code.license must be MIT")
+    truth = contract.get("scientific_source", {})
+    for key in ("baseline_commit",):
         if not SHA40.fullmatch(truth.get(key, "")):
-            errors.append(f"scientific_truth.{key} must be a 40-character lowercase commit SHA")
-    blockers = contract.get("release_blockers", [])
-    if not isinstance(blockers, list) or not blockers:
-        errors.append("release_blockers must be a non-empty list until final release")
-    if blockers and contract.get("status") == "READY":
-        errors.append("status cannot be READY while release_blockers is non-empty")
+            errors.append(f"scientific_source.{key} must be a 40-character lowercase commit SHA")
+    gates = contract.get("external_publication_gates", [])
+    if not isinstance(gates, list) or not gates:
+        errors.append("external_publication_gates must remain explicit before Hub publication")
+    if gates and contract.get("status") in {"PUBLISHED", "FINAL_RELEASE"}:
+        errors.append("status cannot claim publication while external gates remain")
     for key, value in boundaries.items():
         if not isinstance(value, str) or len(value.strip()) < 20:
             errors.append(f"evidence boundary {key} is missing or non-substantive")
     gate = contract.get("reproduction_gate", {})
-    for key in ("config", "entrypoint", "reference", "reference_sha256", "smoke_fixture"):
+    for key in (
+        "config",
+        "entrypoint",
+        "result_index",
+        "quality_audit",
+        "reference",
+        "reference_sha256",
+        "smoke_fixture",
+    ):
         if not gate.get(key):
             errors.append(f"reproduction_gate.{key} is required")
+    for key in ("config", "entrypoint", "result_index", "quality_audit", "reference", "smoke_fixture"):
+        value = gate.get(key)
+        if value and not (ROOT / value).exists():
+            errors.append(f"reproduction_gate.{key} does not exist: {value}")
     if gate.get("reference_sha256") and not re.fullmatch(
         r"[0-9a-f]{64}", gate["reference_sha256"]
     ):

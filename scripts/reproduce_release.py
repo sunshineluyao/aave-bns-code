@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reproduce the reviewer-facing RC26 result snapshot from the dataset package.
+"""Reproduce the reviewer-facing public result snapshot from the data package.
 
 This entry point is intentionally standard-library-only.  It verifies the
 dataset package before computing results, preserves evidence-state labels, and
@@ -466,7 +466,7 @@ def write_outputs(output_dir: Path, payload: dict[str, Any]) -> dict[str, str]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Verify the canonical Aave-BNS dataset and reproduce RC26 result snapshots."
+        description="Verify the canonical Aave-BNS data package and reproduce public result snapshots."
     )
     parser.add_argument("--dataset-root", required=True, type=Path)
     parser.add_argument(
@@ -542,4 +542,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

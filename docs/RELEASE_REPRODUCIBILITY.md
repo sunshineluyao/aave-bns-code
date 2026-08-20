@@ -1,188 +1,163 @@
-# RC26 Dataset-to-results reproduction guide
+# Public data-to-results reproducibility guide
 
 ## Scope and evidence ceiling
 
-This guide gives an interdisciplinary reviewer one deterministic path from the
-governed RC26 Dataset package to the compact results consumed by the paper and
-demo. It uses the NASEM meaning of **computational reproducibility**: the same
-data, code, methods, and conditions. It does not claim independent replication
-with new data.
+This guide provides a credential-free path from the public staged dataset to a
+deterministic result snapshot. It demonstrates computational reproducibility:
+the same data, code, conditions, and governed transformations produce the same
+bytes. It does not claim an independent replication with newly collected data,
+prove causal identification, or remove upstream measurement limitations.
 
-Two workflows are deliberately separated:
+The default path does not execute blockchain queries. Completed acquisition
+evidence is preserved in the public data repository. The acquisition modules in
+this repository are retained for a separately authorized refresh and never run
+when a pinned input is missing.
 
-1. **Released Dataset to reviewer-facing results** — credential-free after the
-   two private repositories have been cloned. This is the release gate
-   implemented here.
-2. **Raw public-chain acquisition to released Dataset** — already completed in
-   the pinned scientific-source repository. The retained `real_v2`–`real_v6`
-   code is RPC/provider-, time-, and compute-dependent and is outside the RC26
-   release path. Missing pinned payloads fail closed; they are not silently
-   replaced by a fresh query.
+## Public inputs
 
-Passing the first workflow shows that the staged Dataset package is internally
-consistent with the committed result snapshot. It does not prove that the
-scientific claims are true, causal, generalizable, or free from upstream data
-errors.
+| Product | Repository | Candidate revision | License |
+|---|---|---|---|
+| Data | `sunshineluyao/aave-bns-data-HF` | `942b7c1b63c9b3deb1732e970b9a727a8a3a349a` | CC BY 4.0 International |
+| Code | `sunshineluyao/aave-bns-code` | reviewed commit or release tag | MIT |
 
-## Immutable candidate inputs
+The release contract depends only on these public data and code products. The
+data candidate contains 14 Hub configurations, two metadata-only evidence-gap
+tables, schemas, source and claim ledgers, a migration manifest, and a complete
+SHA-256 inventory.
 
-| Product | Repository | Candidate revision |
-|---|---|---|
-| Scientific truth | `sunshineluyao/aave-bns` PR #29 | `932f6f4f62c3402adf38231ed83ea9ca17cc227c` |
-| Dataset | `sunshineluyao/aave-bns-data-HF` PR #1 | `e4eb1a7007c82a3ba020be3432eaa04d98675a05` |
-| Paper | `sunshineluyao/aave-bns-paper` merged PR #14 | `8993caa628f0ff277f6f8e92c05bc8671d557ff1` |
-| Space source | `sunshineluyao/aave-bns-demo-HF` PR #1 | `de702cffb5307b21fdc03c692775678ac492581d` |
+## Tested environment and resources
 
-The source, Dataset candidate, and merged paper are immutable inputs to this
-code candidate. The Dataset license, Hub publication revision, code revision,
-Space revision, and final release approval remain explicit human decisions.
-`release/reproduction_config.json` therefore keeps the Dataset
-`locked_revision` and `final_cross_repository_lock` as `null`.
+| Item | Reviewer path |
+|---|---|
+| Python | CPython 3.11 or 3.12; package minimum is 3.10 |
+| Dependencies | exact versions in `requirements-release.lock` |
+| Hardware | CPU only; no GPU or accelerator |
+| Memory | under 1 GB for the compact release path |
+| Disk | under 250 MB including a virtual environment and outputs |
+| Network | needed only to clone/install; disabled for reproduction itself |
+| Secrets | none |
+| Randomness | no randomness in the release harness; simulation seed is fixed in `configs/simulation.yaml` |
+| Typical runtime | seconds for the release harness; minutes for the full test suite on a laptop-class CPU |
 
-## Prerequisites
-
-- Git with credentials for the private repositories.
-- CPython 3.11.11 (the pure-standard-library release entry point also works on
-  supported Python 3.10+).
-- Approximately 100 MB of free disk for source, the compact Dataset, the
-  environment, and generated JSON.
-- No RPC secret, Google Cloud project, GPU, or paid API is required for this
-  Dataset-to-results workflow.
-
-The scientific pipeline's exact reviewer environment is recorded in
-`requirements-release.lock`. The release entry point itself intentionally
-uses only Python's standard library so that package validation can run before
-third-party installation.
-
-## Exact commands
+## Exact reviewer commands
 
 ```bash
-# 1. Obtain the immutable candidate Dataset.
 git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout e4eb1a7007c82a3ba020be3432eaa04d98675a05
+git -C aave-bns-data-HF checkout 942b7c1b63c9b3deb1732e970b9a727a8a3a349a
 
-# 2. Obtain this code PR and check out its reported final commit.
 git clone https://github.com/sunshineluyao/aave-bns-code.git
 cd aave-bns-code
-# Replace CODE_PR_FINAL_SHA with the immutable SHA reported on PR #1.
-git checkout CODE_PR_FINAL_SHA
+git checkout <reviewed-code-commit-or-release-tag>
 
-# 3. Create the pinned environment.
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
 python -m pip install -r requirements-release.lock
 
-# 4. Verify the complete package, recompute results, and compare the reference.
+python scripts/validate_release_contract.py
+python scripts/validate_result_replication_index.py \
+  --dataset-root ../aave-bns-data-HF
 python scripts/reproduce_release.py \
   --dataset-root ../aave-bns-data-HF \
   --checksum-scope all \
   --output-dir outputs/release_review
-
-# 5. Independently check the committed reference file.
 (cd release && sha256sum -c reference_results.sha256)
-```
-
-The command must end with:
-
-```text
-PASS: canonical package verified; deterministic result snapshot sha256=63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197
-NOTICE: candidate dataset commit is immutable, but the final cross-repository lock remains a human release decision.
 ```
 
 Generated files:
 
-- `outputs/release_review/results.json`
-- `outputs/release_review/SHA256SUMS.txt`
+- `outputs/release_review/results.json`;
+- `outputs/release_review/SHA256SUMS.txt`.
 
-## What is recomputed
+The first file must equal `release/reference_results.json` exactly. Its expected
+digest is committed in `release/reference_results.sha256`.
 
-| Output family | Canonical Dataset config | Deterministic operation | Evidence state |
-|---|---|---|---|
-| Chain event totals | `participation_and_concentration_metrics` | Sum weekly Pool-event counts by chain | `DERIVED` |
-| Weekly concentration change | `participation_and_concentration_metrics` | Mean beneficiary HHI for weeks −16…−1 and 1…16; week 0 excluded; report relative change | `DERIVED` |
-| Role-network snapshot | `structural_metrics` | Select `all_actions` layer and preserve topology/centrality measures | `DERIVED` |
-| Arbitrum–Gnosis diagnostic | `failed_design_estimates` | Select the 16-week horizon and preserve estimate, Newey–West SE, and interval | `FAILED_DESIGN` |
-| Economic-actor HHI bound | `actor_bounds_change` | Select the evidence-assumption outer bound and enforce no signed actor conclusion | `BOUNDED` |
+## Result coverage
 
-Before any transformation, the entry point:
+`release/result_replication_index.json` is the authoritative result-level map.
+It is mirrored as a readable table in the root README and cross-checked against
+`metadata/result_data_crosswalk.csv` in the data repository. It covers R01–R11:
+activity, events, participation/concentration, cross-chain overlap, topology,
+actor bounds, simulation, failed-design diagnostics, source verification,
+metric definitions, and the blocked infrastructure-evidence boundary.
+
+Before calculating a result, the harness:
 
 1. rejects unsafe or duplicate checksum paths;
-2. verifies either every checksum entry (release gate) or only required fixture
-   inputs (smoke development);
-3. requires exactly 14 Hugging Face configurations and separately audits the
-   two blocked metadata-only tables, neither of which is exposed as a Hub
-   configuration;
-4. matches every config's CSV header and row count to
-   `metadata/release_manifest.json`;
-5. matches all evidence states;
-6. refuses a failed-design row not marked `diagnostic_not_causal`; and
-7. refuses actor bounds that permit an economic-actor conclusion.
+2. hashes every file listed in the data checksum manifest;
+3. checks all 14 configuration names, schemas, row counts, primary evidence
+   states, and two non-loadable evidence gaps;
+4. recomputes the compact result families using decimal-stable operations;
+5. rejects any comparative diagnostic not marked `diagnostic_not_causal`;
+6. rejects actor bounds that permit an unsupported signed conclusion; and
+7. compares the complete canonical JSON result with the committed reference.
 
-## Offline smoke and reference fixture
+## Test and quality gates
 
 ```bash
 make release-smoke
-python -m pytest -q tests/test_release_reproduction.py tests/test_release_contract.py
+python -m pytest -q
+ruff check src tests scripts
+make pipeline-validate DATASET_ROOT=../aave-bns-data-HF
 ```
 
-`tests/fixtures/release_minimal/` is synthetic test material constructed only
-to exercise the release interface. Its values are not empirical evidence and
-must never be cited. The tests verify a successful deterministic run, checksum
-failure after mutation, and rejection of causal promotion after a logically
-invalid fixture is re-checksummed.
+The smoke fixture is synthetic and tests a successful deterministic run,
+checksum rejection after mutation, and rejection of an invalid causal
+promotion even after the fixture is re-checksummed. Unit tests cover
+acquisition boundaries, normalization, simulations, network measures,
+descriptive analysis, partial identification, diagnostics, contracts, and
+release reproduction. The clean public checkout passes 117 portable tests and
+visibly skips 91 historical integration tests whose separately governed large
+or publication-layout artifacts are absent. Those tests run only with the
+required inputs and `AAVE_BNS_RUN_EXTERNAL_ASSET_TESTS=1`. CI repeats linting,
+portable tests, contract checks, and the smoke gate on Python 3.11 and 3.12.
 
-## Evidence and interpretation boundaries
+## NeurIPS and Papers with Code checklist
 
-- Addresses are protocol identifiers, not verified people or independent
-  economic actors.
-- Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare,
-  or governance power.
-- Mean-weekly HHI change and pooled-period HHI change are different nonlinear
-  aggregations and are not interchangeable.
-- Simulations are synthetic and uncalibrated.
-- Arbitrum–Gnosis outputs are failed-design diagnostics, not treatment effects.
-- Verified route-level infrastructure dependence remains blocked.
-- `BLOCKED` and `PLANNED` Dataset configurations are inventoried but never
-  promoted into computed results.
+The release is organized around the NeurIPS 2026 quality and clarity criteria:
+claims are paired with evidence-state boundaries, and a technically qualified
+reviewer receives enough environment, data, command, and expected-output detail
+to reproduce the computational results. The code-release checklist is handled
+as follows:
 
-## Raw-chain workflow boundary
+| Checklist item | Implementation |
+|---|---|
+| Dependencies | `pyproject.toml` plus exact reviewer lock in `requirements-release.lock` |
+| Training code | Not applicable: the study trains no model |
+| Evaluation code | `scripts/reproduce_release.py`, result index, exact reference, and tests |
+| Pretrained models | Not applicable: no model or weights are used |
+| README results and commands | R01–R11 replication table with one-command release path |
 
-The credentialed acquisition and full rebuild code remains separately
-available for an explicit refresh or independent replication:
+Primary guidance used for this audit:
 
-```bash
-make reproduce-real-v2
-make reproduce-real-v3
-make reproduce-real-v4
-make reproduce-real-v5-candidate
-```
+- NeurIPS 2026 Main Track Handbook:
+  https://neurips.cc/Conferences/2026/MainTrackHandbook
+- NeurIPS 2026 Reviewer Guidelines:
+  https://neurips.cc/Conferences/2026/ReviewerGuidelines
+- Papers with Code research-code release checklist:
+  https://github.com/paperswithcode/releasing-research-code
 
-Those commands can incur provider cost and material runtime, require the
-source-repository data layout plus documented RPC variables, and are not run by
-the RC26 target. Reviewers should treat the migration ledger—not a new query—as
-the evidence that the completed acquisition snapshot was preserved.
+## Interpretation and operational boundaries
+
+- Addresses are not verified people or independent economic actors.
+- Event-frequency HHI is not capital, liquidity, wealth, risk, welfare,
+  ownership, or governance power.
+- Weekly-mean and pooled-period HHI changes are not interchangeable.
+- Simulation output is synthetic and uncalibrated.
+- Comparative estimates are retained as failed-design diagnostics, not effects.
+- Route-level infrastructure claims remain blocked.
+- Raw acquisition can be provider-, time-, and credential-dependent and is not
+  part of the compact reviewer command.
 
 ## Troubleshooting
 
-- **Checksum mismatch:** ensure the Dataset is checked out at the exact
-  candidate revision, has no modified files, and was not exported through a
-  tool that normalized line endings.
-- **Config or schema mismatch:** the Dataset and code commits are from
-  different release candidates; check both SHAs above.
-- **Reference mismatch:** retain generated output, do not overwrite the
-  reference, and open an issue identifying the first JSON path reported.
-- **Private-repository access:** request access from the corresponding author;
-  do not substitute an unversioned download.
-- **Final lock remains null:** expected for this provisional PR. Only the human
-  release owner may approve and record the final cross-repository lock.
-
-## Audit status
-
-This PR reaches evidence level E4 for the committed synthetic smoke fixture and
-performs complete byte-level checksum verification plus deterministic
-transformation calculations over the pinned private Dataset candidate. A new
-raw-chain clean-room rerun was deliberately not performed. Release
-recommendation: **not ready for public Dataset publication** because license,
-reuse, privacy, Hub, and platform gates remain; the private Dataset-to-results
-path is ready for review.
+- **Checksum mismatch:** restore the exact data candidate and remove local data
+  edits; never overwrite the reference to force a pass.
+- **Schema or configuration mismatch:** verify the data commit above and ensure
+  both repositories are siblings.
+- **Reference mismatch:** retain the generated JSON and report the first path
+  printed by the comparator.
+- **Missing optional system tools:** Inkscape is required only to re-export the
+  pipeline PDF/PNG, not to reproduce numeric results.
+- **Need a fresh acquisition:** follow the explicit real-version workflow and
+  record a new governed snapshot; do not substitute it into this release.

@@ -1,4 +1,3 @@
-from datetime import datetime, timezone
 import importlib.util
 from pathlib import Path
 
@@ -72,3 +71,4 @@ def test_manifest_fails_closed_when_treated_pool_is_unverified():
         assert "missing verified treated Pool" in str(exc)
     else:
         raise AssertionError("unverified treated Pool must fail closed")
+

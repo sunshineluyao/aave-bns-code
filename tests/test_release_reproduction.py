@@ -5,7 +5,6 @@ from pathlib import Path
 
 from scripts.reproduce_release import main
 
-
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "tests" / "fixtures" / "release_minimal"
 FIXTURE_CONFIG = FIXTURE / "reproduction_config.json"

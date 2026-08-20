@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed audit of the RC26 data/code pipeline and generated assets."""
+"""Fail-closed audit of the public data/code pipeline and generated assets."""
 
 from __future__ import annotations
 
@@ -10,11 +10,9 @@ import json
 import re
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_REVISION = "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
-DATA_REVISION = "e4eb1a7007c82a3ba020be3432eaa04d98675a05"
-PAPER_REVISION = "8993caa628f0ff277f6f8e92c05bc8671d557ff1"
+DATA_REVISION = "942b7c1b63c9b3deb1732e970b9a727a8a3a349a"
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
 
 
@@ -51,22 +49,19 @@ def main() -> int:
     expected = {
         "scientific_source": SOURCE_REVISION,
         "data_candidate": DATA_REVISION,
-        "paper": PAPER_REVISION,
     }
     if revisions != expected:
         error("pins.pipeline_manifest", {"expected": expected, "actual": revisions})
     if reproduction.get("dataset", {}).get("candidate_revision") != DATA_REVISION:
         error("pins.reproduction_dataset", reproduction.get("dataset", {}).get("candidate_revision"))
     candidates = reproduction.get("cross_repository_candidates", {})
-    if candidates.get("scientific_truth") != SOURCE_REVISION:
-        error("pins.reproduction_source", candidates.get("scientific_truth"))
-    if candidates.get("paper") != PAPER_REVISION:
-        error("pins.reproduction_paper", candidates.get("paper"))
+    if candidates != {"scientific_source": SOURCE_REVISION}:
+        error("pins.reproduction_source", candidates)
     if release.get("canonical_source_revision") != SOURCE_REVISION:
         error("pins.dataset_source", release.get("canonical_source_revision"))
-    if release.get("paper_revision") != PAPER_REVISION:
-        error("pins.dataset_paper", release.get("paper_revision"))
-    if pipeline_contract.get("no_requery_policy") is not True or manifest.get("no_requery_for_rc26") is not True:
+    if release.get("status") != "READY_FOR_HF_STAGING":
+        error("dataset.staging_status", release.get("status"))
+    if pipeline_contract.get("no_requery_policy") is not True or manifest.get("no_requery_for_release") is not True:
         error("policy.no_requery", "both data and figure contracts must fail closed")
 
     stages = manifest.get("stages", [])
@@ -125,10 +120,33 @@ def main() -> int:
         ROOT / "docs/open-science-pipeline/open_science_pipeline.pdf",
         ROOT / "docs/open-science-pipeline/open_science_pipeline.png",
         ROOT / "docs/open-science-pipeline/figure_manifest.json",
+        ROOT / "docs/open-science-pipeline/figure_manifest_audit.json",
+        ROOT / "docs/open-science-pipeline/pdf_layout_audit.json",
     ]
     for path in required_assets:
         if not path.is_file() or path.stat().st_size == 0:
             error("figure.missing_asset", path.relative_to(ROOT).as_posix())
+    manifest_audit = json.loads(
+        (ROOT / "docs/open-science-pipeline/figure_manifest_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    if manifest_audit.get("status") != "PASS":
+        error("figure.manifest_audit", manifest_audit.get("status"))
+    pdf_audit = json.loads(
+        (ROOT / "docs/open-science-pipeline/pdf_layout_audit.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    if pdf_audit.get("passed") is not True or pdf_audit.get("issue_count") != 0:
+        error("figure.pdf_audit", pdf_audit)
+
+    result_index = json.loads(
+        (ROOT / "release/result_replication_index.json").read_text(encoding="utf-8")
+    )
+    result_ids = [item.get("result_id") for item in result_index.get("results", [])]
+    if result_ids != [f"R{number:02d}" for number in range(1, 12)]:
+        error("replication_index.result_ids", result_ids)
 
     report = {
         "status": "PASS" if not errors else "FAIL",
@@ -139,7 +157,7 @@ def main() -> int:
         "queried_evidence_files": len(queried),
         "processed_configurations": len(configs),
         "errors": errors,
-        "publication_status": "NOT_READY",
+        "publication_status": manifest.get("publication_status"),
         "publication_gate_count": len(manifest.get("publication_gates", [])),
     }
     rendered = json.dumps(report, indent=2, sort_keys=True) + "\n"
@@ -151,4 +169,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

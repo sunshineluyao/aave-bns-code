@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "checked_date": "2026-08-20",
+  "status": "PASS_PUBLIC_REVIEWER_PATH",
+  "license": "MIT",
+  "python_support": ["3.10", "3.11", "3.12"],
+  "validated_data_revision": "942b7c1b63c9b3deb1732e970b9a727a8a3a349a",
+  "checks": {
+    "ruff_src_tests_scripts": "PASS",
+    "portable_pytest": {
+      "status": "PASS",
+      "passed": 117,
+      "skipped_external_asset_tests": 91,
+      "skip_policy": "Visible pytest skips; execute only when separately governed inputs are staged and AAVE_BNS_RUN_EXTERNAL_ASSET_TESTS=1."
+    },
+    "release_contract": "PASS",
+    "result_replication_index": "PASS_11_OF_11",
+    "full_data_to_results": "PASS_BYTE_EXACT_REFERENCE",
+    "synthetic_negative_smoke": "PASS_CHECKSUM_AND_CAUSAL_REJECTION",
+    "reference_sha256": "f10ae008435a4c5dbf39de219baeaf72e77ca3b8daf35475bb6a6818dae8e2fa",
+    "pipeline_contract": "PASS_8_STAGES",
+    "pipeline_visual_qa": "PASS_MANIFEST_SVG_PDF_LAYOUT_AND_RENDERED_INSPECTION"
+  },
+  "papers_with_code_checklist": {
+    "dependencies": "PASS_PYPROJECT_AND_EXACT_REQUIREMENTS_LOCK",
+    "training_code": "NOT_APPLICABLE_NO_MODEL_TRAINING",
+    "evaluation_code": "PASS_OFFLINE_RELEASE_HARNESS_REFERENCE_AND_TESTS",
+    "pretrained_models": "NOT_APPLICABLE_NO_MODEL_OR_WEIGHTS",
+    "readme_results_and_commands": "PASS_R01_TO_R11_PUBLIC_REPLICATION_TABLE"
+  },
+  "neurips_review_alignment": {
+    "quality": "Claims remain evidence-status bounded and computed outputs pass deterministic validation.",
+    "clarity": "Environment, public data pin, commands, output locations, resources, and expected digest are documented.",
+    "reproducibility": "The credential-free public data-to-results path is executable offline and byte-comparable.",
+    "limitations": "Raw refreshes, external historical integration artifacts, non-causal diagnostics, actor uncertainty, and blocked infrastructure evidence are explicit."
+  },
+  "primary_guidance": [
+    "https://neurips.cc/Conferences/2026/MainTrackHandbook",
+    "https://neurips.cc/Conferences/2026/ReviewerGuidelines",
+    "https://github.com/paperswithcode/releasing-research-code"
+  ]
+}

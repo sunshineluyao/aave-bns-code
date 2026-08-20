@@ -1,5 +1,5 @@
-from pathlib import Path
 import importlib.util
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -35,4 +35,5 @@ def test_single_route_fails_closed():
     _, summary = MODULE.compute([row("0xa", "eth-gnosis", "Ethereum", 60)])
     assert summary["gate_passed"] is False
     assert summary["infrastructure_result_produced"] is False
+
 

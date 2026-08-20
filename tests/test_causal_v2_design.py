@@ -1,6 +1,5 @@
-from pathlib import Path
 import importlib.util
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -26,4 +25,5 @@ def test_mantle_is_explicitly_bundled():
     mantle = next(row for row in rows if row["cohort_id"] == "mantle_gho")
     assert mantle["bundled_market_entry"] == "true"
     assert mantle["market_available_by_utc"] == mantle["operational_activation_utc"]
+
 

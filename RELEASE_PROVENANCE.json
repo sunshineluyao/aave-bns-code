@@ -1,10 +1,15 @@
 {
-  "release_status": "PROVISIONAL_RC26_CROSS_REPOSITORY_STAGED",
+  "release_status": "READY_FOR_PUBLIC_REVIEW",
+  "release_family": "Aave-BNS public reproducibility release 1.0.0-rc1",
   "source_repository": "https://github.com/sunshineluyao/aave-bns",
-  "scientific_truth_source_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
-  "technical_review_fix_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+  "scientific_source_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
   "source_pr": 29,
-  "standalone_baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
+  "canonical_data_repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+  "canonical_data_candidate_revision": "942b7c1b63c9b3deb1732e970b9a727a8a3a349a",
+  "data_license": "CC-BY-4.0",
+  "code_repository": "https://github.com/sunshineluyao/aave-bns-code",
+  "code_license": "MIT",
+  "code_revision_status": "CURRENT_REVIEWED_COMMIT",
   "scope": [
     "analysis",
     "configs",
@@ -13,24 +18,22 @@
     "src",
     "tests",
     "root build and citation files",
-    "cross-repository release validation",
-    "canonical Dataset-to-results reviewer harness",
+    "public data-to-results validation",
+    "result-by-result replication index",
     "deterministic reference result and smoke fixture",
     "machine-readable open-science pipeline registry",
     "editable SVG, PDF, and PNG pipeline figure"
   ],
   "excluded": [
-    "paper",
-    "large empirical payloads published separately through Dataset release",
-    "raw logs"
+    "non-public research materials",
+    "large empirical payloads hosted in the public data product",
+    "raw logs",
+    "trained models and pretrained weights because none exist"
   ],
   "checked_at": "2026-08-20",
-  "clean_room_execution": "PINNED_DATASET_TO_RESULTS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
-  "canonical_dataset_candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
-  "paper_candidate_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
-  "demo_candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
-  "reference_results_sha256": "63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197",
-  "validation_ceiling": "Byte-exact migrated Dataset-to-results calculations and E4 synthetic smoke fixture; no new raw-chain clean-room rerun",
+  "clean_room_execution": "PINNED_PUBLIC_DATA_TO_RESULTS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
+  "reference_results_sha256": "f10ae008435a4c5dbf39de219baeaf72e77ca3b8daf35475bb6a6818dae8e2fa",
+  "validation_ceiling": "Byte-exact public data-to-results calculations and synthetic smoke validation; no new raw-chain clean-room rerun",
   "scientific_boundaries": [
     "address identifiers are not verified people or independent economic actors",
     "failed-design diagnostics are not treatment effects",
@@ -38,9 +41,13 @@
     "mean-weekly and pooled-period HHI changes are not interchangeable",
     "route-level infrastructure evidence remains blocked"
   ],
-  "associated_repositories": {
+  "associated_public_repositories": {
     "data": "https://github.com/sunshineluyao/aave-bns-data-HF",
-    "paper": "https://github.com/sunshineluyao/aave-bns-paper",
-    "demo": "https://github.com/sunshineluyao/aave-bns-demo-HF"
-  }
+    "code": "https://github.com/sunshineluyao/aave-bns-code"
+  },
+  "remaining_external_gates": [
+    "Hugging Face upload and immutable revision receipt",
+    "Dataset Viewer inspection",
+    "post-upload Croissant RAI merge and validation"
+  ]
 }

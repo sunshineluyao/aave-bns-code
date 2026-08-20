@@ -1,5 +1,7 @@
-# Exact reviewer environment used for the RC26 release interface.
+# Exact reviewer environment used for the public result-reproduction interface.
 # Install with: python -m pip install -r requirements-release.lock
+setuptools==80.9.0
+wheel==0.45.1
 numpy==1.26.4
 pandas==2.2.3
 networkx==3.4.2
@@ -16,4 +18,3 @@ certifi==2024.12.14
 pytest==8.3.5
 ruff==0.8.6
 PyMuPDF==1.25.1
-
