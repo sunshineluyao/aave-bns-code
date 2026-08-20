@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Standard-library smoke gate for the RC8 release reproduction interface."""
+"""Standard-library smoke gate for the RC26 release reproduction interface."""
 
 from __future__ import annotations
 
@@ -70,7 +70,7 @@ def main() -> int:
 
         checksum_root = temp / "checksum-failure"
         shutil.copytree(FIXTURE, checksum_root)
-        checksum_target = checksum_root / "data" / "structural_metrics" / "data.csv"
+        checksum_target = checksum_root / "data" / "processed" / "structural_metrics" / "data.csv"
         checksum_target.write_text(
             checksum_target.read_text(encoding="utf-8") + "\n", encoding="utf-8"
         )
@@ -79,7 +79,7 @@ def main() -> int:
 
         causal_root = temp / "causal-failure"
         shutil.copytree(FIXTURE, causal_root)
-        relative = "data/failed_design_estimates/data.csv"
+        relative = "data/processed/failed_design_estimates/data.csv"
         causal_target = causal_root / relative
         causal_target.write_text(
             causal_target.read_text(encoding="utf-8").replace(

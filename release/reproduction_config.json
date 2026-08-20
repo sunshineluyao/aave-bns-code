@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "release_family": "Aave-BNS RC8",
+  "release_family": "Aave-BNS RC26",
   "dataset": {
     "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
     "pull_request": 1,
-    "candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
+    "candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
     "locked_revision": null,
-    "package_version": "0.1.0-rc8-provisional",
+    "package_version": "0.2.0-rc26-provisional",
     "release_manifest": "metadata/release_manifest.json",
     "checksum_manifest": "metadata/checksums.sha256"
   },
@@ -31,10 +31,10 @@
     "future_route_schema": "BLOCKED"
   },
   "transformation_inputs": [
-    "data/participation_and_concentration_metrics/data.csv",
-    "data/structural_metrics/data.csv",
-    "data/failed_design_estimates/data.csv",
-    "data/actor_bounds_change/data.csv"
+    "data/processed/participation_and_concentration_metrics/data.csv",
+    "data/processed/structural_metrics/data.csv",
+    "data/processed/failed_design_estimates/data.csv",
+    "data/processed/actor_bounds_change/data.csv"
   ],
   "reference": {
     "results": "release/reference_results.json",
@@ -49,7 +49,7 @@
   },
   "cross_repository_candidates": {
     "scientific_truth": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
-    "paper": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
     "demo": "de702cffb5307b21fdc03c692775678ac492581d"
   },
   "final_cross_repository_lock": null

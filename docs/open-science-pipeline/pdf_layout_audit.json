@@ -1,0 +1,15 @@
+{
+  "pdf": "docs/open-science-pipeline/open_science_pipeline.pdf",
+  "pages": [
+    1
+  ],
+  "thresholds_pt": {
+    "min_font_size": 8.0,
+    "min_text_gap": 0.0,
+    "text_padding": 0.0,
+    "caption_gap": 4.0
+  },
+  "passed": true,
+  "issue_count": 0,
+  "issues": []
+}

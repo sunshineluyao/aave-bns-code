@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0",
-  "release_family": "Aave-BNS RC8 smoke fixture",
+  "release_family": "Aave-BNS RC26 smoke fixture",
   "dataset": {
     "repository": "https://example.invalid/aave-bns-fixture",
     "candidate_revision": "1111111111111111111111111111111111111111",
@@ -16,10 +16,10 @@
     "actor_bounds_change": "BOUNDED"
   },
   "transformation_inputs": [
-    "data/participation_and_concentration_metrics/data.csv",
-    "data/structural_metrics/data.csv",
-    "data/failed_design_estimates/data.csv",
-    "data/actor_bounds_change/data.csv"
+    "data/processed/participation_and_concentration_metrics/data.csv",
+    "data/processed/structural_metrics/data.csv",
+    "data/processed/failed_design_estimates/data.csv",
+    "data/processed/actor_bounds_change/data.csv"
   ],
   "reference": {
     "results": "tests/fixtures/release_minimal/expected_results.json",
@@ -39,3 +39,4 @@
   },
   "final_cross_repository_lock": null
 }
+

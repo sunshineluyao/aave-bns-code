@@ -1,15 +1,15 @@
 {
   "cross_repository_candidates": {
     "demo": "de702cffb5307b21fdc03c692775678ac492581d",
-    "paper": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
     "scientific_truth": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
   },
   "dataset": {
-    "candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
+    "candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
     "locked_revision": null,
-    "package_version": "0.1.0-rc8-provisional",
+    "package_version": "0.2.0-rc26-provisional",
     "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
-    "verified_checksum_file_count": 5
+    "verified_checksum_file_count": 63
   },
   "evidence_boundaries": {
     "address_actor": "Addresses are protocol identifiers, not verified natural persons or independent economic actors.",
@@ -23,7 +23,7 @@
     {
       "evidence_status": "BOUNDED",
       "name": "actor_bounds_change",
-      "path": "data/actor_bounds_change/data.csv",
+      "path": "data/processed/actor_bounds_change/data.csv",
       "promoted_to_result": true,
       "rows": 4,
       "sha256": "98e357dbfc0ce47147451c1b88eca4397ec4b791f25cf3a5453c371d22f0a4e8"
@@ -31,7 +31,7 @@
     {
       "evidence_status": "BOUNDED",
       "name": "actor_bounds_period",
-      "path": "data/actor_bounds_period/data.csv",
+      "path": "data/processed/actor_bounds_period/data.csv",
       "promoted_to_result": false,
       "rows": 4,
       "sha256": "38aaa467a4dfa316b41206b0648428e76fecde07d312b92e8411a2f86dca2602"
@@ -39,7 +39,7 @@
     {
       "evidence_status": "DERIVED",
       "name": "cross_chain_overlap",
-      "path": "data/cross_chain_overlap/data.csv",
+      "path": "data/processed/cross_chain_overlap/data.csv",
       "promoted_to_result": false,
       "rows": 33,
       "sha256": "2781693c49ec3abf2722cea6fc389e50b5872abaa1b8f88e2b66545ff7d2536f"
@@ -47,7 +47,7 @@
     {
       "evidence_status": "FAILED_DESIGN",
       "name": "failed_design_estimates",
-      "path": "data/failed_design_estimates/data.csv",
+      "path": "data/processed/failed_design_estimates/data.csv",
       "promoted_to_result": true,
       "rows": 6,
       "sha256": "0bdf68c244a12b9e6f0cf2a06785dde62bce1f0f123f34d5246dee7a6bf9ef04"
@@ -55,7 +55,7 @@
     {
       "evidence_status": "FAILED_DESIGN",
       "name": "failed_design_event_study",
-      "path": "data/failed_design_event_study/data.csv",
+      "path": "data/processed/failed_design_event_study/data.csv",
       "promoted_to_result": false,
       "rows": 66,
       "sha256": "78e27db93cfe55bb9281cb4122845af1419c0abdf844824d749b5088a93a99a1"
@@ -63,7 +63,7 @@
     {
       "evidence_status": "FAILED_DESIGN",
       "name": "failed_design_placebos",
-      "path": "data/failed_design_placebos/data.csv",
+      "path": "data/processed/failed_design_placebos/data.csv",
       "promoted_to_result": false,
       "rows": 6,
       "sha256": "f46adeaa56db48e3bc3e633d7355b071308f4319c2ae7023111dfa7e81d1f7eb"
@@ -71,7 +71,7 @@
     {
       "evidence_status": "FAILED_DESIGN",
       "name": "failed_design_pretrends",
-      "path": "data/failed_design_pretrends/data.csv",
+      "path": "data/processed/failed_design_pretrends/data.csv",
       "promoted_to_result": false,
       "rows": 2,
       "sha256": "6d0c0fedebe964e9305c9d6224164e999042a3a9eb3f39ef313cb430708af475"
@@ -79,23 +79,23 @@
     {
       "evidence_status": "BLOCKED",
       "name": "future_route_schema",
-      "path": "data/future_route_schema/data.csv",
+      "path": "data/processed/future_route_schema/data.csv",
       "promoted_to_result": false,
       "rows": 19,
-      "sha256": "a7a6b7c620e934e69980f9e68d66eba67af38abec55480e4e8f353390c5afeca"
+      "sha256": "b558fd92cb97de3a10a83da816380802ed66e824f9bfd42f057f0325a4941951"
     },
     {
       "evidence_status": "BLOCKED",
       "name": "infrastructure_evidence_status",
-      "path": "data/infrastructure_evidence_status/data.csv",
+      "path": "data/processed/infrastructure_evidence_status/data.csv",
       "promoted_to_result": false,
       "rows": 9,
-      "sha256": "051007f3fc18a243225f4a804d02cf49422b945e18ffb27c65578a3669fce14b"
+      "sha256": "b4bc0b8fe0778ed1bd229d54463b58ff3189f986aea85dab1cedc41d12286dfa"
     },
     {
       "evidence_status": "OBSERVED",
       "name": "metric_registry",
-      "path": "data/metric_registry/data.csv",
+      "path": "data/processed/metric_registry/data.csv",
       "promoted_to_result": false,
       "rows": 39,
       "sha256": "1cdaefc2b8dd975b2448d394de825f3cfe8b16cf9753c21464c3358204e5d19f"
@@ -103,7 +103,7 @@
     {
       "evidence_status": "DERIVED",
       "name": "observed_protocol_action_counts",
-      "path": "data/observed_protocol_action_counts/data.csv",
+      "path": "data/processed/observed_protocol_action_counts/data.csv",
       "promoted_to_result": false,
       "rows": 165,
       "sha256": "26fc2c09968b1e9cb85cc6a844a50a0e0a957de59f7bd92e46a1b9b0e4957d1c"
@@ -111,7 +111,7 @@
     {
       "evidence_status": "DERIVED",
       "name": "participation_and_concentration_metrics",
-      "path": "data/participation_and_concentration_metrics/data.csv",
+      "path": "data/processed/participation_and_concentration_metrics/data.csv",
       "promoted_to_result": true,
       "rows": 66,
       "sha256": "0268058038065daaec4ab0e0ffa2c7742ddb33791cf2fbe3f5de7bc529a6b635"
@@ -119,7 +119,7 @@
     {
       "evidence_status": "SYNTHETIC",
       "name": "simulation",
-      "path": "data/simulation/data.csv",
+      "path": "data/processed/simulation/data.csv",
       "promoted_to_result": false,
       "rows": 16,
       "sha256": "624420697b78dba68c94885734b236f4daed604b51a1c8077e790ab3855f86e9"
@@ -127,7 +127,7 @@
     {
       "evidence_status": "OBSERVED",
       "name": "source_audit",
-      "path": "data/source_audit/data.csv",
+      "path": "data/processed/source_audit/data.csv",
       "promoted_to_result": false,
       "rows": 31,
       "sha256": "7c6d7982aef57eb7f968c3c3e3259f94a003e8e859aed2855a4897439dc7897d"
@@ -135,7 +135,7 @@
     {
       "evidence_status": "DERIVED",
       "name": "structural_metrics",
-      "path": "data/structural_metrics/data.csv",
+      "path": "data/processed/structural_metrics/data.csv",
       "promoted_to_result": true,
       "rows": 12,
       "sha256": "fa80529bcde148b02de1d572d5083ecd421e869abfcbc8f72df52833571ee2f4"
@@ -143,13 +143,13 @@
     {
       "evidence_status": "OBSERVED",
       "name": "treatment_event_registry",
-      "path": "data/treatment_event_registry/data.csv",
+      "path": "data/processed/treatment_event_registry/data.csv",
       "promoted_to_result": false,
       "rows": 2,
       "sha256": "870a8b7733a38852c46b5693a44c82a162ef6ad7a02dd8d2406c2a8e458ebde2"
     }
   ],
-  "release_family": "Aave-BNS RC8",
+  "release_family": "Aave-BNS RC26",
   "results": {
     "all_actions_structural_snapshot": [
       {

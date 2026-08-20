@@ -1,9 +1,9 @@
-# RC8 Dataset-to-results reproduction guide
+# RC26 Dataset-to-results reproduction guide
 
 ## Scope and evidence ceiling
 
 This guide gives an interdisciplinary reviewer one deterministic path from the
-governed RC8 Dataset package to the compact results consumed by the paper and
+governed RC26 Dataset package to the compact results consumed by the paper and
 demo. It uses the NASEM meaning of **computational reproducibility**: the same
 data, code, methods, and conditions. It does not claim independent replication
 with new data.
@@ -13,10 +13,11 @@ Two workflows are deliberately separated:
 1. **Released Dataset to reviewer-facing results** — credential-free after the
    two private repositories have been cloned. This is the release gate
    implemented here.
-2. **Raw public-chain acquisition to released Dataset** — RPC/provider,
-   time-, and compute-dependent. Existing `real_v2`–`real_v6` scripts and
-   verification targets document it, but that full workflow was not executed
-   during this PR update.
+2. **Raw public-chain acquisition to released Dataset** — already completed in
+   the pinned scientific-source repository. The retained `real_v2`–`real_v6`
+   code is RPC/provider-, time-, and compute-dependent and is outside the RC26
+   release path. Missing pinned payloads fail closed; they are not silently
+   replaced by a fresh query.
 
 Passing the first workflow shows that the staged Dataset package is internally
 consistent with the committed result snapshot. It does not prove that the
@@ -28,14 +29,14 @@ errors.
 | Product | Repository | Candidate revision |
 |---|---|---|
 | Scientific truth | `sunshineluyao/aave-bns` PR #29 | `932f6f4f62c3402adf38231ed83ea9ca17cc227c` |
-| Dataset | `sunshineluyao/aave-bns-data-HF` PR #1 | `ec8340befe6ba98d053482a8d0efc25577d7a222` |
-| Paper | `sunshineluyao/aave-bns-paper` PR #1 | `24d559b8f5f764f76590e1877f799c1244ad57b4` |
+| Dataset | `sunshineluyao/aave-bns-data-HF` PR #1 | `e4eb1a7007c82a3ba020be3432eaa04d98675a05` |
+| Paper | `sunshineluyao/aave-bns-paper` merged PR #14 | `8993caa628f0ff277f6f8e92c05bc8671d557ff1` |
 | Space source | `sunshineluyao/aave-bns-demo-HF` PR #1 | `de702cffb5307b21fdc03c692775678ac492581d` |
 
-These are inspectable candidate commits, not a final cross-product release
-lock. The final Dataset license, Hugging Face publication revision, code
-revision, paper revision, Space revision, and release approval remain explicit
-human decisions. `release/reproduction_config.json` therefore keeps
+The source, Dataset candidate, and merged paper are immutable inputs to this
+code candidate. The Dataset license, Hub publication revision, code revision,
+Space revision, and final release approval remain explicit human decisions.
+`release/reproduction_config.json` therefore keeps the Dataset
 `locked_revision` and `final_cross_repository_lock` as `null`.
 
 ## Prerequisites
@@ -58,7 +59,7 @@ third-party installation.
 ```bash
 # 1. Obtain the immutable candidate Dataset.
 git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout ec8340befe6ba98d053482a8d0efc25577d7a222
+git -C aave-bns-data-HF checkout e4eb1a7007c82a3ba020be3432eaa04d98675a05
 
 # 2. Obtain this code PR and check out its reported final commit.
 git clone https://github.com/sunshineluyao/aave-bns-code.git
@@ -85,7 +86,7 @@ python scripts/reproduce_release.py \
 The command must end with:
 
 ```text
-PASS: canonical package verified; deterministic result snapshot sha256=d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862
+PASS: canonical package verified; deterministic result snapshot sha256=63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197
 NOTICE: candidate dataset commit is immutable, but the final cross-repository lock remains a human release decision.
 ```
 
@@ -147,7 +148,8 @@ invalid fixture is re-checksummed.
 
 ## Raw-chain workflow boundary
 
-The credentialed acquisition and full rebuild remain separately available:
+The credentialed acquisition and full rebuild code remains separately
+available for an explicit refresh or independent replication:
 
 ```bash
 make reproduce-real-v2
@@ -156,10 +158,10 @@ make reproduce-real-v4
 make reproduce-real-v5-candidate
 ```
 
-Those commands can incur provider cost and material runtime and require the RPC
-variables documented by their respective guides. They were not run in this PR
-update. Reviewers should not treat the harness, fixture tests, or Dataset
-checksum comparison as evidence that a new raw-chain extraction succeeded.
+Those commands can incur provider cost and material runtime, require the
+source-repository data layout plus documented RPC variables, and are not run by
+the RC26 target. Reviewers should treat the migration ledger—not a new query—as
+the evidence that the completed acquisition snapshot was preserved.
 
 ## Troubleshooting
 
@@ -177,10 +179,10 @@ checksum comparison as evidence that a new raw-chain extraction succeeded.
 
 ## Audit status
 
-This PR update reaches evidence level E4 for the committed synthetic smoke
-fixture and deterministic transformation calculations over the inspected
-candidate Dataset inputs. Complete byte-level verification of the private
-Dataset clone and a raw-chain clean-room rerun remain tasks for an authenticated
-reviewer/runner. Release recommendation: **not ready for final publication**,
-but the code product is ready for reviewer inspection of the staged
-Dataset-to-results pathway.
+This PR reaches evidence level E4 for the committed synthetic smoke fixture and
+performs complete byte-level checksum verification plus deterministic
+transformation calculations over the pinned private Dataset candidate. A new
+raw-chain clean-room rerun was deliberately not performed. Release
+recommendation: **not ready for public Dataset publication** because license,
+reuse, privacy, Hub, and platform gates remain; the private Dataset-to-results
+path is ready for review.

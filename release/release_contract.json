@@ -1,8 +1,8 @@
 {
   "schema_version": "1.0",
-  "release_family": "Aave-BNS RC8",
+  "release_family": "Aave-BNS RC26",
   "status": "NOT_READY",
-  "checked_date": "2026-08-18",
+  "checked_date": "2026-08-20",
   "scientific_truth": {
     "repository": "https://github.com/sunshineluyao/aave-bns",
     "source_pr": 29,
@@ -13,7 +13,7 @@
     "data": {
       "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
       "baseline_commit": "4ac33f365a0eaafa7721d525b892d3a056c4bb77",
-      "candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
+      "candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
       "locked_revision": null,
       "status": "STAGED_SCHEMA_AND_CHECKSUM_PACKAGE_LICENSE_AND_HUB_PUBLICATION_BLOCKED"
     },
@@ -25,10 +25,10 @@
     },
     "paper": {
       "repository": "https://github.com/sunshineluyao/aave-bns-paper",
-      "draft_pr": "https://github.com/sunshineluyao/aave-bns-paper/pull/1",
-      "candidate_revision": "24d559b8f5f764f76590e1877f799c1244ad57b4",
-      "locked_revision": null,
-      "status": "OVERLEAF_SOURCE_AND_LOCAL_BUILD_PROVENANCE_SYNCHRONIZED"
+      "merged_pr": "https://github.com/sunshineluyao/aave-bns-paper/pull/14",
+      "candidate_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+      "locked_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+      "status": "RC26_MERGED_OVERLEAF_VALIDATED_114_PAGES"
     },
     "demo": {
       "repository": "https://github.com/sunshineluyao/aave-bns-demo-HF",
@@ -48,10 +48,12 @@
   },
   "release_blockers": [
     "author-approved dataset license",
+    "source-by-source upstream reuse review",
+    "row-level pseudonymous-address privacy and release review",
     "canonical Hugging Face namespace and authenticated publishing route",
     "platform-generated Croissant merge and validation",
-    "authenticated clean-room verification from a byte-exact private Dataset clone",
-    "credentialed raw-chain full rerun if required by the final venue or artifact review",
+    "Hugging Face Datasets clean-load in the pinned reviewer environment",
+    "credentialed raw-chain full rerun only if required by the final venue or artifact review",
     "production demo pin to an immutable dataset revision",
     "final human approval and immutable cross-product lock"
   ],
@@ -59,9 +61,9 @@
     "config": "release/reproduction_config.json",
     "entrypoint": "scripts/reproduce_release.py",
     "reference": "release/reference_results.json",
-    "reference_sha256": "d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862",
+    "reference_sha256": "63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197",
     "smoke_fixture": "tests/fixtures/release_minimal",
-    "validation_ceiling": "Dataset-to-results harness and inspected canonical inputs; no new raw-chain full rerun"
+    "validation_ceiling": "Dataset-to-results harness, exact migration ledger, and inspected canonical inputs; no new raw-chain full rerun"
   },
   "final_cross_repository_lock": null
 }

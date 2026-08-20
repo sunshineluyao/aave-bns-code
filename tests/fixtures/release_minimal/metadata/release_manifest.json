@@ -4,7 +4,7 @@
   "configs": [
     {
       "name": "participation_and_concentration_metrics",
-      "path": "data/participation_and_concentration_metrics/data.csv",
+      "path": "data/processed/participation_and_concentration_metrics/data.csv",
       "rows": 6,
       "fields": [
         "chain",
@@ -27,7 +27,7 @@
     },
     {
       "name": "structural_metrics",
-      "path": "data/structural_metrics/data.csv",
+      "path": "data/processed/structural_metrics/data.csv",
       "rows": 2,
       "fields": [
         "chain",
@@ -53,7 +53,7 @@
     },
     {
       "name": "failed_design_estimates",
-      "path": "data/failed_design_estimates/data.csv",
+      "path": "data/processed/failed_design_estimates/data.csv",
       "rows": 2,
       "fields": [
         "outcome_id",
@@ -80,7 +80,7 @@
     },
     {
       "name": "actor_bounds_change",
-      "path": "data/actor_bounds_change/data.csv",
+      "path": "data/processed/actor_bounds_change/data.csv",
       "rows": 1,
       "fields": [
         "comparison",
@@ -100,3 +100,4 @@
     }
   ]
 }
+

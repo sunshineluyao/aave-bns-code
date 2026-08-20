@@ -1,6 +1,9 @@
-# Cross-repository RC8 release contract
+# Cross-repository RC26 release contract
 
-`release_contract.json` is the machine-readable coordination layer for the paper, dataset, code, and demo repositories.
+`release_contract.json` coordinates the scientific-source, data, code, paper,
+and read-only demo revisions. `reproduction_config.json` is the executable
+offline Dataset-to-results contract. The visual workflow is generated from
+`docs/open-science-pipeline/pipeline_manifest.json`, not maintained by hand.
 
 Validate it with:
 
@@ -29,8 +32,9 @@ python scripts/reproduce_release.py \
 (cd release && sha256sum -c reference_results.sha256)
 ```
 
-The expected result hash is
-`d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862`.
+The expected result hash is stored in `reference_results.sha256` and is
+regenerated only after the pinned Dataset candidate passes its complete
+checksum inventory.
 This gate verifies the staged Dataset-to-results transformation. It does not
 claim a new raw-chain extraction, a full empirical clean-room rerun, or a final
 cross-repository release.

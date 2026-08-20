@@ -58,7 +58,7 @@ def test_smoke_fixture_matches_reference(tmp_path: Path):
 def test_mutated_fixture_fails_checksum(tmp_path: Path):
     dataset_root = tmp_path / "dataset"
     shutil.copytree(FIXTURE, dataset_root)
-    target = dataset_root / "data" / "structural_metrics" / "data.csv"
+    target = dataset_root / "data" / "processed" / "structural_metrics" / "data.csv"
     target.write_text(target.read_text(encoding="utf-8") + "\n", encoding="utf-8")
     assert run_fixture(dataset_root, tmp_path / "output") == 1
 
@@ -66,7 +66,7 @@ def test_mutated_fixture_fails_checksum(tmp_path: Path):
 def test_causal_promotion_fails_even_after_rechecksum(tmp_path: Path):
     dataset_root = tmp_path / "dataset"
     shutil.copytree(FIXTURE, dataset_root)
-    relative = "data/failed_design_estimates/data.csv"
+    relative = "data/processed/failed_design_estimates/data.csv"
     target = dataset_root / relative
     target.write_text(
         target.read_text(encoding="utf-8").replace(

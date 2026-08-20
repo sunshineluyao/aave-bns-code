@@ -1,7 +1,7 @@
 {
-  "release_status": "PROVISIONAL_RC8_CROSS_REPOSITORY_STAGED",
+  "release_status": "PROVISIONAL_RC26_CROSS_REPOSITORY_STAGED",
   "source_repository": "https://github.com/sunshineluyao/aave-bns",
-  "scientific_truth_source_commit": "2d8b3137eab528a755cf361d1cc6e944c7072779",
+  "scientific_truth_source_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
   "technical_review_fix_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
   "source_pr": 29,
   "standalone_baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
@@ -15,20 +15,22 @@
     "root build and citation files",
     "cross-repository release validation",
     "canonical Dataset-to-results reviewer harness",
-    "deterministic reference result and smoke fixture"
+    "deterministic reference result and smoke fixture",
+    "machine-readable open-science pipeline registry",
+    "editable SVG, PDF, and PNG pipeline figure"
   ],
   "excluded": [
     "paper",
     "large empirical payloads published separately through Dataset release",
     "raw logs"
   ],
-  "checked_at": "2026-08-18",
-  "clean_room_execution": "DATASET_TO_RESULTS_HARNESS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
-  "canonical_dataset_candidate_revision": "ec8340befe6ba98d053482a8d0efc25577d7a222",
-  "paper_candidate_revision": "24d559b8f5f764f76590e1877f799c1244ad57b4",
+  "checked_at": "2026-08-20",
+  "clean_room_execution": "PINNED_DATASET_TO_RESULTS_VALIDATED_RAW_CHAIN_RERUN_NOT_PERFORMED",
+  "canonical_dataset_candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+  "paper_candidate_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
   "demo_candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
-  "reference_results_sha256": "d6c6c06b33b419d5e4d29cc8b86f8bd21c8ad9ff99195de33f973a3b9360a862",
-  "validation_ceiling": "E4 for the synthetic smoke fixture and deterministic calculations over inspected canonical inputs; no authenticated byte-exact full Dataset clone and no raw-chain clean-room rerun",
+  "reference_results_sha256": "63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197",
+  "validation_ceiling": "Byte-exact migrated Dataset-to-results calculations and E4 synthetic smoke fixture; no new raw-chain clean-room rerun",
   "scientific_boundaries": [
     "address identifiers are not verified people or independent economic actors",
     "failed-design diagnostics are not treatment effects",
