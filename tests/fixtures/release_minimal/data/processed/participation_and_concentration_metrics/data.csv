@@ -1,0 +1,8 @@
+chain,chain_id,event_week,event_count,active_beneficiary_addresses,entrant_addresses,exit_addresses,retained_addresses,beneficiary_hhi,beneficiary_gini,top1pct_share,top10pct_share,nakamoto_51,observed_unit,causal_status
+Ethereum,1,-1,10,4,4,0,0,0.20,0.30,0.40,0.50,2,beneficiary_address,descriptive_only
+Ethereum,1,0,20,5,2,1,3,0.15,0.25,0.35,0.45,3,beneficiary_address,descriptive_only
+Ethereum,1,1,30,6,3,2,3,0.10,0.20,0.30,0.40,4,beneficiary_address,descriptive_only
+Arbitrum,42161,-1,40,7,7,0,0,0.25,0.35,0.45,0.55,2,beneficiary_address,descriptive_only
+Arbitrum,42161,0,50,8,3,2,5,0.30,0.40,0.50,0.60,2,beneficiary_address,descriptive_only
+Arbitrum,42161,1,60,9,4,3,5,0.50,0.60,0.70,0.80,1,beneficiary_address,descriptive_only
+

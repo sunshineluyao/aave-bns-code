@@ -1,0 +1,4 @@
+outcome_id,pre_event_weeks,post_event_weeks,post_horizon,anticipation_weeks_excluded,event_week_zero_excluded,arbitrum_pre_mean,arbitrum_post_mean,arbitrum_change,gnosis_pre_mean,gnosis_post_mean,gnosis_change,difference_in_changes_arbitrum_minus_gnosis,nw_lag,nw_standard_error,ci_lower,ci_upper,normal_approx_p_value,causal_status
+log_active_beneficiary_addresses,-1:-1,1:1,16,,True,1.0,2.0,1.0,1.0,1.5,0.5,0.5,1,0.2,0.1,0.9,0.02,diagnostic_not_causal
+beneficiary_hhi,-1:-1,1:1,16,,True,0.2,0.5,0.3,0.1,0.2,0.1,0.2,1,0.1,0.0,0.4,0.05,diagnostic_not_causal
+

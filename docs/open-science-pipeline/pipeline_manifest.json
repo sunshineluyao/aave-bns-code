@@ -1,0 +1,127 @@
+{
+  "schema_version": "1.0",
+  "release_family": "Aave-BNS RC26",
+  "title": "Aave-BNS Open Data Science Pipeline — RC26",
+  "subtitle": "Completed acquisition → verified migration → offline analysis → governed evidence",
+  "checked_date": "2026-08-20",
+  "no_requery_for_rc26": true,
+  "revisions": {
+    "scientific_source": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+    "data_candidate": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1"
+  },
+  "stages": [
+    {
+      "id": "public_evidence",
+      "order": 1,
+      "title": "Public evidence",
+      "short_label": "Chain + governance",
+      "repository": null,
+      "revision": null,
+      "paths": [],
+      "implementation_status": "OBSERVED",
+      "release_role": "external source records"
+    },
+    {
+      "id": "completed_acquisition",
+      "order": 2,
+      "title": "Completed acquisition",
+      "short_label": "real_v2–real_v6",
+      "repository": "https://github.com/sunshineluyao/aave-bns",
+      "revision": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+      "paths": ["queries", "configs", "scripts", "data/metadata", "outputs"],
+      "implementation_status": "IMPLEMENTED_OBSERVED",
+      "release_role": "read-only scientific source; no RC26 re-query"
+    },
+    {
+      "id": "queried_evidence",
+      "order": 3,
+      "title": "Queried-data evidence",
+      "short_label": "14 audit files",
+      "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+      "revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+      "paths": ["data/queried", "metadata/migration_manifest.csv"],
+      "implementation_status": "VERIFIED_MIGRATION",
+      "release_role": "retrieval windows, provider checks, manifests, artifact receipts"
+    },
+    {
+      "id": "processed_tables",
+      "order": 4,
+      "title": "Processed tables",
+      "short_label": "14 governed configs",
+      "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+      "revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+      "paths": ["data/processed", "metadata/release_manifest.json", "metadata/croissant.json"],
+      "implementation_status": "IMPLEMENTED_DERIVED",
+      "release_role": "aggregates, bounds, synthetic mechanisms, and failed-design diagnostics"
+    },
+    {
+      "id": "provenance_gate",
+      "order": 5,
+      "title": "Provenance gate",
+      "short_label": "hash + schema + status",
+      "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+      "revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+      "paths": ["metadata/checksums.sha256", "metadata/schema.json", "metadata/claim_status.json"],
+      "implementation_status": "PASS_LOCAL",
+      "release_role": "fail closed before analysis"
+    },
+    {
+      "id": "offline_analysis",
+      "order": 6,
+      "title": "Offline analysis",
+      "short_label": "deterministic transforms",
+      "repository": "https://github.com/sunshineluyao/aave-bns-code",
+      "revision": "CURRENT_PR_HEAD",
+      "paths": ["scripts/reproduce_release.py", "release/reproduction_config.json", "src/aave_bns"],
+      "implementation_status": "IMPLEMENTED_DERIVED",
+      "release_role": "network, concentration, bounds, simulation, and diagnostic outputs"
+    },
+    {
+      "id": "release_outputs",
+      "order": 7,
+      "title": "Governed outputs",
+      "short_label": "results + tables + figure",
+      "repository": "https://github.com/sunshineluyao/aave-bns-code",
+      "revision": "CURRENT_PR_HEAD",
+      "paths": ["release/reference_results.json", "docs/open-science-pipeline/open_science_pipeline.svg"],
+      "implementation_status": "GENERATED_VERIFIED",
+      "release_role": "byte-stable result snapshot and editable vector asset"
+    },
+    {
+      "id": "rc26_paper",
+      "order": 8,
+      "title": "RC26 paper",
+      "short_label": "114-page Overleaf build",
+      "repository": "https://github.com/sunshineluyao/aave-bns-paper",
+      "revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+      "paths": [],
+      "implementation_status": "MERGED_VALIDATED",
+      "release_role": "read-only claim consumer"
+    }
+  ],
+  "edges": [
+    {"from": "public_evidence", "to": "completed_acquisition", "status": "IMPLEMENTED"},
+    {"from": "completed_acquisition", "to": "queried_evidence", "status": "VERIFIED_MIGRATION"},
+    {"from": "queried_evidence", "to": "processed_tables", "status": "IMPLEMENTED"},
+    {"from": "processed_tables", "to": "provenance_gate", "status": "VALIDATED"},
+    {"from": "provenance_gate", "to": "offline_analysis", "status": "VALIDATED"},
+    {"from": "offline_analysis", "to": "release_outputs", "status": "GENERATED"},
+    {"from": "release_outputs", "to": "rc26_paper", "status": "PINNED_COMPARISON"}
+  ],
+  "evidence_states": ["OBSERVED", "DERIVED", "BOUNDED", "SYNTHETIC", "FAILED_DESIGN", "BLOCKED"],
+  "interpretation_boundaries": [
+    "address ≠ person ≠ independent economic actor",
+    "Pool-event-frequency HHI ≠ capital or governance power",
+    "FAILED_DESIGN ≠ causal effect",
+    "route-level infrastructure dependence remains BLOCKED"
+  ],
+  "publication_gates": [
+    "dataset license",
+    "upstream reuse review",
+    "row-level privacy review",
+    "immutable Hub publication",
+    "Dataset Viewer + Croissant validation"
+  ]
+}
+

@@ -1,0 +1,255 @@
+{
+  "cross_repository_candidates": {
+    "demo": "de702cffb5307b21fdc03c692775678ac492581d",
+    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+    "scientific_truth": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
+  },
+  "dataset": {
+    "candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+    "locked_revision": null,
+    "package_version": "0.2.0-rc26-provisional",
+    "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+    "verified_checksum_file_count": 63
+  },
+  "evidence_boundaries": {
+    "address_actor": "Addresses are protocol identifiers, not verified natural persons or independent economic actors.",
+    "causal": "Arbitrum-Gnosis estimates are failed-design diagnostics, not treatment effects.",
+    "hhi_construct": "Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare, or governance power.",
+    "infrastructure": "Verified route-level infrastructure dependence remains blocked.",
+    "simulation": "Simulation outputs are synthetic and uncalibrated theoretical illustrations."
+  },
+  "final_cross_repository_lock": null,
+  "inventory": [
+    {
+      "evidence_status": "BOUNDED",
+      "name": "actor_bounds_change",
+      "path": "data/processed/actor_bounds_change/data.csv",
+      "promoted_to_result": true,
+      "rows": 4,
+      "sha256": "98e357dbfc0ce47147451c1b88eca4397ec4b791f25cf3a5453c371d22f0a4e8"
+    },
+    {
+      "evidence_status": "BOUNDED",
+      "name": "actor_bounds_period",
+      "path": "data/processed/actor_bounds_period/data.csv",
+      "promoted_to_result": false,
+      "rows": 4,
+      "sha256": "38aaa467a4dfa316b41206b0648428e76fecde07d312b92e8411a2f86dca2602"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "cross_chain_overlap",
+      "path": "data/processed/cross_chain_overlap/data.csv",
+      "promoted_to_result": false,
+      "rows": 33,
+      "sha256": "2781693c49ec3abf2722cea6fc389e50b5872abaa1b8f88e2b66545ff7d2536f"
+    },
+    {
+      "evidence_status": "FAILED_DESIGN",
+      "name": "failed_design_estimates",
+      "path": "data/processed/failed_design_estimates/data.csv",
+      "promoted_to_result": true,
+      "rows": 6,
+      "sha256": "0bdf68c244a12b9e6f0cf2a06785dde62bce1f0f123f34d5246dee7a6bf9ef04"
+    },
+    {
+      "evidence_status": "FAILED_DESIGN",
+      "name": "failed_design_event_study",
+      "path": "data/processed/failed_design_event_study/data.csv",
+      "promoted_to_result": false,
+      "rows": 66,
+      "sha256": "78e27db93cfe55bb9281cb4122845af1419c0abdf844824d749b5088a93a99a1"
+    },
+    {
+      "evidence_status": "FAILED_DESIGN",
+      "name": "failed_design_placebos",
+      "path": "data/processed/failed_design_placebos/data.csv",
+      "promoted_to_result": false,
+      "rows": 6,
+      "sha256": "f46adeaa56db48e3bc3e633d7355b071308f4319c2ae7023111dfa7e81d1f7eb"
+    },
+    {
+      "evidence_status": "FAILED_DESIGN",
+      "name": "failed_design_pretrends",
+      "path": "data/processed/failed_design_pretrends/data.csv",
+      "promoted_to_result": false,
+      "rows": 2,
+      "sha256": "6d0c0fedebe964e9305c9d6224164e999042a3a9eb3f39ef313cb430708af475"
+    },
+    {
+      "evidence_status": "BLOCKED",
+      "name": "future_route_schema",
+      "path": "data/processed/future_route_schema/data.csv",
+      "promoted_to_result": false,
+      "rows": 19,
+      "sha256": "b558fd92cb97de3a10a83da816380802ed66e824f9bfd42f057f0325a4941951"
+    },
+    {
+      "evidence_status": "BLOCKED",
+      "name": "infrastructure_evidence_status",
+      "path": "data/processed/infrastructure_evidence_status/data.csv",
+      "promoted_to_result": false,
+      "rows": 9,
+      "sha256": "b4bc0b8fe0778ed1bd229d54463b58ff3189f986aea85dab1cedc41d12286dfa"
+    },
+    {
+      "evidence_status": "OBSERVED",
+      "name": "metric_registry",
+      "path": "data/processed/metric_registry/data.csv",
+      "promoted_to_result": false,
+      "rows": 39,
+      "sha256": "1cdaefc2b8dd975b2448d394de825f3cfe8b16cf9753c21464c3358204e5d19f"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "observed_protocol_action_counts",
+      "path": "data/processed/observed_protocol_action_counts/data.csv",
+      "promoted_to_result": false,
+      "rows": 165,
+      "sha256": "26fc2c09968b1e9cb85cc6a844a50a0e0a957de59f7bd92e46a1b9b0e4957d1c"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "participation_and_concentration_metrics",
+      "path": "data/processed/participation_and_concentration_metrics/data.csv",
+      "promoted_to_result": true,
+      "rows": 66,
+      "sha256": "0268058038065daaec4ab0e0ffa2c7742ddb33791cf2fbe3f5de7bc529a6b635"
+    },
+    {
+      "evidence_status": "SYNTHETIC",
+      "name": "simulation",
+      "path": "data/processed/simulation/data.csv",
+      "promoted_to_result": false,
+      "rows": 16,
+      "sha256": "624420697b78dba68c94885734b236f4daed604b51a1c8077e790ab3855f86e9"
+    },
+    {
+      "evidence_status": "OBSERVED",
+      "name": "source_audit",
+      "path": "data/processed/source_audit/data.csv",
+      "promoted_to_result": false,
+      "rows": 31,
+      "sha256": "7c6d7982aef57eb7f968c3c3e3259f94a003e8e859aed2855a4897439dc7897d"
+    },
+    {
+      "evidence_status": "DERIVED",
+      "name": "structural_metrics",
+      "path": "data/processed/structural_metrics/data.csv",
+      "promoted_to_result": true,
+      "rows": 12,
+      "sha256": "fa80529bcde148b02de1d572d5083ecd421e869abfcbc8f72df52833571ee2f4"
+    },
+    {
+      "evidence_status": "OBSERVED",
+      "name": "treatment_event_registry",
+      "path": "data/processed/treatment_event_registry/data.csv",
+      "promoted_to_result": false,
+      "rows": 2,
+      "sha256": "870a8b7733a38852c46b5693a44c82a162ef6ad7a02dd8d2406c2a8e458ebde2"
+    }
+  ],
+  "release_family": "Aave-BNS RC26",
+  "results": {
+    "all_actions_structural_snapshot": [
+      {
+        "chain": "Arbitrum",
+        "event_count": 1837410,
+        "evidence_status": "DERIVED",
+        "interpretation_status": "descriptive_noncausal",
+        "maximum_k_core": 8,
+        "observed_unit": "address_role",
+        "pagerank_hhi": "2.012711205499261e-05",
+        "topology_edge_count": 69584,
+        "topology_node_count": 50693,
+        "weighted_in_degree_hhi": "0.006664251816239639",
+        "weighted_out_degree_hhi": "0.16682337421209506"
+      },
+      {
+        "chain": "Ethereum",
+        "event_count": 118806,
+        "evidence_status": "DERIVED",
+        "interpretation_status": "descriptive_noncausal",
+        "maximum_k_core": 6,
+        "observed_unit": "address_role",
+        "pagerank_hhi": "0.00011314085932807451",
+        "topology_edge_count": 10896,
+        "topology_node_count": 8891,
+        "weighted_in_degree_hhi": "0.0007974204712085135",
+        "weighted_out_degree_hhi": "0.42373610457992933"
+      }
+    ],
+    "economic_actor_hhi_change_bound": {
+      "change_lower": "-0.9964446246745151",
+      "change_upper": "0.994353135321389",
+      "comparison": "post_minus_pre",
+      "economic_actor_conclusion_permitted": false,
+      "evidence_status": "BOUNDED",
+      "metric": "hhi",
+      "sign_identified": false
+    },
+    "event_totals": [
+      {
+        "chain": "Arbitrum",
+        "chain_id": "42161",
+        "event_count": 1837410,
+        "evidence_status": "DERIVED",
+        "observed_unit": "beneficiary_address"
+      },
+      {
+        "chain": "Ethereum",
+        "chain_id": "1",
+        "event_count": 118806,
+        "evidence_status": "DERIVED",
+        "observed_unit": "beneficiary_address"
+      }
+    ],
+    "failed_design_horizon_16": [
+      {
+        "causal_status": "diagnostic_not_causal",
+        "ci_lower": "-0.029978195531",
+        "ci_upper": "-0.00686263388006",
+        "difference_in_changes_arbitrum_minus_gnosis": "-0.0184204147055",
+        "evidence_status": "FAILED_DESIGN",
+        "nw_standard_error": "0.00589682695177",
+        "outcome_id": "beneficiary_hhi",
+        "post_horizon": 16
+      },
+      {
+        "causal_status": "diagnostic_not_causal",
+        "ci_lower": "1.53881094637",
+        "ci_upper": "2.42777961677",
+        "difference_in_changes_arbitrum_minus_gnosis": "1.98329528157",
+        "evidence_status": "FAILED_DESIGN",
+        "nw_standard_error": "0.226777722042",
+        "outcome_id": "log_active_beneficiary_addresses",
+        "post_horizon": 16
+      }
+    ],
+    "weekly_beneficiary_hhi": [
+      {
+        "chain": "Arbitrum",
+        "evidence_status": "DERIVED",
+        "interpretation": "weekly event-frequency concentration; descriptive, not causal",
+        "post_mean_beneficiary_hhi": "0.0147416509061810",
+        "post_weeks": 16,
+        "pre_mean_beneficiary_hhi": "0.00932421292315566",
+        "pre_weeks": 16,
+        "relative_change": "0.581007536793987",
+        "week_zero_excluded": true
+      },
+      {
+        "chain": "Ethereum",
+        "evidence_status": "DERIVED",
+        "interpretation": "weekly event-frequency concentration; descriptive, not causal",
+        "post_mean_beneficiary_hhi": "0.00654643098696709",
+        "post_weeks": 16,
+        "pre_mean_beneficiary_hhi": "0.00955845715977548",
+        "pre_weeks": 16,
+        "relative_change": "-0.315116354288199",
+        "week_zero_excluded": true
+      }
+    ]
+  },
+  "schema_version": "1.0"
+}

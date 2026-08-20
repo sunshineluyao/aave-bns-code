@@ -1,0 +1,16 @@
+{
+  "errors": [],
+  "migration_record_count": 32,
+  "pins": {
+    "data_candidate": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+    "scientific_source": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
+  },
+  "processed_configurations": 14,
+  "publication_gate_count": 5,
+  "publication_status": "NOT_READY",
+  "queried_evidence_files": 14,
+  "release_family": "Aave-BNS RC26",
+  "stage_count": 8,
+  "status": "PASS"
+}

@@ -1,0 +1,94 @@
+{
+  "title": "Aave-BNS Open Data Science Pipeline — RC26",
+  "iconography_mode": "rich-editorial",
+  "editable_master": "open_science_pipeline.svg",
+  "derived_assets": ["open_science_pipeline.pdf", "open_science_pipeline.png"],
+  "source_registry": "pipeline_manifest.json",
+  "palette": {
+    "ink": "#18324A",
+    "surface": "#F5F7FB",
+    "primary": "#315EFB",
+    "secondary": "#12A594",
+    "status_accent": "#D97745",
+    "divider": "#CBD5E1"
+  },
+  "semantic_graphics": [
+    {
+      "concept": "public chain and governance evidence",
+      "visual_encoding": "linked ledger blocks with a governance document",
+      "shape_ids": ["icon-public-blocks", "label-public-evidence"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "external records are observed inputs"
+    },
+    {
+      "concept": "completed versioned acquisition",
+      "visual_encoding": "terminal brackets, retrieval wave, and locked version tag",
+      "shape_ids": ["icon-acquisition-terminal", "label-completed-acquisition"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "acquisition already ran at the pinned scientific revision"
+    },
+    {
+      "concept": "queried-data migration",
+      "visual_encoding": "open folder carrying manifest sheets and a checksum seal",
+      "shape_ids": ["icon-queried-folder", "label-queried-evidence"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "audit evidence was migrated without a new query"
+    },
+    {
+      "concept": "governed processed configurations",
+      "visual_encoding": "stacked tabular layers with explicit evidence-state rows",
+      "shape_ids": ["icon-processed-tables", "label-processed-tables"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "fourteen loadable configurations remain status-governed"
+    },
+    {
+      "concept": "provenance validation gate",
+      "visual_encoding": "shield crossed by hash, schema, and status check marks",
+      "shape_ids": ["icon-provenance-shield", "label-provenance-gate"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "analysis fails closed when identity or semantics drift"
+    },
+    {
+      "concept": "offline multidimensional analysis",
+      "visual_encoding": "role-aware network joined to bounds and diagnostic traces",
+      "shape_ids": ["icon-analysis-network", "label-offline-analysis"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "analysis is deterministic and does not elevate failed designs"
+    },
+    {
+      "concept": "governed result bundle",
+      "visual_encoding": "coordinated result sheet, table grid, and vector-chart leaf",
+      "shape_ids": ["icon-output-bundle", "label-release-outputs"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "results and visual assets derive from one pinned registry"
+    },
+    {
+      "concept": "claim and evidence ledger",
+      "visual_encoding": "six-row status matrix with asymmetric boundaries for causal and blocked evidence",
+      "shape_ids": ["hero-evidence-ledger", "label-evidence-ledger"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "observed, derived, bounded, synthetic, failed, and blocked states stay distinct"
+    },
+    {
+      "concept": "merged validated paper",
+      "visual_encoding": "typeset page stack with an explicit 114-page validation mark",
+      "shape_ids": ["icon-paper-stack", "label-rc26-paper"],
+      "origin": "original editable vector geometry",
+      "evidence_implication": "the paper is a pinned claim consumer, not the data source"
+    }
+  ],
+  "hero_graphic": {
+    "concept": "claim and evidence ledger",
+    "shape_ids": ["hero-evidence-ledger", "hero-ledger-boundary"]
+  },
+  "panel_graphics": {
+    "acquisition_and_migration": ["icon-public-blocks", "icon-acquisition-terminal", "icon-queried-folder", "icon-processed-tables", "icon-provenance-shield"],
+    "analysis_and_outputs": ["icon-analysis-network", "icon-output-bundle", "icon-paper-stack"],
+    "claim_governance": ["hero-evidence-ledger", "hero-ledger-boundary"],
+    "publication_boundary": ["icon-release-lock", "icon-release-checklist"]
+  },
+  "composition_mechanism": "A top left-to-right provenance spine feeds a lower offline analysis arc; the evidence ledger and publication gates remain visually separate from computed outputs.",
+  "grayscale_encoding": "Implemented flow uses solid connectors and dark borders; migrated flow uses double checks; unresolved publication gates use dashed connectors and lock marks, so status does not depend on hue.",
+  "external_assets": []
+}
+

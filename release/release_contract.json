@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "release_family": "Aave-BNS RC26",
+  "status": "NOT_READY",
+  "checked_date": "2026-08-20",
+  "scientific_truth": {
+    "repository": "https://github.com/sunshineluyao/aave-bns",
+    "source_pr": 29,
+    "baseline_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c",
+    "technical_review_fix_commit": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
+  },
+  "products": {
+    "data": {
+      "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
+      "baseline_commit": "4ac33f365a0eaafa7721d525b892d3a056c4bb77",
+      "candidate_revision": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
+      "locked_revision": null,
+      "status": "STAGED_SCHEMA_AND_CHECKSUM_PACKAGE_LICENSE_AND_HUB_PUBLICATION_BLOCKED"
+    },
+    "code": {
+      "repository": "https://github.com/sunshineluyao/aave-bns-code",
+      "baseline_commit": "179e54857e5b8542cba66bc44f988ae28043a63b",
+      "pr_parent_commit": "443e862873f1279395abec4553ab351861010744",
+      "status": "REVIEWER_HARNESS_VALIDATED_FULL_RAW_RERUN_NOT_PERFORMED"
+    },
+    "paper": {
+      "repository": "https://github.com/sunshineluyao/aave-bns-paper",
+      "merged_pr": "https://github.com/sunshineluyao/aave-bns-paper/pull/14",
+      "candidate_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+      "locked_revision": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+      "status": "RC26_MERGED_OVERLEAF_VALIDATED_114_PAGES"
+    },
+    "demo": {
+      "repository": "https://github.com/sunshineluyao/aave-bns-demo-HF",
+      "branch": "agent/rc8-evidence-explorer",
+      "candidate_revision": "de702cffb5307b21fdc03c692775678ac492581d",
+      "locked_revision": null,
+      "status": "RELEASE_AWARE_SOURCE_STAGED_DATASET_PUBLICATION_PENDING"
+    }
+  },
+  "evidence_boundaries": {
+    "address_actor": "Addresses are protocol identifiers, not verified natural persons or independent economic actors.",
+    "hhi_construct": "Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare, or governance power.",
+    "hhi_aggregation": "Mean-weekly and pooled-period HHI changes are different nonlinear aggregations and are not interchangeable.",
+    "simulation": "Synthetic and uncalibrated.",
+    "causal": "Arbitrum-Gnosis is a failed-design diagnostic, not a treatment effect.",
+    "infrastructure": "Verified route-level infrastructure dependence remains blocked."
+  },
+  "release_blockers": [
+    "author-approved dataset license",
+    "source-by-source upstream reuse review",
+    "row-level pseudonymous-address privacy and release review",
+    "canonical Hugging Face namespace and authenticated publishing route",
+    "platform-generated Croissant merge and validation",
+    "Hugging Face Datasets clean-load in the pinned reviewer environment",
+    "credentialed raw-chain full rerun only if required by the final venue or artifact review",
+    "production demo pin to an immutable dataset revision",
+    "final human approval and immutable cross-product lock"
+  ],
+  "reproduction_gate": {
+    "config": "release/reproduction_config.json",
+    "entrypoint": "scripts/reproduce_release.py",
+    "reference": "release/reference_results.json",
+    "reference_sha256": "63b4b9ab96b7f26edd61d1f095f44d9d75ccc249e397915f956dc6074eb14197",
+    "smoke_fixture": "tests/fixtures/release_minimal",
+    "validation_ceiling": "Dataset-to-results harness, exact migration ledger, and inspected canonical inputs; no new raw-chain full rerun"
+  },
+  "final_cross_repository_lock": null
+}
