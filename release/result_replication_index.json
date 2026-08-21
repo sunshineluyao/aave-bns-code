@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
-  "checked_date": "2026-08-20",
+  "checked_date": "2026-08-21",
   "status": "VALIDATED_PUBLIC_DATA_TO_RESULTS_MAP",
   "public_repositories": {
     "data": "https://github.com/sunshineluyao/aave-bns-data-HF",
     "code": "https://github.com/sunshineluyao/aave-bns-code"
   },
-  "dataset_revision": "942b7c1b63c9b3deb1732e970b9a727a8a3a349a",
+  "dataset_revision": "49265b508c1a6b76f21a6bbbf5ac4f40946bd96f",
   "common_release_command": "python scripts/reproduce_release.py --dataset-root ../aave-bns-data-HF --checksum-scope all --output-dir outputs/release_review",
   "results": [
     {
@@ -302,5 +302,6 @@
       "evidence_status": "BLOCKED",
       "interpretation_boundary": "No empirical route HHI bridge reliance removal loss or resilience claim"
     }
-  ]
+  ],
+  "dataset_checksum_manifest_sha256": "a23f22fb968914cc32fe7bfb9018380dc469ccbdca8682b958f7ca3593ab3bde"
 }
