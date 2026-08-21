@@ -20,7 +20,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 INPUT_PATH = ROOT / "outputs/real_v5/descriptive/weekly_address_metrics.csv"
 OUTPUT_DIR = ROOT / "outputs/real_v5/pilot_did"
-TABLE_PATH = ROOT / "paper/tables/tab06_pilot_did.tex"
+TABLE_PATH = ROOT / "outputs/real_v5/pilot_did/pilot_did_table.tex"
 
 CHAINS = ("Ethereum", "Arbitrum")
 WINDOWS = (16, 12, 8)
@@ -55,7 +55,7 @@ def stable_float(
 
 def stabilize_row(row: dict[str, object]) -> dict[str, object]:
     return {
-        key: stable_float(value) if isinstance(value, (float, np.floating)) else value
+        key: stable_float(value) if isinstance(value, float | np.floating) else value
         for key, value in row.items()
     }
 

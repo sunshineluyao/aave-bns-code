@@ -87,11 +87,13 @@ def main() -> None:
     with Path(args.input).open(encoding="utf-8", newline="") as stream:
         rows = list(csv.DictReader(stream))
     metrics, summary = compute(rows)
-    output = Path(args.output_dir); output.mkdir(parents=True, exist_ok=True)
+    output = Path(args.output_dir)
+    output.mkdir(parents=True, exist_ok=True)
     if metrics:
         with (output / "route_week_metrics.csv").open("w", encoding="utf-8", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=list(metrics[0]))
-            writer.writeheader(); writer.writerows(metrics)
+            writer.writeheader()
+            writer.writerows(metrics)
     (output / "summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )

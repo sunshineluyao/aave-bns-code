@@ -1,6 +1,5 @@
-from pathlib import Path
 import importlib.util
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -39,3 +38,4 @@ def test_support_gate_allows_verified_subset():
 def test_support_gate_blocks_insufficient_subset():
     gate = MODULE.verification_gate(verified=1, selected=7, minimum_verified=2)
     assert gate["support_audit_eligible"] is False
+

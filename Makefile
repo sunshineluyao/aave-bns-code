@@ -1,4 +1,4 @@
-.PHONY: demo simulation test lint release-smoke reproduce-release verify-release-reference pipeline-figure pipeline-validate policy-assets verify-real-v2 reproduce-real-v2 verify-real-v3 reproduce-real-v3 real-v3-assets verify-real-v4 verify-real-v4-local reproduce-real-v4 real-v4-assets reproduce-real-v5-candidate real-v5-descriptive real-v5-topology real-v5-core-periphery real-v5-assets real-v5-core-periphery-assets real-v6-gnosis-assets network-glossary real-v5-pilot-did publication-visual-assets paper paper-layout-audit submission clean
+.PHONY: demo simulation test lint release-smoke release-contract result-index-validate reproduce-release verify-release-reference pipeline-figure pipeline-validate policy-assets verify-real-v2 reproduce-real-v2 verify-real-v3 reproduce-real-v3 real-v3-assets verify-real-v4 verify-real-v4-local reproduce-real-v4 real-v4-assets reproduce-real-v5-candidate real-v5-descriptive real-v5-topology real-v5-core-periphery real-v5-assets real-v5-core-periphery-assets real-v6-gnosis-assets network-glossary real-v5-pilot-did clean
 
 PYTHON ?= python
 DATASET_ROOT ?= ../aave-bns-data-HF
@@ -16,10 +16,17 @@ test:
 	PYTHONPATH=src pytest
 
 lint:
-	ruff check src tests scripts hf_space
+	ruff check src tests scripts
 
 release-smoke:
 	$(PYTHON) scripts/run_release_smoke.py
+
+release-contract:
+	$(PYTHON) scripts/validate_release_contract.py
+
+result-index-validate:
+	$(PYTHON) scripts/validate_result_replication_index.py \
+		--dataset-root $(DATASET_ROOT)
 
 reproduce-release:
 	$(PYTHON) scripts/reproduce_release.py \
@@ -110,23 +117,5 @@ network-glossary:
 real-v5-pilot-did:
 	PYTHONPATH=src $(PYTHON) scripts/run_real_v5_pilot_did.py
 
-publication-visual-assets: simulation real-v3-assets real-v4-assets real-v5-assets real-v5-core-periphery-assets real-v6-gnosis-assets network-glossary real-v5-pilot-did
-	PYTHONPATH=src $(PYTHON) scripts/render_publication_visuals.py
-	$(PYTHON) paper/scripts/generate_figures.py
-
-paper: demo policy-assets publication-visual-assets
-	$(MAKE) -C paper paper
-
-paper-layout-audit:
-	$(PYTHON) scripts/audit_pdf_layout.py --self-test
-	$(PYTHON) scripts/audit_pdf_layout.py paper/main.pdf \
-		--pages 4,10,27,29,32,37,63,65,67,68 --figure-regions \
-		--json paper/layout_audit.json
-
-submission: demo policy-assets publication-visual-assets
-	$(MAKE) -C paper submission
-
 clean:
-	rm -rf outputs/* paper/generated/tables/* paper/generated/figures/*
-	touch outputs/.gitkeep paper/generated/tables/.gitkeep paper/generated/figures/.gitkeep
-	$(MAKE) -C paper clean
+	rm -rf outputs/release_review outputs/simulation

@@ -1,0 +1,307 @@
+{
+  "schema_version": "1.0",
+  "checked_date": "2026-08-21",
+  "status": "VALIDATED_PUBLIC_DATA_TO_RESULTS_MAP",
+  "public_repositories": {
+    "data": "https://github.com/sunshineluyao/aave-bns-data-HF",
+    "code": "https://github.com/sunshineluyao/aave-bns-code"
+  },
+  "dataset_revision": "49265b508c1a6b76f21a6bbbf5ac4f40946bd96f",
+  "common_release_command": "python scripts/reproduce_release.py --dataset-root ../aave-bns-data-HF --checksum-scope all --output-dir outputs/release_review",
+  "results": [
+    {
+      "result_id": "R01",
+      "result_family": "Protocol activity",
+      "public_result": "Audited weekly protocol-action counts",
+      "dataset_configurations": [
+        "observed_protocol_action_counts"
+      ],
+      "dataset_fields": [
+        "event_count",
+        "transaction_count",
+        "active_addresses"
+      ],
+      "data_assets": [
+        "data/processed/observed_protocol_action_counts/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "DIRECT_GOVERNED_TABLE",
+      "output_locator": "inventory[name=observed_protocol_action_counts]",
+      "evidence_status": "DERIVED",
+      "interpretation_boundary": "Event frequency is not value or capital"
+    },
+    {
+      "result_id": "R02",
+      "result_family": "Protocol events",
+      "public_result": "Governed event dates and timing rules",
+      "dataset_configurations": [
+        "treatment_event_registry"
+      ],
+      "dataset_fields": [
+        "event_name",
+        "activation_date",
+        "treatment_date_rule"
+      ],
+      "data_assets": [
+        "data/processed/treatment_event_registry/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "DIRECT_GOVERNED_TABLE",
+      "output_locator": "inventory[name=treatment_event_registry]",
+      "evidence_status": "OBSERVED",
+      "interpretation_boundary": "Registry timing does not itself identify an effect"
+    },
+    {
+      "result_id": "R03",
+      "result_family": "Participation and concentration",
+      "public_result": "Weekly address participation and event-frequency concentration",
+      "dataset_configurations": [
+        "participation_and_concentration_metrics"
+      ],
+      "dataset_fields": [
+        "active_beneficiary_addresses",
+        "beneficiary_hhi",
+        "entrant_addresses",
+        "exit_addresses"
+      ],
+      "data_assets": [
+        "data/processed/participation_and_concentration_metrics/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "COMPUTED_REFERENCE",
+      "output_locator": "results.event_totals;results.weekly_beneficiary_hhi",
+      "evidence_status": "DERIVED",
+      "interpretation_boundary": "Addresses are not people or independent economic actors"
+    },
+    {
+      "result_id": "R04",
+      "result_family": "Cross-chain participation",
+      "public_result": "Weekly Ethereum-Arbitrum address overlap",
+      "dataset_configurations": [
+        "cross_chain_overlap"
+      ],
+      "dataset_fields": [
+        "shared_addresses",
+        "jaccard_overlap",
+        "ethereum_share_also_on_arbitrum",
+        "arbitrum_share_also_on_ethereum"
+      ],
+      "data_assets": [
+        "data/processed/cross_chain_overlap/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "DIRECT_GOVERNED_TABLE",
+      "output_locator": "inventory[name=cross_chain_overlap]",
+      "evidence_status": "DERIVED",
+      "interpretation_boundary": "Address overlap is descriptive and not bridge-flow evidence"
+    },
+    {
+      "result_id": "R05",
+      "result_family": "Role-aware structure",
+      "public_result": "Chain-layer topology and concentration metrics",
+      "dataset_configurations": [
+        "structural_metrics"
+      ],
+      "dataset_fields": [
+        "layer",
+        "topology_node_count",
+        "topology_edge_count",
+        "pagerank_hhi",
+        "maximum_k_core"
+      ],
+      "data_assets": [
+        "data/processed/structural_metrics/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py",
+        "src/aave_bns/network.py"
+      ],
+      "replication_mode": "COMPUTED_REFERENCE",
+      "output_locator": "results.all_actions_structural_snapshot",
+      "evidence_status": "DERIVED",
+      "interpretation_boundary": "Topology metrics do not form a scalar decentralization ranking"
+    },
+    {
+      "result_id": "R06",
+      "result_family": "Actor uncertainty",
+      "public_result": "Economic-actor concentration bounds and change envelope",
+      "dataset_configurations": [
+        "actor_bounds_period",
+        "actor_bounds_change"
+      ],
+      "dataset_fields": [
+        "evidence_hhi_lower",
+        "evidence_hhi_upper",
+        "change_lower",
+        "change_upper",
+        "sign_identified"
+      ],
+      "data_assets": [
+        "data/processed/actor_bounds_period/data.csv",
+        "data/processed/actor_bounds_change/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py",
+        "scripts/run_real_v4_partial_identification.py"
+      ],
+      "replication_mode": "COMPUTED_AND_BOUNDED",
+      "output_locator": "results.economic_actor_hhi_change_bound",
+      "evidence_status": "BOUNDED",
+      "interpretation_boundary": "The signed actor-level change is not identified"
+    },
+    {
+      "result_id": "R07",
+      "result_family": "Mechanism simulation",
+      "public_result": "Synthetic network-formation scenarios",
+      "dataset_configurations": [
+        "simulation"
+      ],
+      "dataset_fields": [
+        "active_entities",
+        "total_activity",
+        "activity_hhi",
+        "chain_hhi",
+        "structural_hhi",
+        "max_route_removal_loss"
+      ],
+      "data_assets": [
+        "data/processed/simulation/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py",
+        "src/aave_bns/simulation.py"
+      ],
+      "commands": [
+        "python scripts/reproduce_release.py --dataset-root ../aave-bns-data-HF --checksum-scope all --output-dir outputs/release_review",
+        "PYTHONPATH=src python -m aave_bns.cli simulate"
+      ],
+      "replication_mode": "SYNTHETIC_REGENERATION",
+      "output_locator": "inventory[name=simulation];outputs/simulation/scenario_results.csv",
+      "evidence_status": "SYNTHETIC",
+      "interpretation_boundary": "Uncalibrated simulation is not historical evidence"
+    },
+    {
+      "result_id": "R08",
+      "result_family": "Comparative diagnostic",
+      "public_result": "Complete 42-row model-based uncertainty ledger",
+      "dataset_configurations": [
+        "participation_and_concentration_metrics",
+        "failed_design_event_study",
+        "model_based_inference"
+      ],
+      "dataset_fields": [
+        "analysis_family",
+        "outcome",
+        "term",
+        "estimate",
+        "hac_standard_error",
+        "test_statistic",
+        "degrees_of_freedom",
+        "two_sided_p_value",
+        "ci_low_model_based",
+        "ci_high_model_based",
+        "hac_lag",
+        "finite_sample_correction",
+        "interpretation_status"
+      ],
+      "data_assets": [
+        "data/processed/participation_and_concentration_metrics/data.csv",
+        "data/processed/failed_design_event_study/data.csv",
+        "data/processed/model_based_inference/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/generate_model_based_inference.py",
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "COMPUTED_MODEL_BASED_INFERENCE_LEDGER",
+      "output_locator": "outputs/release_review/model_based_inference.csv; governed data configuration model_based_inference",
+      "evidence_status": "FAILED_DESIGN",
+      "interpretation_boundary": "Working-model precision is not treatment-assignment inference or a causal effect",
+      "commands": [
+        "python scripts/reproduce_release.py --dataset-root ../aave-bns-data-HF --checksum-scope all --output-dir outputs/release_review",
+        "python scripts/generate_model_based_inference.py --chain-input ../aave-bns-data-HF/data/processed/participation_and_concentration_metrics/data.csv --event-study-input ../aave-bns-data-HF/data/processed/failed_design_event_study/data.csv --output outputs/release_review/model_based_inference.csv"
+      ]
+    },
+    {
+      "result_id": "R09",
+      "result_family": "Source verification",
+      "public_result": "Governed event-source audit",
+      "dataset_configurations": [
+        "source_audit"
+      ],
+      "dataset_fields": [
+        "event_id",
+        "primary_source",
+        "verification_status"
+      ],
+      "data_assets": [
+        "data/processed/source_audit/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py",
+        "scripts/render_source_audit.py"
+      ],
+      "replication_mode": "DIRECT_GOVERNED_TABLE",
+      "output_locator": "inventory[name=source_audit]",
+      "evidence_status": "OBSERVED",
+      "interpretation_boundary": "Source verification does not remove measurement limitations"
+    },
+    {
+      "result_id": "R10",
+      "result_family": "Measurement definitions",
+      "public_result": "Metric formulas units and supported interpretations",
+      "dataset_configurations": [
+        "metric_registry"
+      ],
+      "dataset_fields": [
+        "measure_id",
+        "formula_latex",
+        "text_definition",
+        "unit",
+        "evidence_status"
+      ],
+      "data_assets": [
+        "data/processed/metric_registry/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py",
+        "scripts/render_network_measure_glossary.py"
+      ],
+      "replication_mode": "DIRECT_GOVERNED_TABLE",
+      "output_locator": "inventory[name=metric_registry]",
+      "evidence_status": "OBSERVED",
+      "interpretation_boundary": "Definitions constrain but do not validate unsupported constructs"
+    },
+    {
+      "result_id": "R11",
+      "result_family": "Infrastructure evidence boundary",
+      "public_result": "Route-level empirical dependence remains unavailable",
+      "dataset_configurations": [
+        "infrastructure_evidence_status"
+      ],
+      "dataset_fields": [
+        "status",
+        "required_evidence"
+      ],
+      "data_assets": [
+        "data/processed/infrastructure_evidence_status/data.csv"
+      ],
+      "code_entrypoints": [
+        "scripts/reproduce_release.py"
+      ],
+      "replication_mode": "NEGATIVE_EVIDENCE_GATE",
+      "output_locator": "inventory[name=infrastructure_evidence_status]",
+      "evidence_status": "BLOCKED",
+      "interpretation_boundary": "No empirical route HHI bridge reliance removal loss or resilience claim"
+    }
+  ],
+  "dataset_checksum_manifest_sha256": "7d973f75e2656b98f60eba9b29afd9818824680c0573aee103c96089b1b89710"
+}

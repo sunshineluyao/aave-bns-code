@@ -283,7 +283,7 @@ def stable_float(value: float, digits: int = SERIALIZATION_SIGNIFICANT_DIGITS) -
 
 def _stable_row(row: dict[str, Any]) -> dict[str, Any]:
     return {
-        key: stable_float(value) if isinstance(value, (float, np.floating)) else value
+        key: stable_float(value) if isinstance(value, float | np.floating) else value
         for key, value in row.items()
     }
 

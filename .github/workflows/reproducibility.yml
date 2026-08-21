@@ -1,0 +1,39 @@
+name: reproducibility
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install exact reviewer environment
+        run: |
+          python -m pip install -r requirements-release.lock
+          python -m pip install --no-build-isolation --no-deps -e .
+      - name: Lint
+        run: ruff check src tests scripts
+      - name: Unit and integration tests
+        run: python -m pytest -q
+      - name: Release contract
+        run: python scripts/validate_release_contract.py
+      - name: Result-index schema
+        run: python scripts/validate_result_replication_index.py --schema-only
+      - name: Offline synthetic release smoke
+        run: python scripts/run_release_smoke.py
+      - name: Reference checksum
+        run: cd release && sha256sum -c reference_results.sha256

@@ -33,10 +33,7 @@
     "infrastructure": "Route-level infrastructure evidence remains blocked in this fixture."
   },
   "cross_repository_candidates": {
-    "scientific_truth": "2222222222222222222222222222222222222222",
-    "paper": "3333333333333333333333333333333333333333",
-    "demo": "4444444444444444444444444444444444444444"
+    "scientific_source": "2222222222222222222222222222222222222222"
   },
   "final_cross_repository_lock": null
 }
-

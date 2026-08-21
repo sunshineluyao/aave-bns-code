@@ -6,9 +6,9 @@ import json
 import os
 import time
 import urllib.request
+from collections.abc import Callable
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "data/metadata/causal_v2_donor_registry.csv"
@@ -96,7 +96,9 @@ def verify_row(row: dict[str, str]) -> dict[str, object]:
         result["error"] = "no RPC URL configured"
         return result
     try:
-        call = lambda method, params: rpc_call(url, method, params)
+        def call(method: str, params: list[object]) -> object:
+            return rpc_call(url, method, params)
+
         observed_chain = int(str(call("eth_chainId", [])), 16)
         if observed_chain != int(row["chain_id"]):
             raise RpcError(

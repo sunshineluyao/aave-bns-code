@@ -1,7 +1,6 @@
-from datetime import datetime, timedelta, timezone
 import importlib.util
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[1]
 SPEC = importlib.util.spec_from_file_location(
@@ -53,3 +52,4 @@ def test_donor_must_cover_full_pre_window():
     formal = next(row for row in rows if row["clock"] == "formal_commitment")
     assert formal["eligible_market_ids"] == "early"
     assert formal["support_gate"] == "false"
+

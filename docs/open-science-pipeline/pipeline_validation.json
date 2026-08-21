@@ -2,15 +2,14 @@
   "errors": [],
   "migration_record_count": 32,
   "pins": {
-    "data_candidate": "e4eb1a7007c82a3ba020be3432eaa04d98675a05",
-    "paper": "8993caa628f0ff277f6f8e92c05bc8671d557ff1",
+    "data_candidate": "942b7c1b63c9b3deb1732e970b9a727a8a3a349a",
     "scientific_source": "932f6f4f62c3402adf38231ed83ea9ca17cc227c"
   },
   "processed_configurations": 14,
-  "publication_gate_count": 5,
-  "publication_status": "NOT_READY",
+  "publication_gate_count": 3,
+  "publication_status": "READY_FOR_HF_STAGING",
   "queried_evidence_files": 14,
-  "release_family": "Aave-BNS RC26",
+  "release_family": "Aave-BNS public reproducibility release 1.0.0-rc1",
   "stage_count": 8,
   "status": "PASS"
 }

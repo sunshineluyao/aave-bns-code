@@ -1,5 +1,5 @@
 {
-  "title": "Aave-BNS Open Data Science Pipeline — RC26",
+  "title": "Aave-BNS Open Data Science Pipeline",
   "iconography_mode": "rich-editorial",
   "editable_master": "open_science_pipeline.svg",
   "derived_assets": ["open_science_pipeline.pdf", "open_science_pipeline.png"],
@@ -70,11 +70,11 @@
       "evidence_implication": "observed, derived, bounded, synthetic, failed, and blocked states stay distinct"
     },
     {
-      "concept": "merged validated paper",
-      "visual_encoding": "typeset page stack with an explicit 114-page validation mark",
-      "shape_ids": ["icon-paper-stack", "label-rc26-paper"],
+      "concept": "public result replication index",
+      "visual_encoding": "result-by-data-by-code matrix with validated row checks",
+      "shape_ids": ["icon-replication-index", "label-replication-index"],
       "origin": "original editable vector geometry",
-      "evidence_implication": "the paper is a pinned claim consumer, not the data source"
+      "evidence_implication": "each reported result or withheld claim maps to public data and executable code"
     }
   ],
   "hero_graphic": {
@@ -83,7 +83,7 @@
   },
   "panel_graphics": {
     "acquisition_and_migration": ["icon-public-blocks", "icon-acquisition-terminal", "icon-queried-folder", "icon-processed-tables", "icon-provenance-shield"],
-    "analysis_and_outputs": ["icon-analysis-network", "icon-output-bundle", "icon-paper-stack"],
+    "analysis_and_outputs": ["icon-analysis-network", "icon-output-bundle", "icon-replication-index"],
     "claim_governance": ["hero-evidence-ledger", "hero-ledger-boundary"],
     "publication_boundary": ["icon-release-lock", "icon-release-checklist"]
   },
@@ -91,4 +91,3 @@
   "grayscale_encoding": "Implemented flow uses solid connectors and dark borders; migrated flow uses double checks; unresolved publication gates use dashed connectors and lock marks, so status does not depend on hue.",
   "external_assets": []
 }
-

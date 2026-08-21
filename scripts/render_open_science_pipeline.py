@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the editable RC26 open-science pipeline from its JSON registry."""
+"""Render the editable public open-science pipeline from its JSON registry."""
 
 from __future__ import annotations
 
@@ -7,7 +7,6 @@ import argparse
 import html
 import json
 from pathlib import Path
-
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = ROOT / "docs/open-science-pipeline/pipeline_manifest.json"
@@ -157,13 +156,14 @@ def icon_outputs(x: int, y: int) -> str:
     </g>"""
 
 
-def icon_paper(x: int, y: int) -> str:
+def icon_replication_index(x: int, y: int) -> str:
     return f"""
-    <g id="icon-paper-stack" fill="none" stroke="{PRIMARY}" stroke-width="3">
-      <path d="M {x+18} {y+8} h94 l24 24 v104 h-118 z" fill="{WHITE}"/>
-      <path d="M {x+112} {y+8} v24 h24 M {x+38} {y+50} h78 M {x+38} {y+68} h78 M {x+38} {y+86} h48"/>
-      <circle cx="{x+108}" cy="{y+108}" r="18" fill="{SECONDARY}" stroke="none"/>
-      <path d="M {x+98} {y+108} l7 7 14 -17" stroke="{WHITE}" stroke-width="4" stroke-linecap="round"/>
+    <g id="icon-replication-index" fill="none" stroke="{PRIMARY}" stroke-width="3">
+      <rect x="{x+8}" y="{y+8}" width="132" height="116" rx="10" fill="{WHITE}"/>
+      <path d="M {x+8} {y+40} h132 M {x+52} {y+8} v116 M {x+100} {y+8} v116"/>
+      <path d="M {x+20} {y+25} h20 M {x+64} {y+25} h24 M {x+112} {y+25} h16" stroke="{SECONDARY}" stroke-width="5"/>
+      <path d="M {x+20} {y+58} l6 6 11 -13 M {x+20} {y+84} l6 6 11 -13 M {x+20} {y+110} l6 6 11 -13" stroke="{SECONDARY}" stroke-width="4"/>
+      <path d="M {x+64} {y+60} h24 M {x+64} {y+86} h24 M {x+64} {y+112} h24 M {x+112} {y+60} h16 M {x+112} {y+86} h16 M {x+112} {y+112} h16"/>
     </g>"""
 
 
@@ -176,13 +176,15 @@ def evidence_ledger(x: int, y: int, w: int) -> str:
         ("FAILED_DESIGN", "diagnostic ≠ effect", ACCENT, "cross"),
         ("BLOCKED", "claim withheld", ACCENT, "lock"),
     ]
-    out=[f'<g id="hero-evidence-ledger">']
+    out=['<g id="hero-evidence-ledger">']
     for i,(state,note,color,kind) in enumerate(states):
         yy=y+i*34
         fill=color if kind=="solid" else WHITE
         out.append(f'<rect x="{x}" y="{yy}" width="18" height="18" rx="3" fill="{fill}" stroke="{color}" stroke-width="2"/>')
-        if kind=="cross": out.append(f'<path d="M {x+4} {yy+4} l10 10 M {x+14} {yy+4} l-10 10" stroke="{color}" stroke-width="2"/>')
-        if kind=="lock": out.append(f'<path d="M {x+5} {yy+8} v-3 a4 4 0 0 1 8 0 v3" stroke="{color}" stroke-width="2" fill="none"/>')
+        if kind == "cross":
+            out.append(f'<path d="M {x+4} {yy+4} l10 10 M {x+14} {yy+4} l-10 10" stroke="{color}" stroke-width="2"/>')
+        if kind == "lock":
+            out.append(f'<path d="M {x+5} {yy+8} v-3 a4 4 0 0 1 8 0 v3" stroke="{color}" stroke-width="2" fill="none"/>')
         out.append(text_block(f'ledger-state-{i}',x+30,yy+15,[state],size=16,weight=700,fill=INK))
         out.append(text_block(f'ledger-note-{i}',x+175,yy+15,[note],size=16,fill=INK))
     out.append(f'<path id="hero-ledger-boundary" d="M {x+w-8} {y-8} v204" stroke="{ACCENT}" stroke-width="3" stroke-dasharray="7 7"/>')
@@ -216,11 +218,11 @@ def render(manifest: dict) -> str:
     gate = stage(manifest, "provenance_gate")
     analysis = stage(manifest, "offline_analysis")
     outputs = stage(manifest, "release_outputs")
-    paper = stage(manifest, "rc26_paper")
+    replication = stage(manifest, "replication_index")
 
     svg=[f'''<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" role="img" aria-labelledby="figure-title figure-desc">
   <title id="figure-title">{esc(manifest['title'])}</title>
-  <desc id="figure-desc">Evidence-bounded RC26 workflow from completed acquisition through verified data migration, offline analysis, governed outputs, and a validated paper.</desc>
+  <desc id="figure-desc">Evidence-bounded public workflow from completed acquisition through verified data migration, offline analysis, governed outputs, and a result-level replication index.</desc>
   <defs>
     <marker id="arrow-primary" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="{PRIMARY}"/></marker>
     <marker id="arrow-accent" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="{ACCENT}"/></marker>
@@ -229,7 +231,7 @@ def render(manifest: dict) -> str:
   <rect id="title-band" x="0" y="0" width="1600" height="128" fill="{WHITE}"/>
   {text_block('main-title', 800, 55, [manifest['title']], size=36, weight=750, fill=INK, anchor='middle')}
   {text_block('main-subtitle', 800, 91, [manifest['subtitle']], size=20, weight=450, fill=INK, anchor='middle')}
-  {text_block('main-policy', 800, 118, ['No blockchain re-query in the RC26 release path'], size=16, weight=700, fill=SECONDARY, anchor='middle')}
+  {text_block('main-policy', 800, 118, ['No blockchain re-query in the public release path'], size=16, weight=700, fill=SECONDARY, anchor='middle')}
 ''']
 
     svg.append(panel("panel-acquisition",50,150,1500,315,"1 · Acquisition identity and verified migration",PRIMARY))
@@ -249,7 +251,7 @@ def render(manifest: dict) -> str:
     svg.append(panel("panel-analysis",50,495,930,420,"2 · Offline analysis and governed outputs",SECONDARY))
     lower=[(analysis,85,575,250,250,PRIMARY,icon_network(140,582),"label-offline-analysis",[analysis['short_label'],"network · HHI · bounds"]),
            (outputs,385,575,250,250,SECONDARY,icon_outputs(435,582),"label-release-outputs",[outputs['short_label'],"byte-stable snapshot"]),
-           (paper,685,575,250,250,PRIMARY,icon_paper(740,570),"label-rc26-paper",[paper['short_label'],"merged · read-only"])]
+           (replication,685,575,250,250,PRIMARY,icon_replication_index(740,570),"label-replication-index",[replication['short_label'],"public · validated"])]
     for item,x,y,w,h,border,icon,label_id,notes in lower:
         svg.extend([stage_card('card-'+item['id'],x,y,w,h,border=border),icon,
                     text_block(label_id,x+w//2,y+164,[item['title']],size=20,weight=700,anchor='middle'),
@@ -264,12 +266,12 @@ def render(manifest: dict) -> str:
 
     svg.append(panel("panel-publication",1010,800,540,140,"4 · Public-release boundary",ACCENT))
     svg.append(publication_icons(1040,864))
-    svg.append(text_block('publication-gate-label',1395,880,['License · reuse · privacy', 'Hub · Viewer · Croissant'],size=15,weight=650,anchor='middle',line_height=22))
-    svg.append(text_block('publication-status-label',1395,929,['NOT READY FOR PUBLICATION'],size=13,weight=750,fill=ACCENT,anchor='middle'))
+    svg.append(text_block('publication-gate-label',1395,880,['Upload · immutable pin', 'Viewer · Croissant'],size=15,weight=650,anchor='middle',line_height=22))
+    svg.append(text_block('publication-status-label',1395,929,['READY FOR HF STAGING'],size=13,weight=750,fill=SECONDARY,anchor='middle'))
     svg.append(arrow('publication-dashed-edge',1490,780,1490,798,color=ACCENT,dashed=True))
 
     svg.append(f'<line id="footer-divider" x1="50" y1="946" x2="1550" y2="946" stroke="{DIVIDER}" stroke-width="2"/>')
-    svg.append(text_block('footer-left',55,976,[f"Source {manifest['revisions']['scientific_source'][:8]} · Data {manifest['revisions']['data_candidate'][:8]} · Paper {manifest['revisions']['paper'][:8]}"],size=14,fill=INK))
+    svg.append(text_block('footer-left',55,976,[f"Source {manifest['revisions']['scientific_source'][:8]} · Data {manifest['revisions']['data_candidate'][:8]} · Code current reviewed commit"],size=14,fill=INK))
     svg.append(text_block('footer-right',1545,976,[f"Registry v{manifest['schema_version']} · checked {manifest['checked_date']}"],size=14,fill=INK,anchor='end'))
     svg.append('</svg>\n')
     return ''.join(svg)

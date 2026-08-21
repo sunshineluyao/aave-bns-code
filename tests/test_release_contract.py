@@ -3,7 +3,6 @@ from pathlib import Path
 
 from scripts.validate_release_contract import validate
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -15,10 +14,10 @@ def test_release_contract_passes():
     assert validate(load_contract()) == []
 
 
-def test_ready_is_rejected_while_blocked():
+def test_publication_claim_is_rejected_while_external_gates_remain():
     contract = load_contract()
-    contract["status"] = "READY"
-    assert any("cannot be READY" in item for item in validate(contract))
+    contract["status"] = "PUBLISHED"
+    assert any("cannot claim publication" in item for item in validate(contract))
 
 
 def test_scientific_boundaries_are_explicit():

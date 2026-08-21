@@ -4,9 +4,9 @@
     1
   ],
   "thresholds_pt": {
-    "min_font_size": 8.0,
-    "min_text_gap": 0.0,
-    "text_padding": 0.0,
+    "min_font_size": 7.0,
+    "min_text_gap": 1.0,
+    "text_padding": 0.75,
     "caption_gap": 4.0
   },
   "passed": true,

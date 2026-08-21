@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Standard-library smoke gate for the RC26 release reproduction interface."""
+"""Standard-library smoke gate for the public release reproduction interface."""
 
 from __future__ import annotations
 

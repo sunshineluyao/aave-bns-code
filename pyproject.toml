@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "aave-bns"
-version = "0.1.0"
+version = "1.0.0rc1"
 description = "Reproducible protocol-network research pipeline for the longitudinal Aave decentralization study"
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
   {name = "Ziqiao Ao"},
   {name = "Lin William Cong"},
@@ -21,6 +21,13 @@ dependencies = [
   "networkx>=3.2,<4",
   "PyYAML>=6.0,<7",
   "requests>=2.31,<3"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Information Analysis"
 ]
 
 [project.optional-dependencies]
@@ -57,3 +64,4 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501"]  # Generated SVG/LaTeX source contains intentionally long literals.
