@@ -7,7 +7,11 @@ import numpy as np
 import pandas as pd
 
 
-SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "generate_model_based_inference.py"
+SCRIPT = (
+    Path(__file__).resolve().parents[1]
+    / "scripts"
+    / "generate_model_based_inference.py"
+)
 SPEC = importlib.util.spec_from_file_location("model_based_inference", SCRIPT)
 MODULE = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -23,16 +27,31 @@ def test_generates_complete_stable_ledger(tmp_path: Path) -> None:
                 {
                     "chain": chain,
                     "event_week": week,
-                    "active_beneficiary_addresses": 1000 + 8 * week + (70 if week > 0 else 0) + 50 * offset,
-                    "beneficiary_hhi": 0.02 + 0.0002 * week - (0.001 if week > 0 else 0) + 0.002 * offset,
+                    "active_beneficiary_addresses": 1000
+                    + 8 * week
+                    + (70 if week > 0 else 0)
+                    + 50 * offset,
+                    "beneficiary_hhi": 0.02
+                    + 0.0002 * week
+                    - (0.001 if week > 0 else 0)
+                    + 0.002 * offset,
                 }
             )
     chain = pd.DataFrame(chain_rows)
     event_rows = []
-    for outcome, scale in (("log_active_beneficiary_addresses", 1.0), ("beneficiary_hhi", 0.01)):
+    for outcome, scale in (
+        ("log_active_beneficiary_addresses", 1.0),
+        ("beneficiary_hhi", 0.01),
+    ):
         for week in weeks:
             gap = scale * (0.1 * week + (0.8 + 0.03 * week if week > 0 else 0))
-            event_rows.append({"outcome_id": outcome, "event_week": week, "gap_arbitrum_minus_gnosis": gap})
+            event_rows.append(
+                {
+                    "outcome_id": outcome,
+                    "event_week": week,
+                    "gap_arbitrum_minus_gnosis": gap,
+                }
+            )
     event = pd.DataFrame(event_rows)
     chain_path = tmp_path / "chain.csv"
     event_path = tmp_path / "event.csv"
