@@ -3,7 +3,7 @@
 This MIT-licensed repository contains the executable acquisition, transformation,
 simulation, network-analysis, diagnostic, and release-validation code for the
 Aave-BNS study. Public release inputs are provided by
-[`sunshineluyao/aave-bns-data-HF`](https://github.com/sunshineluyao/aave-bns-data-HF).
+[Hugging Face Dataset `zlysunshine/aave-bns-data`](https://huggingface.co/datasets/zlysunshine/aave-bns-data).
 The release path is intentionally limited to the public data and code products.
 
 ## Reproduce the public result snapshot
@@ -12,8 +12,10 @@ Clone the data and code repositories side by side, pin the validated data
 candidate, and run the fail-closed reviewer path:
 
 ```bash
-git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout 49265b508c1a6b76f21a6bbbf5ac4f40946bd96f
+# Download the immutable public dataset snapshot from Hugging Face
+hf download zlysunshine/aave-bns-data --repo-type dataset \
+  --revision 49265b508c1a6b76f21a6bbbf5ac4f40946bd96f \
+  --local-dir ../aave-bns-data-HF
 
 git clone https://github.com/sunshineluyao/aave-bns-code.git
 cd aave-bns-code
@@ -39,24 +41,25 @@ provider, or API.
 ## Result-by-result replication map
 
 The machine-readable source for this table is
-`release/result_replication_index.json`; the validator cross-checks it against
+`release/result_replication_index.json`. The public data assets are hosted at
+[https://huggingface.co/datasets/zlysunshine/aave-bns-data](https://huggingface.co/datasets/zlysunshine/aave-bns-data); the validator cross-checks it against
 `metadata/result_data_crosswalk.csv` in the data repository. “Direct” means the
 reported table is itself a governed, checksummed result asset; “computed” means
 the release harness recalculates a compact summary from that asset.
 
-| ID | Reported result or boundary | Public data assets | Code path and reproduced output |
-|---|---|---|---|
-| R01 | Audited weekly protocol-action counts | `observed_protocol_action_counts` | `scripts/reproduce_release.py`; direct checksum/schema/row validation in `results.inventory` |
-| R02 | Governed event dates and timing rules | `treatment_event_registry` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
-| R03 | Weekly address participation and event-frequency concentration | `participation_and_concentration_metrics` | computed as `results.event_totals` and `results.weekly_beneficiary_hhi` |
-| R04 | Weekly Ethereum–Arbitrum address overlap | `cross_chain_overlap` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
-| R05 | Chain-layer topology and concentration metrics | `structural_metrics` | computed as `results.all_actions_structural_snapshot` |
-| R06 | Economic-actor concentration bounds and change envelope | `actor_bounds_period`, `actor_bounds_change` | computed as `results.economic_actor_hhi_change_bound`; signed actor conclusion must remain false |
-| R07 | Synthetic network-formation scenarios | `simulation` | direct release validation; regenerate with `PYTHONPATH=src python -m aave_bns.cli simulate` |
-| R08 | Complete model-based uncertainty ledger: chain-relative changes, comparative coefficients, controlled ITS, Wald tests, pretrends, horizons, and anticipation sensitivity | `participation_and_concentration_metrics`, `failed_design_event_study`, `model_based_inference` | `scripts/generate_model_based_inference.py`; 42/42 rows reproduced with calendar-aware HAC and stable nonzero tail probabilities |
-| R09 | Governed event-source verification | `source_audit` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
-| R10 | Metric formulas, units, and supported interpretations | `metric_registry` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
-| R11 | Route-level infrastructure evidence is unavailable | metadata-only `infrastructure_evidence_status` | negative replication gate: the table must remain excluded from Hub configs and the claim remains `BLOCKED` |
+| ID | Reported result or boundary | Original source | Query-data code | Queried data | Process-data code | Processed data | Reproduced result |
+|---|---|---|---|---|---|---|---|
+| R01 | Audited weekly protocol-action counts | `Ethereum, Arbitrum, and Gnosis Aave V3 Pool logs via EVM JSON-RPC eth_getLogs`<br>`Official Aave V3 address book and IPool interface` | `queries/ethereum/`<br>`queries/arbitrum/README.md`<br>`queries/gnosis/README.md`<br>`src/aave_bns/aave_v3_events.py` | `data/queried/real_v2_ethereum/`<br>`data/queried/real_v6_gnosis/`<br>`Arbitrum acquisition receipts are governed but the row-level queried partition is not separately published` | `src/aave_bns/real_v2_ethereum.py`<br>`src/aave_bns/real_v5_arbitrum.py`<br>`src/aave_bns/real_v6_gnosis_donor.py`<br>`scripts/reproduce_release.py` | `data/processed/observed_protocol_action_counts/data.csv` | `inventory[name=observed_protocol_action_counts]` |
+| R02 | Governed event dates and timing rules | `Executed on-chain Aave governance payloads and official Aave governance records` | `NOT_APPLICABLE: event verification is registry/audit work, not bulk chain-log acquisition` | `Companion Dataset metadata source and event registries` | `scripts/render_source_audit.py`<br>`scripts/reproduce_release.py` | `data/processed/treatment_event_registry/data.csv` | `inventory[name=treatment_event_registry]` |
+| R03 | Weekly address participation and event-frequency concentration | `Ethereum, Arbitrum, and Gnosis Aave V3 Pool action logs` | `queries/ethereum/`<br>`queries/arbitrum/README.md`<br>`queries/gnosis/README.md` | `data/queried/real_v2_ethereum/`<br>`data/queried/real_v6_gnosis/`<br>`Arbitrum queried partition not separately published` | `src/aave_bns/real_v2_ethereum.py`<br>`src/aave_bns/real_v5_arbitrum.py`<br>`src/aave_bns/real_v6_gnosis_donor.py`<br>`scripts/reproduce_release.py` | `data/processed/participation_and_concentration_metrics/data.csv` | `results.event_totals;results.weekly_beneficiary_hhi` |
+| R04 | Weekly Ethereum-Arbitrum address overlap | `Ethereum and Arbitrum Aave V3 Pool action logs` | `queries/ethereum/`<br>`queries/arbitrum/README.md` | `data/queried/real_v2_ethereum/`<br>`Arbitrum queried partition not separately published` | `src/aave_bns/real_v5_arbitrum.py`<br>`scripts/reproduce_release.py` | `data/processed/cross_chain_overlap/data.csv` | `inventory[name=cross_chain_overlap]` |
+| R05 | Chain-layer topology and concentration metrics | `Decoded Ethereum and Arbitrum Aave V3 Pool action logs` | `queries/ethereum/`<br>`queries/arbitrum/README.md` | `data/queried/real_v2_ethereum/`<br>`Arbitrum queried partition not separately published` | `src/aave_bns/network.py`<br>`scripts/reproduce_release.py` | `data/processed/structural_metrics/data.csv` | `results.all_actions_structural_snapshot` |
+| R06 | Economic-actor concentration bounds and change envelope | `Address-level action records plus governed contract/entity evidence` | `queries/ethereum/`<br>`queries/arbitrum/README.md` | `Companion Dataset queried records and provenance receipts` | `scripts/run_real_v4_partial_identification.py`<br>`scripts/reproduce_release.py` | `data/processed/actor_bounds_period/data.csv`<br>`data/processed/actor_bounds_change/data.csv` | `results.economic_actor_hhi_change_bound` |
+| R07 | Synthetic network-formation scenarios | `NOT_APPLICABLE: deterministic synthetic simulation` | `NOT_APPLICABLE: no empirical query` | `NOT_APPLICABLE: no queried empirical data` | `src/aave_bns/simulation.py`<br>`scripts/reproduce_release.py` | `data/processed/simulation/data.csv` | `inventory[name=simulation];outputs/simulation/scenario_results.csv` |
+| R08 | Complete 42-row model-based uncertainty ledger | `Arbitrum and Gnosis Aave V3 Pool logs plus governed event calendar` | `queries/arbitrum/README.md`<br>`queries/gnosis/README.md` | `data/queried/real_v6_gnosis/`<br>`Arbitrum queried partition not separately published` | `src/aave_bns/real_v6_gnosis_donor.py`<br>`scripts/generate_model_based_inference.py`<br>`scripts/reproduce_release.py` | `data/processed/participation_and_concentration_metrics/data.csv`<br>`data/processed/failed_design_event_study/data.csv`<br>`data/processed/model_based_inference/data.csv` | `outputs/release_review/model_based_inference.csv; governed data configuration model_based_inference` |
+| R09 | Governed event-source audit | `Official Aave governance forum, executed governance payloads, address book, and on-chain event records` | `NOT_APPLICABLE: source verification rather than bulk acquisition` | `Companion Dataset metadata source registry` | `scripts/render_source_audit.py`<br>`scripts/reproduce_release.py` | `data/processed/source_audit/data.csv` | `inventory[name=source_audit]` |
+| R10 | Metric formulas units and supported interpretations | `Published metric definitions and formulas implemented by this release` | `NOT_APPLICABLE: definitional registry` | `NOT_APPLICABLE: no queried observations` | `scripts/render_network_measure_glossary.py`<br>`scripts/reproduce_release.py` | `data/processed/metric_registry/data.csv` | `inventory[name=metric_registry]` |
+| R11 | Route-level empirical dependence remains unavailable | `Required route, bridge, relayer, and infrastructure evidence is unavailable` | `NOT_APPLICABLE: blocked evidence boundary` | `NOT_APPLICABLE: no verified queried route-level data` | `scripts/reproduce_release.py` | `data/processed/infrastructure_evidence_status/data.csv` | `inventory[name=infrastructure_evidence_status]` |
 
 Every row has an exact command, field list, evidence status, output locator, and
 interpretation boundary in `release/result_replication_index.json`.
@@ -115,7 +118,7 @@ in `docs/NEURIPS_2026_CODE_READINESS.md`.
 ```text
 analysis/                     reference statistical implementation
 configs/                      chain, source, contract, and analysis settings
-queries/                      source-specific acquisition queries
+queries/                      chain-specific acquisition entry points and contracts
 src/aave_bns/                 acquisition, transformation, network, and analysis code
 scripts/reproduce_release.py  offline data-to-results release gate
 release/                      public pins, result index, reference, and contract
