@@ -3,7 +3,7 @@
   "checked_date": "2026-08-21",
   "status": "VALIDATED_PUBLIC_DATA_TO_RESULTS_MAP",
   "public_repositories": {
-    "data": "https://github.com/sunshineluyao/aave-bns-data-HF",
+    "data": "https://huggingface.co/datasets/zlysunshine/aave-bns-data",
     "code": "https://github.com/sunshineluyao/aave-bns-code"
   },
   "dataset_revision": "49265b508c1a6b76f21a6bbbf5ac4f40946bd96f",
@@ -30,7 +30,34 @@
       "replication_mode": "DIRECT_GOVERNED_TABLE",
       "output_locator": "inventory[name=observed_protocol_action_counts]",
       "evidence_status": "DERIVED",
-      "interpretation_boundary": "Event frequency is not value or capital"
+      "interpretation_boundary": "Event frequency is not value or capital",
+      "original_sources": [
+        "Ethereum, Arbitrum, and Gnosis Aave V3 Pool logs via EVM JSON-RPC eth_getLogs",
+        "Official Aave V3 address book and IPool interface"
+      ],
+      "query_code": [
+        "queries/ethereum/",
+        "queries/arbitrum/README.md",
+        "queries/gnosis/README.md",
+        "src/aave_bns/aave_v3_events.py"
+      ],
+      "queried_data": [
+        "data/queried/real_v2_ethereum/",
+        "data/queried/real_v6_gnosis/",
+        "Arbitrum acquisition receipts are governed but the row-level queried partition is not separately published"
+      ],
+      "process_code": [
+        "src/aave_bns/real_v2_ethereum.py",
+        "src/aave_bns/real_v5_arbitrum.py",
+        "src/aave_bns/real_v6_gnosis_donor.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/observed_protocol_action_counts/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=observed_protocol_action_counts]"
+      ]
     },
     {
       "result_id": "R02",
@@ -53,7 +80,26 @@
       "replication_mode": "DIRECT_GOVERNED_TABLE",
       "output_locator": "inventory[name=treatment_event_registry]",
       "evidence_status": "OBSERVED",
-      "interpretation_boundary": "Registry timing does not itself identify an effect"
+      "interpretation_boundary": "Registry timing does not itself identify an effect",
+      "original_sources": [
+        "Executed on-chain Aave governance payloads and official Aave governance records"
+      ],
+      "query_code": [
+        "NOT_APPLICABLE: event verification is registry/audit work, not bulk chain-log acquisition"
+      ],
+      "queried_data": [
+        "Companion Dataset metadata source and event registries"
+      ],
+      "process_code": [
+        "scripts/render_source_audit.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/treatment_event_registry/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=treatment_event_registry]"
+      ]
     },
     {
       "result_id": "R03",
@@ -77,7 +123,32 @@
       "replication_mode": "COMPUTED_REFERENCE",
       "output_locator": "results.event_totals;results.weekly_beneficiary_hhi",
       "evidence_status": "DERIVED",
-      "interpretation_boundary": "Addresses are not people or independent economic actors"
+      "interpretation_boundary": "Addresses are not people or independent economic actors",
+      "original_sources": [
+        "Ethereum, Arbitrum, and Gnosis Aave V3 Pool action logs"
+      ],
+      "query_code": [
+        "queries/ethereum/",
+        "queries/arbitrum/README.md",
+        "queries/gnosis/README.md"
+      ],
+      "queried_data": [
+        "data/queried/real_v2_ethereum/",
+        "data/queried/real_v6_gnosis/",
+        "Arbitrum queried partition not separately published"
+      ],
+      "process_code": [
+        "src/aave_bns/real_v2_ethereum.py",
+        "src/aave_bns/real_v5_arbitrum.py",
+        "src/aave_bns/real_v6_gnosis_donor.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/participation_and_concentration_metrics/data.csv"
+      ],
+      "result_outputs": [
+        "results.event_totals;results.weekly_beneficiary_hhi"
+      ]
     },
     {
       "result_id": "R04",
@@ -101,7 +172,28 @@
       "replication_mode": "DIRECT_GOVERNED_TABLE",
       "output_locator": "inventory[name=cross_chain_overlap]",
       "evidence_status": "DERIVED",
-      "interpretation_boundary": "Address overlap is descriptive and not bridge-flow evidence"
+      "interpretation_boundary": "Address overlap is descriptive and not bridge-flow evidence",
+      "original_sources": [
+        "Ethereum and Arbitrum Aave V3 Pool action logs"
+      ],
+      "query_code": [
+        "queries/ethereum/",
+        "queries/arbitrum/README.md"
+      ],
+      "queried_data": [
+        "data/queried/real_v2_ethereum/",
+        "Arbitrum queried partition not separately published"
+      ],
+      "process_code": [
+        "src/aave_bns/real_v5_arbitrum.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/cross_chain_overlap/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=cross_chain_overlap]"
+      ]
     },
     {
       "result_id": "R05",
@@ -127,7 +219,28 @@
       "replication_mode": "COMPUTED_REFERENCE",
       "output_locator": "results.all_actions_structural_snapshot",
       "evidence_status": "DERIVED",
-      "interpretation_boundary": "Topology metrics do not form a scalar decentralization ranking"
+      "interpretation_boundary": "Topology metrics do not form a scalar decentralization ranking",
+      "original_sources": [
+        "Decoded Ethereum and Arbitrum Aave V3 Pool action logs"
+      ],
+      "query_code": [
+        "queries/ethereum/",
+        "queries/arbitrum/README.md"
+      ],
+      "queried_data": [
+        "data/queried/real_v2_ethereum/",
+        "Arbitrum queried partition not separately published"
+      ],
+      "process_code": [
+        "src/aave_bns/network.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/structural_metrics/data.csv"
+      ],
+      "result_outputs": [
+        "results.all_actions_structural_snapshot"
+      ]
     },
     {
       "result_id": "R06",
@@ -155,7 +268,28 @@
       "replication_mode": "COMPUTED_AND_BOUNDED",
       "output_locator": "results.economic_actor_hhi_change_bound",
       "evidence_status": "BOUNDED",
-      "interpretation_boundary": "The signed actor-level change is not identified"
+      "interpretation_boundary": "The signed actor-level change is not identified",
+      "original_sources": [
+        "Address-level action records plus governed contract/entity evidence"
+      ],
+      "query_code": [
+        "queries/ethereum/",
+        "queries/arbitrum/README.md"
+      ],
+      "queried_data": [
+        "Companion Dataset queried records and provenance receipts"
+      ],
+      "process_code": [
+        "scripts/run_real_v4_partial_identification.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/actor_bounds_period/data.csv",
+        "data/processed/actor_bounds_change/data.csv"
+      ],
+      "result_outputs": [
+        "results.economic_actor_hhi_change_bound"
+      ]
     },
     {
       "result_id": "R07",
@@ -186,7 +320,26 @@
       "replication_mode": "SYNTHETIC_REGENERATION",
       "output_locator": "inventory[name=simulation];outputs/simulation/scenario_results.csv",
       "evidence_status": "SYNTHETIC",
-      "interpretation_boundary": "Uncalibrated simulation is not historical evidence"
+      "interpretation_boundary": "Uncalibrated simulation is not historical evidence",
+      "original_sources": [
+        "NOT_APPLICABLE: deterministic synthetic simulation"
+      ],
+      "query_code": [
+        "NOT_APPLICABLE: no empirical query"
+      ],
+      "queried_data": [
+        "NOT_APPLICABLE: no queried empirical data"
+      ],
+      "process_code": [
+        "src/aave_bns/simulation.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/simulation/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=simulation];outputs/simulation/scenario_results.csv"
+      ]
     },
     {
       "result_id": "R08",
@@ -228,6 +381,30 @@
       "commands": [
         "python scripts/reproduce_release.py --dataset-root ../aave-bns-data-HF --checksum-scope all --output-dir outputs/release_review",
         "python scripts/generate_model_based_inference.py --chain-input ../aave-bns-data-HF/data/processed/participation_and_concentration_metrics/data.csv --event-study-input ../aave-bns-data-HF/data/processed/failed_design_event_study/data.csv --output outputs/release_review/model_based_inference.csv"
+      ],
+      "original_sources": [
+        "Arbitrum and Gnosis Aave V3 Pool logs plus governed event calendar"
+      ],
+      "query_code": [
+        "queries/arbitrum/README.md",
+        "queries/gnosis/README.md"
+      ],
+      "queried_data": [
+        "data/queried/real_v6_gnosis/",
+        "Arbitrum queried partition not separately published"
+      ],
+      "process_code": [
+        "src/aave_bns/real_v6_gnosis_donor.py",
+        "scripts/generate_model_based_inference.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/participation_and_concentration_metrics/data.csv",
+        "data/processed/failed_design_event_study/data.csv",
+        "data/processed/model_based_inference/data.csv"
+      ],
+      "result_outputs": [
+        "outputs/release_review/model_based_inference.csv; governed data configuration model_based_inference"
       ]
     },
     {
@@ -252,7 +429,26 @@
       "replication_mode": "DIRECT_GOVERNED_TABLE",
       "output_locator": "inventory[name=source_audit]",
       "evidence_status": "OBSERVED",
-      "interpretation_boundary": "Source verification does not remove measurement limitations"
+      "interpretation_boundary": "Source verification does not remove measurement limitations",
+      "original_sources": [
+        "Official Aave governance forum, executed governance payloads, address book, and on-chain event records"
+      ],
+      "query_code": [
+        "NOT_APPLICABLE: source verification rather than bulk acquisition"
+      ],
+      "queried_data": [
+        "Companion Dataset metadata source registry"
+      ],
+      "process_code": [
+        "scripts/render_source_audit.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/source_audit/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=source_audit]"
+      ]
     },
     {
       "result_id": "R10",
@@ -278,7 +474,26 @@
       "replication_mode": "DIRECT_GOVERNED_TABLE",
       "output_locator": "inventory[name=metric_registry]",
       "evidence_status": "OBSERVED",
-      "interpretation_boundary": "Definitions constrain but do not validate unsupported constructs"
+      "interpretation_boundary": "Definitions constrain but do not validate unsupported constructs",
+      "original_sources": [
+        "Published metric definitions and formulas implemented by this release"
+      ],
+      "query_code": [
+        "NOT_APPLICABLE: definitional registry"
+      ],
+      "queried_data": [
+        "NOT_APPLICABLE: no queried observations"
+      ],
+      "process_code": [
+        "scripts/render_network_measure_glossary.py",
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/metric_registry/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=metric_registry]"
+      ]
     },
     {
       "result_id": "R11",
@@ -300,7 +515,25 @@
       "replication_mode": "NEGATIVE_EVIDENCE_GATE",
       "output_locator": "inventory[name=infrastructure_evidence_status]",
       "evidence_status": "BLOCKED",
-      "interpretation_boundary": "No empirical route HHI bridge reliance removal loss or resilience claim"
+      "interpretation_boundary": "No empirical route HHI bridge reliance removal loss or resilience claim",
+      "original_sources": [
+        "Required route, bridge, relayer, and infrastructure evidence is unavailable"
+      ],
+      "query_code": [
+        "NOT_APPLICABLE: blocked evidence boundary"
+      ],
+      "queried_data": [
+        "NOT_APPLICABLE: no verified queried route-level data"
+      ],
+      "process_code": [
+        "scripts/reproduce_release.py"
+      ],
+      "processed_data": [
+        "data/processed/infrastructure_evidence_status/data.csv"
+      ],
+      "result_outputs": [
+        "inventory[name=infrastructure_evidence_status]"
+      ]
     }
   ],
   "dataset_checksum_manifest_sha256": "7d973f75e2656b98f60eba9b29afd9818824680c0573aee103c96089b1b89710"
