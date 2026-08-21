@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "release_family": "Aave-BNS public reproducibility release 1.0.0-rc1",
+  "release_family": "Aave-BNS public reproducibility release 1.0.0-rc2",
   "dataset": {
     "repository": "https://github.com/sunshineluyao/aave-bns-data-HF",
-    "candidate_revision": "942b7c1b63c9b3deb1732e970b9a727a8a3a349a",
+    "candidate_revision": "49265b508c1a6b76f21a6bbbf5ac4f40946bd96f",
     "locked_revision": null,
-    "package_version": "1.0.0-rc1",
+    "package_version": "1.0.0-rc2",
     "release_manifest": "metadata/release_manifest.json",
     "checksum_manifest": "metadata/checksums.sha256"
   },
@@ -23,7 +23,8 @@
     "failed_design_placebos": "FAILED_DESIGN",
     "failed_design_pretrends": "FAILED_DESIGN",
     "source_audit": "OBSERVED",
-    "metric_registry": "OBSERVED"
+    "metric_registry": "OBSERVED",
+    "model_based_inference": "FAILED_DESIGN"
   },
   "metadata_only_evidence_gaps": {
     "infrastructure_evidence_status": "BLOCKED",
@@ -33,7 +34,8 @@
     "data/processed/participation_and_concentration_metrics/data.csv",
     "data/processed/structural_metrics/data.csv",
     "data/processed/failed_design_estimates/data.csv",
-    "data/processed/actor_bounds_change/data.csv"
+    "data/processed/actor_bounds_change/data.csv",
+    "data/processed/model_based_inference/data.csv"
   ],
   "reference": {
     "results": "release/reference_results.json",
