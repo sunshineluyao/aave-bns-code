@@ -5,9 +5,12 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import re
 from pathlib import Path, PurePosixPath
+
+import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 INDEX = ROOT / "release/result_replication_index.json"
@@ -17,6 +20,7 @@ EXPECTED_REPOSITORIES = {
     "code": "https://github.com/sunshineluyao/aave-bns-code",
 }
 SHA40 = re.compile(r"^[0-9a-f]{40}$")
+SHA256 = re.compile(r"^[0-9a-f]{64}$")
 NONPUBLIC_REPOSITORY_URL = re.compile(
     r"https://github\.com/[^\s\"']+/[^/\s\"']*(?:paper|manuscript)[^/\s\"']*",
     re.IGNORECASE,
@@ -30,6 +34,43 @@ def safe_path(root: Path, relative: str) -> Path:
     path = root.joinpath(*posix.parts).resolve()
     path.relative_to(root.resolve())
     return path
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def validate_inference_ledger(dataset_root: Path) -> list[str]:
+    """Recompute R08 and compare every governed value, not merely its row count."""
+    from generate_model_based_inference import generate
+
+    chain_path = dataset_root / "data/processed/participation_and_concentration_metrics/data.csv"
+    event_path = dataset_root / "data/processed/failed_design_event_study/data.csv"
+    governed_path = dataset_root / "data/processed/model_based_inference/data.csv"
+    generated = generate(chain_path, event_path)
+    governed = pd.read_csv(governed_path)
+    key = ["analysis_family", "outcome", "term", "specification"]
+    errors: list[str] = []
+    if list(generated.columns) != list(governed.columns):
+        return ["R08 generated and governed ledger columns differ"]
+    generated = generated.sort_values(key).reset_index(drop=True)
+    governed = governed.sort_values(key).reset_index(drop=True)
+    try:
+        pd.testing.assert_frame_equal(
+            generated,
+            governed,
+            check_dtype=False,
+            check_exact=False,
+            rtol=1e-10,
+            atol=1e-12,
+        )
+    except AssertionError as exc:
+        errors.append(f"R08 generated ledger differs from governed ledger: {exc}")
+    return errors
 
 
 def main() -> int:
@@ -50,6 +91,9 @@ def main() -> int:
         errors.append("public_repositories must contain exactly the public data and code repositories")
     if not SHA40.fullmatch(str(index.get("dataset_revision", ""))):
         errors.append("dataset_revision must be an immutable 40-character SHA")
+    expected_manifest_sha256 = str(index.get("dataset_checksum_manifest_sha256", ""))
+    if not SHA256.fullmatch(expected_manifest_sha256):
+        errors.append("dataset_checksum_manifest_sha256 must be a 64-character SHA-256")
     common_command = str(index.get("common_release_command", ""))
     if "scripts/reproduce_release.py" not in common_command or "--dataset-root" not in common_command:
         errors.append("common_release_command must run the offline release entry point")
@@ -84,6 +128,14 @@ def main() -> int:
             errors.append("--dataset-root is required unless --schema-only is used")
         else:
             dataset_root = args.dataset_root.resolve()
+            checksum_manifest = dataset_root / "metadata/checksums.sha256"
+            if not checksum_manifest.is_file():
+                errors.append("dataset checksum manifest is missing")
+            elif sha256_file(checksum_manifest) != expected_manifest_sha256:
+                errors.append(
+                    "dataset checkout does not match the pinned checksum-manifest receipt "
+                    f"{expected_manifest_sha256}"
+                )
             manifest = json.loads(
                 (dataset_root / "metadata/release_manifest.json").read_text(encoding="utf-8")
             )
@@ -121,6 +173,7 @@ def main() -> int:
                     else:
                         if not path.is_file():
                             errors.append(f"{result_id} data asset is missing: {relative}")
+            errors.extend(validate_inference_ledger(dataset_root))
 
     suffixes = {".md", ".json", ".csv", ".yml", ".yaml", ".txt", ".cff", ".svg"}
     for path in ROOT.rglob("*"):
