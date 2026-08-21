@@ -22,6 +22,10 @@ source .venv/bin/activate
 python -m pip install -r requirements-release.lock
 
 make reproduce-release DATASET_ROOT=../aave-bns-data-HF
+python scripts/generate_model_based_inference.py \
+  --chain-input ../aave-bns-data-HF/data/processed/participation_and_concentration_metrics/data.csv \
+  --event-study-input ../aave-bns-data-HF/data/processed/failed_design_event_study/data.csv \
+  --output outputs/release_review/model_based_inference.csv
 make result-index-validate DATASET_ROOT=../aave-bns-data-HF
 (cd release && sha256sum -c reference_results.sha256)
 ```
@@ -49,7 +53,7 @@ the release harness recalculates a compact summary from that asset.
 | R05 | Chain-layer topology and concentration metrics | `structural_metrics` | computed as `results.all_actions_structural_snapshot` |
 | R06 | Economic-actor concentration bounds and change envelope | `actor_bounds_period`, `actor_bounds_change` | computed as `results.economic_actor_hhi_change_bound`; signed actor conclusion must remain false |
 | R07 | Synthetic network-formation scenarios | `simulation` | direct release validation; regenerate with `PYTHONPATH=src python -m aave_bns.cli simulate` |
-| R08 | Arbitrum–Gnosis diagnostic, event study, placebos, and pretrends | four `failed_design_*` configurations | horizon-16 summary in `results.failed_design_horizon_16`; all four tables validated and retained as `FAILED_DESIGN` |
+| R08 | Complete model-based uncertainty ledger: chain-relative changes, comparative coefficients, controlled ITS, Wald tests, pretrends, horizons, and anticipation sensitivity | `participation_and_concentration_metrics`, `failed_design_event_study`, `model_based_inference` | `scripts/generate_model_based_inference.py`; 42/42 rows reproduced with calendar-aware HAC and stable nonzero tail probabilities |
 | R09 | Governed event-source verification | `source_audit` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
 | R10 | Metric formulas, units, and supported interpretations | `metric_registry` | `scripts/reproduce_release.py`; direct validation in `results.inventory` |
 | R11 | Route-level infrastructure evidence is unavailable | metadata-only `infrastructure_evidence_status` | negative replication gate: the table must remain excluded from Hub configs and the claim remains `BLOCKED` |
@@ -87,8 +91,8 @@ package. They run only when those inputs are deliberately staged and
 - Weekly-mean and pooled-period HHI changes are different nonlinear
   aggregations and are not interchangeable.
 - Simulation outputs are synthetic and uncalibrated.
-- Arbitrum–Gnosis estimates are failed-design diagnostics, not treatment
-  effects.
+- Arbitrum–Gnosis statistics are model-based failed-design diagnostics, not treatment
+  effects; their HAC intervals and p-values do not establish causal identification.
 - Verified route-level infrastructure dependence remains blocked.
 
 ## Reproducibility scope
