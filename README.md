@@ -80,7 +80,8 @@ recomputes the derived result snapshot, and compares it byte-for-byte with
 `release/reference_results.json`. It runs offline and does not query a chain,
 provider, or API.
 
-<a id="replication-map"></a>\n## 🧭 Result-by-result replication map
+<a id="replication-map"></a>
+## 🧭 Result-by-result replication map
 
 The machine-readable source for this table is
 `release/result_replication_index.json`. The public data assets are hosted at
@@ -108,7 +109,8 @@ interpretation boundary in `release/result_replication_index.json`.
 
 <p align="right"><a href="#contents">⬆️ Back to contents</a></p>
 
-<a id="validation"></a>\n## ✅ Reviewer and CI checks
+<a id="validation"></a>
+## ✅ Reviewer and CI checks
 
 ```bash
 make release-smoke
@@ -130,7 +132,8 @@ large or publication-layout artifacts are not distributed in this code
 package. They run only when those inputs are deliberately staged and
 `AAVE_BNS_RUN_EXTERNAL_ASSET_TESTS=1` is set; the skip is visible, never silent.
 
-<a id="boundaries"></a>\n## 🛡️ Evidence boundaries
+<a id="boundaries"></a>
+## 🛡️ Evidence boundaries
 
 - Address identifiers are not verified people or independent economic actors.
 - Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare,
@@ -142,7 +145,8 @@ package. They run only when those inputs are deliberately staged and
   effects; their HAC intervals and p-values do not establish causal identification.
 - Verified route-level infrastructure dependence remains blocked.
 
-<a id="scope"></a>\n## 🔬 Reproducibility scope
+<a id="scope"></a>
+## 🔬 Reproducibility scope
 
 The default release command starts from the completed, immutable public data
 candidate. Acquisition modules and queries are retained for independent future
@@ -157,7 +161,8 @@ expected outputs, and limitations are documented in
 `docs/RELEASE_REPRODUCIBILITY.md`; the dated NeurIPS/Papers with Code audit is
 in `docs/NEURIPS_2026_CODE_READINESS.md`.
 
-<a id="repository-map"></a>\n## 🗂️ Repository map
+<a id="repository-map"></a>
+## 🗂️ Repository map
 
 ```text
 analysis/                     reference statistical implementation
@@ -170,7 +175,8 @@ docs/open-science-pipeline/   generated editable pipeline and registry
 tests/                        unit, integration, and synthetic release fixtures
 ```
 
-<a id="license"></a>\n## 📄 License
+<a id="license"></a>
+## 📄 License
 
 Code is released under the [MIT License](LICENSE). The companion data release
 uses CC BY 4.0 International; its license and third-party-rights boundary are
