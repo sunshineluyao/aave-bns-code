@@ -1,0 +1,53 @@
+{
+  "figure_id": "aave-bns-code-readme-teaser",
+  "title": "Aave-BNS evidence-first reproducibility pipeline",
+  "version": "1.0.0",
+  "iconography_mode": "rich-editorial",
+  "intended_surface": "GitHub README on light and dark themes",
+  "source_asset": "docs/readme/aave_bns_code_teaser.svg",
+  "evidence_mode": "descriptive-and-model-based",
+  "palette": {
+    "background": ["#080B1A", "#120A2B", "#071B27"],
+    "ink": "#F8FAFC",
+    "muted_ink": "#AAB4D0",
+    "primary": "#8B5CF6",
+    "secondary": "#22D3EE",
+    "verified": "#34D399",
+    "boundary": "#FBBF24"
+  },
+  "pipeline_stages": [
+    "Original source",
+    "Query code",
+    "Queried data",
+    "Process code",
+    "Processed data",
+    "Results"
+  ],
+  "chain_evidence": {
+    "ethereum": "Verified queried partition and processing modules",
+    "arbitrum": "Query contract and acquisition receipts; queried row partition is not separately public",
+    "gnosis": "Verified queried partition and donor-diagnostic processing modules"
+  },
+  "graphics_inventory": [
+    "protocol source",
+    "query-code terminal",
+    "governed data store",
+    "deterministic processing gear",
+    "multilayer processed-data network",
+    "result chart",
+    "Ethereum chain card",
+    "Arbitrum chain card",
+    "Gnosis chain card"
+  ],
+  "claim_boundaries": [
+    "The figure depicts provenance and reproducibility architecture, not causal identification.",
+    "Arbitrum queried row-level data are not represented as separately published.",
+    "Verified route-level infrastructure dependence remains outside the release evidence."
+  ],
+  "accessibility": {
+    "live_text": true,
+    "non_color_status_labels": true,
+    "minimum_body_font_px": 12,
+    "alt_text": "A dark-mode-safe six-stage Aave-BNS pipeline from original sources through query and processing code to public data and auditable results, with explicit Ethereum, Arbitrum, and Gnosis evidence states."
+  }
+}

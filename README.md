@@ -1,12 +1,54 @@
-# Aave-BNS reproducible analysis code
+<div align="center">
 
-This MIT-licensed repository contains the executable acquisition, transformation,
-simulation, network-analysis, diagnostic, and release-validation code for the
-Aave-BNS study. Public release inputs are provided by
-[Hugging Face Dataset `zlysunshine/aave-bns-data`](https://huggingface.co/datasets/zlysunshine/aave-bns-data).
-The release path is intentionally limited to the public data and code products.
+# Aave-BNS Reproducible Analysis Code
 
-## Reproduce the public result snapshot
+**Evidence-first multichain network analysis for decentralized finance**
+
+<a href="https://huggingface.co/datasets/zlysunshine/aave-bns-data"><img alt="Hugging Face Dataset" src="https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-aave--bns--data-FFD21E?style=for-the-badge"></a>
+<a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/License-MIT-34D399?style=for-the-badge"></a>
+<a href="docs/RELEASE_REPRODUCIBILITY.md"><img alt="Reproducible release" src="https://img.shields.io/badge/Reproducibility-Fail--closed-22D3EE?style=for-the-badge"></a>
+<a href="release/result_replication_index.json"><img alt="Results R01 through R11" src="https://img.shields.io/badge/Results-R01%E2%80%93R11-8B5CF6?style=for-the-badge"></a>
+
+<br>
+
+<a href="#quick-start">🚀 Quick start</a> ·
+<a href="#replication-map">🧭 Replication map</a> ·
+<a href="#validation">✅ Validation</a> ·
+<a href="#boundaries">🛡️ Evidence boundaries</a> ·
+<a href="#repository-map">🗂️ Repository map</a>
+
+</div>
+
+<p align="center">
+  <img src="docs/readme/aave_bns_code_teaser.svg" width="100%" alt="A dark-mode-safe six-stage Aave-BNS pipeline from original sources through query and processing code to public data and auditable results, with explicit Ethereum, Arbitrum, and Gnosis evidence states.">
+</p>
+
+> [!NOTE]
+> This MIT-licensed repository contains the executable acquisition,
+> transformation, simulation, network-analysis, diagnostic, and
+> release-validation code for the Aave-BNS study. Public release inputs are
+> hosted on the [Hugging Face Dataset
+> `zlysunshine/aave-bns-data`](https://huggingface.co/datasets/zlysunshine/aave-bns-data).
+> The public release path is intentionally limited to the data and code products.
+
+<a id="contents"></a>
+## 📚 Contents
+
+<table>
+<tr>
+<td width="33%"><a href="#quick-start"><strong>🚀 Reproduce the snapshot</strong></a><br><sub>Pinned data, environment, and fail-closed command</sub></td>
+<td width="33%"><a href="#replication-map"><strong>🧭 Trace every result</strong></a><br><sub>Source → query → data → processing → output</sub></td>
+<td width="33%"><a href="#validation"><strong>✅ Validate the release</strong></a><br><sub>Reviewer, CI, checksum, and contract gates</sub></td>
+</tr>
+<tr>
+<td><a href="#boundaries"><strong>🛡️ Read the boundaries</strong></a><br><sub>Interpretation and evidence limits</sub></td>
+<td><a href="#scope"><strong>🔬 Reproducibility scope</strong></a><br><sub>Offline default and explicit refresh path</sub></td>
+<td><a href="#repository-map"><strong>🗂️ Explore the repository</strong></a><br><sub>Code, queries, release assets, docs, and tests</sub></td>
+</tr>
+</table>
+
+<a id="quick-start"></a>
+## 🚀 Reproduce the public result snapshot
 
 Clone the data and code repositories side by side, pin the validated data
 candidate, and run the fail-closed reviewer path:
@@ -38,7 +80,8 @@ recomputes the derived result snapshot, and compares it byte-for-byte with
 `release/reference_results.json`. It runs offline and does not query a chain,
 provider, or API.
 
-## Result-by-result replication map
+<a id="replication-map"></a>
+## 🧭 Result-by-result replication map
 
 The machine-readable source for this table is
 `release/result_replication_index.json`. The public data assets are hosted at
@@ -64,7 +107,10 @@ the release harness recalculates a compact summary from that asset.
 Every row has an exact command, field list, evidence status, output locator, and
 interpretation boundary in `release/result_replication_index.json`.
 
-## Reviewer and CI checks
+<p align="right"><a href="#contents">⬆️ Back to contents</a></p>
+
+<a id="validation"></a>
+## ✅ Reviewer and CI checks
 
 ```bash
 make release-smoke
@@ -86,7 +132,8 @@ large or publication-layout artifacts are not distributed in this code
 package. They run only when those inputs are deliberately staged and
 `AAVE_BNS_RUN_EXTERNAL_ASSET_TESTS=1` is set; the skip is visible, never silent.
 
-## Evidence boundaries
+<a id="boundaries"></a>
+## 🛡️ Evidence boundaries
 
 - Address identifiers are not verified people or independent economic actors.
 - Pool-event-frequency HHI is not capital, liquidity, ownership, risk, welfare,
@@ -98,7 +145,8 @@ package. They run only when those inputs are deliberately staged and
   effects; their HAC intervals and p-values do not establish causal identification.
 - Verified route-level infrastructure dependence remains blocked.
 
-## Reproducibility scope
+<a id="scope"></a>
+## 🔬 Reproducibility scope
 
 The default release command starts from the completed, immutable public data
 candidate. Acquisition modules and queries are retained for independent future
@@ -113,7 +161,8 @@ expected outputs, and limitations are documented in
 `docs/RELEASE_REPRODUCIBILITY.md`; the dated NeurIPS/Papers with Code audit is
 in `docs/NEURIPS_2026_CODE_READINESS.md`.
 
-## Repository map
+<a id="repository-map"></a>
+## 🗂️ Repository map
 
 ```text
 analysis/                     reference statistical implementation
@@ -126,8 +175,11 @@ docs/open-science-pipeline/   generated editable pipeline and registry
 tests/                        unit, integration, and synthetic release fixtures
 ```
 
-## License
+<a id="license"></a>
+## 📄 License
 
 Code is released under the [MIT License](LICENSE). The companion data release
 uses CC BY 4.0 International; its license and third-party-rights boundary are
-documented in the data repository.
+documented on the [public Hugging Face Dataset](https://huggingface.co/datasets/zlysunshine/aave-bns-data).
+
+<div align="center"><sub>Designed for auditable, interdisciplinary reuse · Teaser source: <a href="docs/readme/aave_bns_code_teaser.svg">editable SVG</a> · <a href="docs/readme/aave_bns_code_teaser.manifest.json">semantic manifest</a></sub></div>
