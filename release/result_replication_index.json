@@ -191,7 +191,7 @@
     {
       "result_id": "R08",
       "result_family": "Comparative diagnostic",
-      "public_result": "Complete 42-row model-based inference ledger for chain-relative and Arbitrum-Gnosis diagnostics",
+      "public_result": "Complete 42-row model-based uncertainty ledger",
       "dataset_configurations": [
         "participation_and_concentration_metrics",
         "failed_design_event_study",
