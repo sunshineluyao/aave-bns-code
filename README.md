@@ -13,7 +13,7 @@ candidate, and run the fail-closed reviewer path:
 
 ```bash
 git clone https://github.com/sunshineluyao/aave-bns-data-HF.git
-git -C aave-bns-data-HF checkout 942b7c1b63c9b3deb1732e970b9a727a8a3a349a
+git -C aave-bns-data-HF checkout 49265b508c1a6b76f21a6bbbf5ac4f40946bd96f
 
 git clone https://github.com/sunshineluyao/aave-bns-code.git
 cd aave-bns-code
