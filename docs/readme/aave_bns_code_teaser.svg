@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" role="img" aria-labelledby="title desc">
+  <title id="title">Aave-BNS evidence-first reproducibility pipeline</title>
+  <desc id="desc">A dark-mode-safe diagram connecting original blockchain sources, chain-specific query code, governed queried and processed data, deterministic processing, and auditable results.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#080B1A"/><stop offset="0.55" stop-color="#120A2B"/><stop offset="1" stop-color="#071B27"/></linearGradient>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#8B5CF6"/><stop offset="1" stop-color="#22D3EE"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10Z" fill="#22D3EE"/></marker>
+    <style>
+      text{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;fill:#F8FAFC}.muted{fill:#AAB4D0}.micro{font-size:12px;font-weight:700;letter-spacing:1.4px}.label{font-size:15px;font-weight:700}.body{font-size:13px}.card{fill:#11162B;stroke-width:1.5}.chip{fill:#17112E;stroke:#8B5CF6}.line{fill:none;stroke:#22D3EE;stroke-width:3;marker-end:url(#arrow)}
+    </style>
+  </defs>
+  <rect width="1440" height="720" rx="24" fill="url(#bg)"/>
+  <g opacity=".12" stroke="#8B5CF6"><path d="M0 145L250 70L410 148L680 55L910 138L1160 62L1440 155" fill="none"/><path d="M0 620L230 548L465 642L730 560L1000 635L1240 535L1440 600" fill="none"/></g>
+  <g transform="translate(54 42)">
+    <circle cx="28" cy="28" r="25" fill="#10182F" stroke="#8B5CF6" stroke-width="2"/>
+    <path d="M13 37h30M17 37l5-17h12l5 17M24 20v17M32 20v17" stroke="#22D3EE" stroke-width="2.5" fill="none"/>
+    <circle cx="38" cy="16" r="5" fill="#FBBF24"/>
+    <text x="70" y="27" font-size="26" font-weight="800">AAVE-BNS <tspan fill="#A78BFA">REPRODUCIBLE CODE</tspan></text>
+    <text x="70" y="50" class="muted" font-size="14" letter-spacing=".8">EVIDENCE-FIRST MULTICHAIN NETWORK ANALYSIS</text>
+  </g>
+  <g transform="translate(1120 47)"><rect width="260" height="48" rx="24" class="chip"/><circle cx="24" cy="24" r="5" fill="#FBBF24"/><text x="40" y="29" class="label">PUBLIC RELEASE · MIT</text></g>
+  <text x="720" y="145" text-anchor="middle" font-size="28" font-weight="800">Can every reported result be traced from source to output?</text>
+  <rect x="420" y="164" width="600" height="3" rx="2" fill="url(#hero)" filter="url(#glow)"/>
+
+  <g transform="translate(42 200)">
+    <g transform="translate(0)"><rect width="196" height="210" rx="18" class="card" stroke="#22D3EE"/><text x="20" y="30" class="micro" fill="#22D3EE">01 · ORIGINAL SOURCE</text><circle cx="98" cy="78" r="31" fill="#0B3340" stroke="#22D3EE" stroke-width="2"/><path d="M78 80h40M83 80l7-24h16l7 24M92 56v24M104 56v24" stroke="#5EEAF4" stroke-width="3" fill="none"/><text x="98" y="128" text-anchor="middle" class="label">Aave V3 logs</text><text x="98" y="151" text-anchor="middle" class="body muted">Governance records</text><text x="98" y="173" text-anchor="middle" class="body muted">Address book + ABI</text><rect x="24" y="187" width="148" height="4" rx="2" fill="#22D3EE"/></g>
+    <path d="M202 105H228" class="line"/>
+    <g transform="translate(236)"><rect width="196" height="210" rx="18" class="card" stroke="#8B5CF6"/><text x="20" y="30" class="micro" fill="#A78BFA">02 · QUERY CODE</text><rect x="65" y="52" width="66" height="56" rx="11" fill="#241548" stroke="#A78BFA"/><path d="M88 67L76 80l12 13M108 67l12 13-12 13M103 61L93 99" stroke="#C4B5FD" stroke-width="3" fill="none"/><text x="98" y="130" text-anchor="middle" class="label">Chain-specific</text><text x="98" y="153" text-anchor="middle" class="body muted">Ethereum · Arbitrum</text><text x="98" y="175" text-anchor="middle" class="body muted">Gnosis acquisition</text><rect x="24" y="187" width="148" height="4" rx="2" fill="#8B5CF6"/></g>
+    <path d="M438 105H464" class="line"/>
+    <g transform="translate(472)"><rect width="196" height="210" rx="18" class="card" stroke="#22D3EE"/><text x="20" y="30" class="micro" fill="#22D3EE">03 · QUERIED DATA</text><ellipse cx="98" cy="61" rx="35" ry="13" fill="#0B3340" stroke="#22D3EE" stroke-width="2"/><path d="M63 61v43c0 7 16 13 35 13s35-6 35-13V61M63 82c0 7 16 13 35 13s35-6 35-13" fill="none" stroke="#5EEAF4" stroke-width="2"/><text x="98" y="139" text-anchor="middle" class="label">Governed records</text><text x="98" y="162" text-anchor="middle" class="body muted">Hashes + receipts</text><text x="98" y="181" text-anchor="middle" class="body" fill="#FBBF24">Fail-closed boundaries</text></g>
+    <path d="M674 105H700" class="line"/>
+    <g transform="translate(708)"><rect width="196" height="210" rx="18" class="card" stroke="#8B5CF6"/><text x="20" y="30" class="micro" fill="#A78BFA">04 · PROCESS CODE</text><circle cx="98" cy="80" r="35" fill="#241548" stroke="#A78BFA" stroke-width="2"/><circle cx="98" cy="80" r="11" fill="none" stroke="#C4B5FD" stroke-width="3"/><path d="M98 39v18M98 103v18M57 80h18M121 80h18M69 51l13 13M114 96l13 13M127 51l-13 13M82 96l-13 13" stroke="#C4B5FD" stroke-width="3"/><text x="98" y="139" text-anchor="middle" class="label">Deterministic ETL</text><text x="98" y="162" text-anchor="middle" class="body muted">Networks · metrics</text><text x="98" y="181" text-anchor="middle" class="body muted">Simulation · audits</text></g>
+    <path d="M910 105H936" class="line"/>
+    <g transform="translate(944)"><rect width="196" height="210" rx="18" class="card" stroke="#22D3EE"/><text x="20" y="30" class="micro" fill="#22D3EE">05 · PROCESSED DATA</text><path d="M62 103l36-55 36 55z" fill="#0B3340" stroke="#22D3EE" stroke-width="2"/><circle cx="98" cy="48" r="7" fill="#5EEAF4"/><circle cx="62" cy="103" r="7" fill="#5EEAF4"/><circle cx="134" cy="103" r="7" fill="#5EEAF4"/><circle cx="98" cy="81" r="8" fill="#A78BFA"/><path d="M98 55v18M68 98l23-14M128 98l-23-14" stroke="#C4B5FD" stroke-width="2"/><text x="98" y="139" text-anchor="middle" class="label">14 configurations</text><text x="98" y="162" text-anchor="middle" class="body muted">Checksummed tables</text><text x="98" y="181" text-anchor="middle" class="body muted">Public HF dataset</text></g>
+    <path d="M1146 105H1172" class="line"/>
+    <g transform="translate(1180)"><rect width="196" height="210" rx="18" class="card" stroke="#FBBF24"/><text x="20" y="30" class="micro" fill="#FBBF24">06 · RESULTS</text><rect x="58" y="51" width="80" height="65" rx="9" fill="#2B2413" stroke="#FBBF24" stroke-width="2"/><path d="M73 100V82M91 100V66M109 100V76M127 100V58" stroke="#FCD34D" stroke-width="7"/><text x="98" y="139" text-anchor="middle" class="label">R01–R11 map</text><text x="98" y="162" text-anchor="middle" class="body muted">Exact commands</text><text x="98" y="181" text-anchor="middle" class="body muted">Auditable boundaries</text></g>
+  </g>
+
+  <g transform="translate(48 446)">
+    <rect width="1344" height="212" rx="20" fill="#0C1225" stroke="#3C4565"/>
+    <text x="24" y="32" class="micro" fill="#AAB4D0">MULTICHAIN EVIDENCE · EXPLICIT COVERAGE AND LIMITS</text>
+    <g transform="translate(24 52)"><rect width="408" height="130" rx="15" fill="#101A31" stroke="#627EEA"/><circle cx="46" cy="46" r="24" fill="#18213B"/><path d="M46 22l-13 24 13 8 13-8zM33 50l13 20 13-20-13 8z" fill="#9CB0FF"/><text x="84" y="39" font-size="18" font-weight="800">Ethereum</text><text x="84" y="63" class="body muted">Queried partition + processing modules</text><rect x="84" y="80" width="170" height="28" rx="14" fill="#122F2E" stroke="#34D399"/><text x="169" y="99" text-anchor="middle" class="micro" fill="#6EE7B7">VERIFIED · OBSERVED</text></g>
+    <g transform="translate(468 52)"><rect width="408" height="130" rx="15" fill="#17132E" stroke="#8B5CF6"/><circle cx="46" cy="46" r="24" fill="#241548"/><path d="M30 54l16-30 16 12-16 30zM42 36l10 8-10 18" fill="none" stroke="#C4B5FD" stroke-width="4"/><text x="84" y="39" font-size="18" font-weight="800">Arbitrum</text><text x="84" y="63" class="body muted">Query contract + receipts; row partition not public</text><rect x="84" y="80" width="198" height="28" rx="14" fill="#302613" stroke="#FBBF24"/><text x="183" y="99" text-anchor="middle" class="micro" fill="#FCD34D">DISCLOSED BOUNDARY</text></g>
+    <g transform="translate(912 52)"><rect width="408" height="130" rx="15" fill="#0D2529" stroke="#22D3EE"/><circle cx="46" cy="46" r="24" fill="#0B3340"/><path d="M31 45c5-17 25-19 31-4 5 13-11 28-24 20-9-6-10-20 0-27" fill="none" stroke="#5EEAF4" stroke-width="4"/><text x="84" y="39" font-size="18" font-weight="800">Gnosis</text><text x="84" y="63" class="body muted">Queried partition + donor diagnostics</text><rect x="84" y="80" width="170" height="28" rx="14" fill="#122F2E" stroke="#34D399"/><text x="169" y="99" text-anchor="middle" class="micro" fill="#6EE7B7">VERIFIED · OBSERVED</text></g>
+  </g>
+  <text x="720" y="695" text-anchor="middle" class="micro muted">EDITABLE SVG · DARK-MODE SAFE · DESCRIPTIVE AND MODEL-BASED EVIDENCE ONLY</text>
+</svg>
